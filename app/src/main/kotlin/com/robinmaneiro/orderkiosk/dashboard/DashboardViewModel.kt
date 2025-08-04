@@ -20,14 +20,4 @@ class DashboardViewModel : ViewModel() {
     data class UiState(
         val isLoading: Boolean = false
     )
-
-    @Suppress("UNCHECKED_CAST")
-    class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(WelcomeViewModel::class.java)) {
-                return WelcomeViewModel(context) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

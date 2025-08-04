@@ -6,16 +6,27 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.robinmaneiro.orderkiosk.dashboard.DashboardScreen
+import com.robinmaneiro.orderkiosk.dashboard.DashboardViewModel
+import com.robinmaneiro.orderkiosk.koin.viewModelModules
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
+import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
+import org.koin.compose.KoinApplication
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.module
 
 @Composable
 fun MainScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
-        composable(Screens.WelcomeScreen.route) { WelcomeScreen(modifier = Modifier, navHostController = navHostController) }
-        composable(Screens.DashboardScreen.route) { DashboardScreen(modifier = Modifier, navHostController = navHostController) }
+    KoinApplication(application = {
+        modules(listOf(
+            viewModelModules
+        ))
+    }) {
+        NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
+            composable(Screens.WelcomeScreen.route) { WelcomeScreen(modifier = Modifier, navHostController = navHostController) }
+            composable(Screens.DashboardScreen.route) { DashboardScreen(modifier = Modifier, navHostController = navHostController) }
 //        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
 //        navAnimatedComposable(Screens.LoginScreen.route) { LoginScreen(navController = navHostController) }
 //        navAnimatedComposable(Screens.RegistrationScreen.route) { RegistrationScreen() }
@@ -27,5 +38,6 @@ fun MainScreen(
 //            val emailAddress = it.arguments?.getString("email_address").orEmpty()
 //            PasswordRecoveryScreen(emailAddress = emailAddress)
 //        }
+        }
     }
 }

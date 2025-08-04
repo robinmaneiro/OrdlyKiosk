@@ -33,6 +33,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DashboardScreen(
@@ -40,7 +41,7 @@ fun DashboardScreen(
     navHostController: NavHostController
 ) {
     val context = LocalContext.current
-    val viewModel = remember { WelcomeViewModel.ViewModelFactory(context).create(WelcomeViewModel::class.java) }
+    val viewModel = koinViewModel<DashboardViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle(WelcomeViewModel.UiState())
 
     Column {
