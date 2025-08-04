@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.util.showToast
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WelcomeScreen(
@@ -30,7 +31,7 @@ fun WelcomeScreen(
     navHostController: NavHostController
 ) {
     val context = LocalContext.current
-    val viewModel = remember { WelcomeViewModel.ViewModelFactory(context).create(WelcomeViewModel::class.java) }
+    val viewModel = koinViewModel<WelcomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle(WelcomeViewModel.UiState())
     val action by viewModel.actions.collectAsStateWithLifecycle(null)
     action?.let {
