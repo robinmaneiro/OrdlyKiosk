@@ -27,8 +27,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WelcomeScreen(
-    modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val viewModel = koinViewModel<WelcomeViewModel>()

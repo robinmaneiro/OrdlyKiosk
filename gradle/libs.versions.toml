@@ -12,6 +12,8 @@ lottie = "6.6.7" #https://airbnb.io/lottie/#/android-compose
 navigation-compose = "2.9.3" #https://developer.android.com/develop/ui/compose/navigation
 coil-compose = "3.3.0" #
 koin = "4.1.0"
+detekt = "1.23.8"
+compose-detekt-rules = "0.4.26"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,7 +42,12 @@ coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-http", 
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 #endregion
 
+#region Detekt
+compose-detekt-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "compose-detekt-rules" }
+#endregion
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}

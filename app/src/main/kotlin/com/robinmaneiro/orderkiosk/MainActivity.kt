@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+private fun GreetingPreview() {
     OrderKioskTheme {
 //        Greeting("Android") TODO: Replace for actual preview
     }

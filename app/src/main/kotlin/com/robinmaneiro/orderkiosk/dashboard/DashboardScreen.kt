@@ -37,14 +37,16 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DashboardScreen(
-    modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val viewModel = koinViewModel<DashboardViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle(WelcomeViewModel.UiState())
 
-    Column {
+    Column(
+        modifier
+    ) {
         Row(
             modifier = Modifier
                 .height(100.dp)
@@ -65,7 +67,7 @@ fun DashboardScreen(
                 }
             }
             LazyVerticalGrid(
-                modifier = modifier,
+                modifier = Modifier,
                 columns = GridCells.Adaptive(180.dp),
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -90,9 +92,11 @@ fun DashboardScreen(
 }
 
 @Composable
-fun MenuCard() {
+fun MenuCard(
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .size(300.dp, 60.dp),
         border = BorderStroke(1.dp, Color.DarkGray),
         colors = CardDefaults.cardColors().copy(
@@ -162,7 +166,7 @@ fun ProductCard(
 
 @Preview(showBackground = true)
 @Composable
-fun ProductCardPreview() {
+private fun ProductCardPreview() {
     ProductCard(
         promotionMessage = "Back again",
         productTitle = "McChicken Classic",
