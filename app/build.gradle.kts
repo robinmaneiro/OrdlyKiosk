@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -63,4 +64,12 @@ dependencies {
     //region Dependency injection
     implementation(libs.koin.compose)
     //endregion
+
+    detektPlugins(libs.compose.detekt.rules)
+}
+
+detekt {
+    autoCorrect = true
+    config.setFrom("../detekt/detekt-config.yml")
+    baseline = file("../detekt/detekt-baseline.yml")
 }
