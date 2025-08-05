@@ -14,6 +14,7 @@ coil-compose = "3.3.0" #
 koin = "4.1.0"
 detekt = "1.23.8"
 compose-detekt-rules = "0.4.26"
+ktor-client = "3.2.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,11 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 
 #region Detekt
 compose-detekt-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "compose-detekt-rules" }
+#endregion
+
+#region Network
+ktor-core = {group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client"}
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor-client"}
 #endregion
 
 [plugins]

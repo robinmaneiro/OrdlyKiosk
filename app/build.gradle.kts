@@ -65,6 +65,11 @@ dependencies {
     implementation(libs.koin.compose)
     //endregion
 
+    //region Networking
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.cio)
+    //endregion
+
     detektPlugins(libs.compose.detekt.rules)
 }
 
