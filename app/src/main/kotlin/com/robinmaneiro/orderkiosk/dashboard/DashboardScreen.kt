@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -42,6 +43,10 @@ fun DashboardScreen(
     val context = LocalContext.current
     val viewModel = koinViewModel<DashboardViewModel>()
     val uiState: DashboardViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    if (uiState.isLoading) {
+        KiLoadingSpinner()
+    }
 
     Column(
         modifier
@@ -156,7 +161,9 @@ fun ProductCard(
 
             Text(
                 text = productTitle,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                minLines = 2,
+                maxLines = 2
             )
 
             Text(
