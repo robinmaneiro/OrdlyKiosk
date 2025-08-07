@@ -36,7 +36,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 #region Compose
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-compose" }
-coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-http", version.ref = "coil-compose"}
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-http", version.ref = "coil-compose" }
 #endregion
 
 #region Dependency Injection
@@ -48,12 +48,15 @@ compose-detekt-rules = { group = "io.nlopez.compose.rules", name = "detekt", ver
 #endregion
 
 #region Network
-ktor-core = {group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client"}
-ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor-client"}
+ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client" }
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor-client" }
+ktor-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor-client" }
+ktor-serialization-jackson = { group = "io.ktor", name = "ktor-serialization-jackson", version.ref = "ktor-client" }
+ktor-okhttp = {group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor-client"}
 #endregion
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

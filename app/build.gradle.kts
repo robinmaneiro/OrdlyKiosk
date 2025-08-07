@@ -35,10 +35,12 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
+    }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,6 +70,9 @@ dependencies {
     //region Networking
     implementation(libs.ktor.core)
     implementation(libs.ktor.cio)
+    implementation(libs.ktor.contentNegotiation)
+    implementation(libs.ktor.serialization.jackson)
+    implementation(libs.ktor.okhttp)
     //endregion
 
     detektPlugins(libs.compose.detekt.rules)
