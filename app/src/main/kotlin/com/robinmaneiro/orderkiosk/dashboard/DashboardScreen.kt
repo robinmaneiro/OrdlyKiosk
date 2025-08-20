@@ -83,7 +83,8 @@ fun DashboardScreen(
                 items(uiState.menuItems) {
                     ProductCard(
                         productTitle = it.title,
-                        productPrice = it.price.toString()
+                        productPrice = it.price.toString(),
+                        productDescription = it.description
                     )
                 }
             }
@@ -134,6 +135,7 @@ fun MenuCard(
 fun ProductCard(
     productTitle: String,
     productPrice: String,
+    productDescription: String,
     modifier: Modifier = Modifier,
     promotionMessage: String? = null
 ) {
@@ -167,6 +169,14 @@ fun ProductCard(
             )
 
             Text(
+                text = productDescription,
+                fontWeight = FontWeight.Thin,
+                color = Color.DarkGray,
+                minLines = 2,
+                maxLines = 2
+            )
+
+            Text(
                 text = productPrice
             )
         }
@@ -179,6 +189,7 @@ private fun ProductCardPreview() {
     ProductCard(
         promotionMessage = "Back again",
         productTitle = "McChicken Classic",
+        productDescription = "It's so delicious",
         productPrice = "£5.49"
     )
 }
