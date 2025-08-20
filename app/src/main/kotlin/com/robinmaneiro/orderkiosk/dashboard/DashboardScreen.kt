@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +34,10 @@ import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.dashboard.ui.BottomSection
+import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCard
+import com.robinmaneiro.orderkiosk.dashboard.ui.MenuSection
+import com.robinmaneiro.orderkiosk.dashboard.ui.ProductsSection
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import org.koin.androidx.compose.koinViewModel
 
@@ -49,147 +55,15 @@ fun DashboardScreen(
     }
 
     Column(
-        modifier
-    ) {
-        Row( // Header
-            modifier = Modifier
-                .height(100.dp)
-                .fillMaxSize()
-                .padding(horizontal = 20.dp)
-                .background(Color.Red)
-        ) {
-            Text(text = "Price: £9.95")
-        }
-
-        Row {
-            // Menu Sections
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                contentPadding = PaddingValues(start = 20.dp, top = 10.dp, bottom = 10.dp),
-            ) {
-                items(count = 30) {
-                    MenuCard()
-                }
-            }
-
-            // Products
-            LazyVerticalGrid(
-                modifier = Modifier,
-                columns = GridCells.Adaptive(180.dp),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(uiState.menuItems) {
-                    ProductCard(
-                        productTitle = it.title,
-                        productPrice = it.price.toString(),
-                        productDescription = it.description
-                    )
-                }
-            }
-        }
-        Row(
-            modifier = Modifier
-                .height(100.dp)
-                .background(Color.Red)
-        ) {
-            Text(text = "Price: £9.95")
-        }
-    }
-}
-
-@Composable
-fun MenuCard(
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .size(300.dp, 60.dp),
-        border = BorderStroke(1.dp, Color.DarkGray),
-        colors = CardDefaults.cardColors().copy(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(4.dp)
+        modifier.fillMaxSize()
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier.height(600.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.big_mac)
-                    .build(),
-                contentDescription = null
-            )
-
-            Text(
-                text = "Burgers",
-                fontWeight = FontWeight.Bold
-            )
+            MenuSection()
+            ProductsSection(menuItems = uiState.menuItems)
         }
+        Spacer(Modifier.padding(5.dp))
+        BottomSection(modifier.weight(1f))
     }
-}
-
-@Composable
-fun ProductCard(
-    productTitle: String,
-    productPrice: String,
-    productDescription: String,
-    modifier: Modifier = Modifier,
-    promotionMessage: String? = null
-) {
-    Card(
-        modifier = modifier,
-        border = BorderStroke(1.dp, Color.DarkGray),
-        colors = CardDefaults.cardColors().copy(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(4.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.big_mac)
-                    .build(),
-                contentDescription = null
-            )
-
-            Text(
-                text = productTitle,
-                fontWeight = FontWeight.Bold,
-                minLines = 2,
-                maxLines = 2
-            )
-
-            Text(
-                text = productDescription,
-                fontWeight = FontWeight.Thin,
-                color = Color.DarkGray,
-                minLines = 2,
-                maxLines = 2
-            )
-
-            Text(
-                text = productPrice
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ProductCardPreview() {
-    ProductCard(
-        promotionMessage = "Back again",
-        productTitle = "McChicken Classic",
-        productDescription = "It's so delicious",
-        productPrice = "£5.49"
-    )
 }
