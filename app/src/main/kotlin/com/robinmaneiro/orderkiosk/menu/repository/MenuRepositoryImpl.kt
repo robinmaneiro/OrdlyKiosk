@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.menu.repository
 
-import com.robinmaneiro.orderkiosk.menu.model.MenuItems
+import com.robinmaneiro.orderkiosk.menu.model.MenuProducts
 
 class MenuRepositoryImpl: MenuRepository {
-    override fun getMenuItems(): MenuItems {
+    override fun getMenuItems(): MenuProducts {
         TODO("Not yet implemented")
     }
 }

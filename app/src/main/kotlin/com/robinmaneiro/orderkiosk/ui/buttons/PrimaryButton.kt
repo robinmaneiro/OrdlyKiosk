@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun PrimaryButton(
     buttonText: String,
-    modifier: Modifier = Modifier,
     primaryButtonStyle: PrimaryBtnStyle,
-    onClickListener: () -> Unit
+    onClickListener: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Button(
         modifier = modifier

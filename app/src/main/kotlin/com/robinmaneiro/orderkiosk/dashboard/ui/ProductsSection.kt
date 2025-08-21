@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -25,12 +24,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.menu.model.MenuItem
+import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 
 @Composable
 fun ProductsSection(
-    modifier: Modifier = Modifier,
-    menuItems: List<MenuItem>
+    menuProducts: List<MenuProduct>,
+    modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
         modifier = Modifier,
@@ -39,7 +38,7 @@ fun ProductsSection(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(menuItems) {
+        items(menuProducts) {
             ProductCard(
                 productTitle = it.title,
                 productPrice = it.price.toString(),
