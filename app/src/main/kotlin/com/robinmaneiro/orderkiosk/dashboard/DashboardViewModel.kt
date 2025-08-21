@@ -3,9 +3,7 @@ package com.robinmaneiro.orderkiosk.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuItemsUseCase
-import com.robinmaneiro.orderkiosk.menu.model.MenuItem
-import com.robinmaneiro.orderkiosk.menu.model.MenuItems
-import com.robinmaneiro.orderkiosk.networking.RequestManager
+import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel.Actions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -33,7 +31,7 @@ class DashboardViewModel(
             }
             _uiState.update {
                 it.copy(
-                    menuItems = menuItems,
+                    menuProducts = menuItems,
                     isLoading = false
                 )
             }
@@ -42,6 +40,6 @@ class DashboardViewModel(
 
     data class UiState(
         val isLoading: Boolean = false,
-        val menuItems: List<MenuItem> = emptyList()
+        val menuProducts: List<MenuProduct> = emptyList()
     )
 }

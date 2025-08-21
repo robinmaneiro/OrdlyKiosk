@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.menu.repository
 
-import com.robinmaneiro.orderkiosk.menu.model.MenuItems
+import com.robinmaneiro.orderkiosk.menu.model.MenuProducts
 
 interface MenuRepository {
-    fun getMenuItems(): MenuItems
+    fun getMenuItems(): MenuProducts
 
     companion object {
         val instance = MenuRepositoryImpl()

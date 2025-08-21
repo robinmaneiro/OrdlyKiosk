@@ -71,6 +71,6 @@ fun MenuCard(
 
 @Preview(showBackground = true)
 @Composable
-fun MenuCardPreview() {
+private fun MenuCardPreview() {
     MenuCard()
 }

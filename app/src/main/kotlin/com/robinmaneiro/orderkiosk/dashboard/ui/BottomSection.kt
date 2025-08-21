@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +24,11 @@ fun BottomSection(
     Row (
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
+            .height(150.dp)
+            .background(Color.LightGray)
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .fillMaxSize()
     ){
         PrimaryButton(
             "Cancel Order",
