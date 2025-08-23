@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.menu.repository
+package com.robinmaneiro.orderkiosk.dashboard.repository
 
-import com.robinmaneiro.orderkiosk.menu.model.MenuProducts
+import com.robinmaneiro.orderkiosk.dashboard.model.MenuProducts
 
 class MenuRepositoryImpl: MenuRepository {
     override fun getMenuItems(): MenuProducts {

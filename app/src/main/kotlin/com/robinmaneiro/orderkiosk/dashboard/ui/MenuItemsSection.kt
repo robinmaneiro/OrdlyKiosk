@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
+import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
 
 @Composable
-fun ProductsSection(
+fun MenuItemsSection(
     menuProducts: List<MenuProduct>,
     modifier: Modifier = Modifier
 ) {

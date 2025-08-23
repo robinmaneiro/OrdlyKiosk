@@ -21,7 +21,7 @@ import com.robinmaneiro.orderkiosk.ui.buttons.PrimaryButton
 fun BottomSection(
     modifier: Modifier = Modifier
 ) {
-    Row (
+    Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -29,13 +29,14 @@ fun BottomSection(
             .background(Color.LightGray)
             .padding(horizontal = 10.dp, vertical = 5.dp)
             .fillMaxSize()
-    ){
+    ) {
         PrimaryButton(
             "Cancel Order",
             primaryButtonStyle = PrimaryBtnStyle.Red,
-        ) {
-            // Cancel order here
-        }
+            onClickListener = {
+                // Cancel order here
+            }
+        )
 
         // List of orderables here
         Spacer(
@@ -47,9 +48,10 @@ fun BottomSection(
         PrimaryButton(
             buttonText = "Complete order",
             primaryButtonStyle = PrimaryBtnStyle.Yellow,
-        ) {
+            onClickListener = {
 
-        }
+            }
+        )
     }
 }
 
