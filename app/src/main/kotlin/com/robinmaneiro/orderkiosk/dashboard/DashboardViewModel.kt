@@ -28,7 +28,7 @@ class DashboardViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
-            val menuItems = getMenuItemsUseCase() ?: run {
+            val menuItemsResponse = getMenuItemsUseCase() ?: run {
                 _uiState.update { it.copy(isLoading = false) }
                 return@launch
             }
@@ -42,7 +42,7 @@ class DashboardViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = menuCategories,
-                    menuProducts = menuItems,
+                    menuProducts = menuItemsResponse.items,
                     isLoading = false
                 )
             }

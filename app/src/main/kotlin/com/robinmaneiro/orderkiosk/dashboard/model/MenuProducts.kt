@@ -3,7 +3,10 @@ package com.robinmaneiro.orderkiosk.dashboard.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class MenuProducts: ArrayList<MenuProduct>()
+data class MenuProducts(
+    @JsonProperty("itemCount") val itemCount: Int,
+    @JsonProperty("items") val items: List<MenuProduct>
+)
 
 @JsonIgnoreProperties(ignoreUnknown = true) // TODO: Change to do this globally
 data class MenuProduct(
