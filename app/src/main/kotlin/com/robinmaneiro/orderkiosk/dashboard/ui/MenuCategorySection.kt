@@ -1,11 +1,13 @@
 package com.robinmaneiro.orderkiosk.dashboard.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,9 +23,11 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
 
 @Composable
-fun MenuSection(
+fun MenuCategorySection(
+    menuCategories: List<MenuCategory>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -31,19 +35,23 @@ fun MenuSection(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         contentPadding = PaddingValues(start = 20.dp, top = 10.dp, bottom = 10.dp),
     ) {
-        items(count = 30) {
-            MenuCard()
+        items(menuCategories) {
+            MenuCard(
+                categoryName = it.categoryName
+            )
         }
     }
 }
 
 @Composable
 fun MenuCard(
-    modifier: Modifier = Modifier
+    categoryName: String,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
-            .size(300.dp, 60.dp),
+            .size(300.dp, 60.dp)
+            .clickable {},
         border = BorderStroke(1.dp, Color.DarkGray),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
@@ -62,7 +70,7 @@ fun MenuCard(
             )
 
             Text(
-                text = "Burgers",
+                text = categoryName,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -72,5 +80,5 @@ fun MenuCard(
 @Preview(showBackground = true)
 @Composable
 private fun MenuCardPreview() {
-    MenuCard()
+    MenuCard("Burgers")
 }
