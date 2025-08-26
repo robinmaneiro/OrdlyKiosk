@@ -28,6 +28,7 @@ import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
 @Composable
 fun MenuCategorySection(
     menuCategories: List<MenuCategory>,
+    onCategoryClicked: (categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -37,7 +38,8 @@ fun MenuCategorySection(
     ) {
         items(menuCategories) {
             MenuCard(
-                categoryName = it.categoryName
+                category = it,
+                onCategoryClicked = onCategoryClicked
             )
         }
     }
@@ -45,13 +47,14 @@ fun MenuCategorySection(
 
 @Composable
 fun MenuCard(
-    categoryName: String,
+    category: MenuCategory,
+    onCategoryClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
             .size(300.dp, 60.dp)
-            .clickable {},
+            .clickable { onCategoryClicked.invoke(category.id) },
         border = BorderStroke(1.dp, Color.DarkGray),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
@@ -70,7 +73,7 @@ fun MenuCard(
             )
 
             Text(
-                text = categoryName,
+                text = category.categoryName,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -80,5 +83,5 @@ fun MenuCard(
 @Preview(showBackground = true)
 @Composable
 private fun MenuCardPreview() {
-    MenuCard("Burgers")
+    MenuCard(MenuCategory("123", "Burgers"), {})
 }

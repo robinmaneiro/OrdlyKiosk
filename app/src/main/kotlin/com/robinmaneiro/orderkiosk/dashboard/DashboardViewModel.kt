@@ -3,10 +3,12 @@ package com.robinmaneiro.orderkiosk.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuItemsUseCase
+import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuAllItemsUseCase
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
-import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel.Actions
+import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.dashboard.usecase.GetItemInfoUseCase
+import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuItemsByCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +18,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(
-    private val getMenuItemsUseCase: GetMenuItemsUseCase = GetMenuItemsUseCase(),
-    private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase()
+    private val getMenuItemsUseCase: GetMenuAllItemsUseCase = GetMenuAllItemsUseCase(),
+    private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase(),
+    private val getMenuItemsByCategoryUserCase: GetMenuItemsByCategoryUseCase = GetMenuItemsByCategoryUseCase(),
+    private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase()
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
@@ -47,6 +51,36 @@ class DashboardViewModel(
                 )
             }
         }
+    }
+
+    fun updateItemsOnCategorySelected(categoryId: String) {
+        viewModelScope.launch {
+            val updatedItemsResponse = getMenuItemsByCategoryUserCase(categoryId) ?: run {
+                _uiState.update { it.copy(isLoading = false) }
+                return@launch
+            }
+
+            _uiState.update {
+                it.copy(
+                    menuProducts = updatedItemsResponse.items
+                )
+            }
+        }
+    }
+
+    fun onProductClicked(productId: String) {
+        viewModelScope.launch {
+            val expandedItemInfo = getItemInfoUseCase(productId) ?: run {
+                _uiState.update { it.copy(isLoading = false) }
+                return@launch
+            }
+
+            _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
+        }
+    }
+
+    sealed interface Actions {
+        data class OpenProductInfo(val product: MenuProductExpanded): Actions
     }
 
     data class UiState(

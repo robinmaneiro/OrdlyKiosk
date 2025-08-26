@@ -29,6 +29,7 @@ import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
 @Composable
 fun MenuItemsSection(
     menuProducts: List<MenuProduct>,
+    onProductClicked: (productId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -42,7 +43,9 @@ fun MenuItemsSection(
             ProductCard(
                 productTitle = it.title,
                 productPrice = it.price.toString(),
-                productDescription = it.description
+                productId = it.productId,
+                productDescription = it.description,
+                onProductClicked = onProductClicked
             )
         }
     }
@@ -52,7 +55,9 @@ fun MenuItemsSection(
 private fun ProductCard(
     productTitle: String,
     productPrice: String,
+    productId: String,
     productDescription: String,
+    onProductClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
     promotionMessage: String? = null
 ) {
@@ -67,7 +72,7 @@ private fun ProductCard(
         Column(
             modifier = Modifier
                 .clickable {
-                    // Here to open the product view
+                    onProductClicked.invoke(productId)
                 }
                 .padding(10.dp),
             horizontalAlignment = Alignment.Start,
@@ -109,6 +114,8 @@ private fun ProductCardPreview() {
         promotionMessage = "Back again",
         productTitle = "McChicken Classic",
         productDescription = "It's so delicious",
-        productPrice = "£5.49"
+        productId = "12",
+        productPrice = "£5.49",
+        onProductClicked = {}
     )
 }
