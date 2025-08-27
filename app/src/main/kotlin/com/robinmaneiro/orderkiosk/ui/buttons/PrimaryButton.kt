@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 
 @Composable
 fun PrimaryButton(
@@ -38,6 +40,6 @@ fun PrimaryButton(
 }
 
 sealed class PrimaryBtnStyle(val containerColor: Color, val backgroundColor: Color) {
-    data object Yellow : PrimaryBtnStyle(Color.Yellow, Color.Black)
-    data object Red : PrimaryBtnStyle(Color.Red, Color.Black)
+    data object Yellow : PrimaryBtnStyle(Aquamarine40, Color.White)
+    data object Red : PrimaryBtnStyle(SandyBrown40, Color.White)
 }
