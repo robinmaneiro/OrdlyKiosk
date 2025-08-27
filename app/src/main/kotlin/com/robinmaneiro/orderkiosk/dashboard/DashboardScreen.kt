@@ -1,7 +1,6 @@
 package com.robinmaneiro.orderkiosk.dashboard
 
-import android.content.Context
-import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +20,7 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
-import com.robinmaneiro.orderkiosk.welcome.HandleAction
+import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -48,7 +47,7 @@ fun DashboardScreen(
     }
 
     Column(
-        modifier.fillMaxSize()
+        modifier.fillMaxSize().background(LightGreyBackground)
     ) {
         Row(
             modifier = Modifier.weight(0.8F)
@@ -57,9 +56,9 @@ fun DashboardScreen(
             MenuItemsSection(menuProducts = uiState.menuProducts, onProductClicked = { viewModel.onProductClicked(it) })
         }
         val bagItems = listOf<String>() // TODO: Specify when
-        if (bagItems.isNotEmpty()) {
+//        if (bagItems.isNotEmpty()) {
             BottomSection()
-        }
+//        }
     }
     shownProduct?.let {
         ProductOverlay(

@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +37,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -50,7 +54,7 @@ fun ProductOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
+            .background(Color.Black.copy(alpha = 0.25f))
             .clickable { onDismiss() },
         contentAlignment = Alignment.Center
     ) {
@@ -62,39 +66,52 @@ fun ProductOverlay(
                 .clickable(enabled = false) { },
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
 
-                Text(text = product.title, style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(6.dp))
+                Column {
+                    Text(text = product.title, style = MaterialTheme.typography.titleMedium)
+                    Spacer(modifier = Modifier.height(6.dp))
 
-                val formattedPrice = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(product.price)
-                Text(text = formattedPrice, style = MaterialTheme.typography.titleSmall)
+                    val formattedPrice = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(product.price)
+                    Text(text = formattedPrice, style = MaterialTheme.typography.titleSmall)
 
-                Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    text = product.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis
-                )
+                    Text(
+                        text = product.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
-//                    if (product.categories.isNotEmpty()) {
-//                        Spacer(modifier = Modifier.height(8.dp))
-//                        FlowRowCategories(product.categories)
-//                    }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(500.dp))
 
                 Row(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    TextButton(onClick = onDismiss) {
-                        Text("Close")
+                    TextButton(
+                        onClick = onDismiss
+                    ) {
+                        Text(
+                            "Close",
+                            color = SandyBrown40
+                        )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Button(onClick = { onBuy(product) }) {
+                    Button(
+                        colors = buttonColors(
+                            containerColor = Aquamarine40,
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(5.dp),
+                        onClick = { onBuy(product) }
+                    ) {
                         Text("Buy")
                     }
                 }
