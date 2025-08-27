@@ -19,4 +19,7 @@ val PestoGreen40 = Color(0xFF468D3F)
 //Background
 val Aquamarine80Alpha50 = Color(0x3F99FFEB) // TODO: Remove if not used
 val LightGreyBackground = Color(0x1FD6D6D6)
+
+val Iceberg = Color(0xFFCCEDF0)
+val DarkGrey = Color(0xFF444444)
 //endregion

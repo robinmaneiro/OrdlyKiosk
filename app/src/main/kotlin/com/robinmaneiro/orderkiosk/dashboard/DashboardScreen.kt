@@ -20,6 +20,7 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
+import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
 import org.koin.androidx.compose.koinViewModel
 
@@ -47,23 +48,28 @@ fun DashboardScreen(
     }
 
     Column(
-        modifier.fillMaxSize().background(LightGreyBackground)
+        modifier
+            .fillMaxSize()
+            .background(Iceberg.copy(alpha = 0.2f))
     ) {
         Row(
-            modifier = Modifier.weight(0.8F)
+            modifier = Modifier.weight(0.9F)
         ) {
             MenuCategorySection(menuCategories = uiState.menuCategories, onCategoryClicked = { viewModel.updateItemsOnCategorySelected(it) })
             MenuItemsSection(menuProducts = uiState.menuProducts, onProductClicked = { viewModel.onProductClicked(it) })
         }
-        val bagItems = listOf<String>() // TODO: Specify when
-//        if (bagItems.isNotEmpty()) {
-            BottomSection()
-//        }
+        if (uiState.bagProducts.isNotEmpty()) {
+            BottomSection(uiState.bagProducts, onSecondaryButtonClicked = {viewModel.cancelOrder()})
+        }
     }
     shownProduct?.let {
         ProductOverlay(
             product = it,
-            onDismiss = { shownProduct = null }
+            onDismiss = { shownProduct = null },
+            onAddToBasket = { product ->
+                viewModel.addToBasket(product) // TODO: Just send up the product id
+                shownProduct = null
+            }
         )
     }
 }
