@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.dashboard.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +25,8 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
+import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 @Composable
 fun MenuCategorySection(
@@ -55,7 +58,8 @@ fun MenuCard(
         modifier = modifier
             .size(300.dp, 60.dp)
             .clickable { onCategoryClicked.invoke(category.id) },
-        border = BorderStroke(1.dp, Color.DarkGray),
+        border = BorderStroke(if (category.isSelected) 2.dp else 1.dp,
+            if (category.isSelected) Aquamarine40 else Color.DarkGray),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
         ),

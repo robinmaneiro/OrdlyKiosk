@@ -26,7 +26,7 @@ class DashboardViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _actions = Channel<Actions>(Channel.CONFLATED)
+    private val _actions = Channel<Actions>(Channel.BUFFERED)
     val actions = _actions.receiveAsFlow()
 
     init {
@@ -62,6 +62,7 @@ class DashboardViewModel(
 
             _uiState.update {
                 it.copy(
+                    menuCategories = it.menuCategories.map { it.copy(isSelected = it.id == categoryId) },
                     menuProducts = updatedItemsResponse.items
                 )
             }
@@ -79,6 +80,22 @@ class DashboardViewModel(
         }
     }
 
+    fun addToBasket(product: MenuProductExpanded) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(bagProducts = _uiState.value.bagProducts.toMutableList().apply { add(product) })
+            }
+        }
+    }
+
+    fun cancelOrder() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(bagProducts = emptyList())
+            }
+        }
+    }
+
     sealed interface Actions {
         data class OpenProductInfo(val product: MenuProductExpanded): Actions
     }
@@ -86,6 +103,7 @@ class DashboardViewModel(
     data class UiState(
         val isLoading: Boolean = false,
         val menuCategories: List<MenuCategory> = emptyList(),
-        val menuProducts: List<MenuProduct> = emptyList()
+        val menuProducts: List<MenuProduct> = emptyList(),
+        val bagProducts: List<MenuProductExpanded> = emptyList()
     )
 }
