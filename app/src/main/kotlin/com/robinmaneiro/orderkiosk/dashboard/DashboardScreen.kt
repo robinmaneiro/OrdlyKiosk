@@ -21,7 +21,6 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -62,6 +61,7 @@ fun DashboardScreen(
             BottomSection(uiState.bagProducts, onSecondaryButtonClicked = {viewModel.cancelOrder()})
         }
     }
+
     shownProduct?.let {
         ProductOverlay(
             product = it,
