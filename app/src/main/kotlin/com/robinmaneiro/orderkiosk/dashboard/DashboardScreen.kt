@@ -26,6 +26,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun DashboardScreen(
     navHostController: NavHostController,
+    serviceType: String?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current

@@ -55,8 +55,8 @@ fun WelcomeScreen(
     }
 
     WelcomeScreenContent(
-        onEatInClicked = { navHostController.navigate(Screens.DashboardScreen.route) },
-        onTakeAwayClicked = { navHostController.navigate(Screens.DashboardScreen.route) }
+        onEatInClicked = { navHostController.navigate(Screens.DashboardScreen("Eat In").route) },
+        onTakeAwayClicked = { navHostController.navigate(Screens.DashboardScreen("Take Away").route) }
     )
 }
 

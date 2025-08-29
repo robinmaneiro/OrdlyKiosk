@@ -1,6 +1,27 @@
 package com.robinmaneiro.orderkiosk
 
-sealed class Screens(val route: String) {
-    data object WelcomeScreen: Screens(route = "WelcomeScreen")
-    data object DashboardScreen : Screens(route = "DashboardScreen")
+import com.robinmaneiro.orderkiosk.Screens.WelcomeScreen.asPlaceholder
+
+sealed interface Screens {
+    val route: String
+
+    fun String.getParametrizedRoute(vararg parameters: String): String {
+        val routeParametersList = parameters.toMutableList().apply { add(0, this@getParametrizedRoute) }
+        return routeParametersList.joinToString(separator = "/")
+    }
+
+    fun String.asPlaceholder() = "{$this}"
+
+    data object WelcomeScreen : Screens {
+        override val route: String = "WelcomeScreen"
+    }
+
+    data class DashboardScreen(
+        val serviceType: String = SERVICE_TYPE_SUB.asPlaceholder()
+    ) : Screens {
+        override val route: String = "DashboardScreen".getParametrizedRoute(serviceType)
+        companion object Companion {
+            const val SERVICE_TYPE_SUB = "serviceType"
+        }
+    }
 }
