@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.dashboard
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,11 +23,11 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
+import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DashboardScreen(
-    navHostController: NavHostController,
     serviceType: String?,
     modifier: Modifier = Modifier
 ) {
@@ -47,21 +49,11 @@ fun DashboardScreen(
         }
     }
 
-    Column(
-        modifier
-            .fillMaxSize()
-            .background(Iceberg.copy(alpha = 0.2f))
-    ) {
-        Row(
-            modifier = Modifier.weight(0.9F)
-        ) {
-            MenuCategorySection(menuCategories = uiState.menuCategories, onCategoryClicked = { viewModel.updateItemsOnCategorySelected(it) })
-            MenuItemsSection(menuProducts = uiState.menuProducts, onProductClicked = { viewModel.onProductClicked(it) })
-        }
-        if (uiState.bagProducts.isNotEmpty()) {
-            BottomSection(uiState.bagProducts, onSecondaryButtonClicked = {viewModel.cancelOrder()})
-        }
-    }
+    DashboardScreenContent(
+        viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
+        uiState = uiState,
+        modifier = modifier
+    )
 
     shownProduct?.let {
         ProductOverlay(
@@ -73,4 +65,45 @@ fun DashboardScreen(
             }
         )
     }
+}
+
+@Composable
+fun DashboardScreenContent(
+    viewModel: DashboardViewModel,
+    uiState: DashboardViewModel.UiState,
+    modifier: Modifier
+) {
+    Box {
+        Column(
+            modifier
+                .fillMaxSize()
+                .background(Iceberg.copy(alpha = 0.2f)),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.weight(0.9F)
+            ) {
+                MenuCategorySection(menuCategories = uiState.menuCategories, onCategoryClicked = { viewModel.updateItemsOnCategorySelected(it) })
+                MenuItemsSection(menuProducts = uiState.menuProducts, onProductClicked = { viewModel.onProductClicked(it) })
+            }
+        }
+
+        if (uiState.bagProducts.isNotEmpty()) {
+            BottomSection(
+                bagProducts = uiState.bagProducts,
+                modifier = Modifier.align(Alignment.BottomCenter),
+                onSecondaryButtonClicked = { viewModel.cancelOrder() }
+            )
+        }
+    }
+}
+
+@PixelTabletPreview
+@Composable
+fun DashboardScreenPreview() {
+    DashboardScreenContent(
+        koinViewModel<DashboardViewModel>(),
+        DashboardViewModel.UiState(),
+        Modifier
+    )
 }
