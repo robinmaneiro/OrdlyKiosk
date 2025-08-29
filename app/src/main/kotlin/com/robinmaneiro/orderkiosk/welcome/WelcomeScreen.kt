@@ -28,8 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_TABLET
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,6 +36,7 @@ import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
+import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import com.robinmaneiro.orderkiosk.util.showToast
 import org.koin.androidx.compose.koinViewModel
 
@@ -136,11 +135,7 @@ fun DeliveryTypeCard(
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    device = PIXEL_TABLET
-)
+@PixelTabletPreview
 @Composable
 fun WelcomeScreenPreview() {
     WelcomeScreenContent()

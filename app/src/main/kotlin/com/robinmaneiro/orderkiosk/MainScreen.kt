@@ -26,8 +26,7 @@ fun MainScreen(
             val serviceType = navHostController.currentBackStackEntry?.arguments?.getString(Screens.DashboardScreen.SERVICE_TYPE_SUB)
             DashboardScreen(
                 modifier = Modifier,
-                serviceType = serviceType,
-                navHostController = navHostController
+                serviceType = serviceType
             )
         }
 //        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
