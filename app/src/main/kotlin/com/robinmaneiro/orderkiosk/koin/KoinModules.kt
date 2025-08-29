@@ -3,7 +3,6 @@ package com.robinmaneiro.orderkiosk.koin
 import com.robinmaneiro.orderkiosk.dashboard.DashboardViewModel
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetItemInfoUseCase
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuAllItemsUseCase
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuItemsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
@@ -16,7 +15,6 @@ val viewModelModules = module {
 
 val useCaseModules = module {
     factoryOf(::GetMenuCategoriesUseCase)
-    factoryOf(::GetMenuAllItemsUseCase)
     factoryOf(::GetMenuItemsByCategoryUseCase)
     factoryOf(::GetItemInfoUseCase)
 }

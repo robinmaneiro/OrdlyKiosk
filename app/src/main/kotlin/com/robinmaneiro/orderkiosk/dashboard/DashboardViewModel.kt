@@ -3,7 +3,6 @@ package com.robinmaneiro.orderkiosk.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuAllItemsUseCase
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
@@ -16,9 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.run
 
 class DashboardViewModel(
-    private val getMenuItemsUseCase: GetMenuAllItemsUseCase = GetMenuAllItemsUseCase(),
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase(),
     private val getMenuItemsByCategoryUserCase: GetMenuItemsByCategoryUseCase = GetMenuItemsByCategoryUseCase(),
     private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase()
@@ -32,16 +31,23 @@ class DashboardViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
-            val menuItemsResponse = getMenuItemsUseCase() ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
 
             val menuCategories = getMenuCategoriesUseCase() ?: run {
                 _uiState.update { it.copy(isLoading = false) }
                 return@launch
             }
 
+            val defaultCategoryId = menuCategories.run {
+                find { it.isDefault } ?: firstOrNull()
+            }?.id ?: run {
+                _uiState.update { it.copy(isLoading = false) }
+                return@launch
+            }
+
+            val menuItemsResponse = getMenuItemsByCategoryUserCase(defaultCategoryId) ?: run {
+                _uiState.update { it.copy(isLoading = false) }
+                return@launch
+            }
 
             _uiState.update {
                 it.copy(
@@ -62,7 +68,7 @@ class DashboardViewModel(
 
             _uiState.update {
                 it.copy(
-                    menuCategories = it.menuCategories.map { it.copy(isSelected = it.id == categoryId) },
+                    menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
                     menuProducts = updatedItemsResponse.items
                 )
             }
@@ -97,7 +103,7 @@ class DashboardViewModel(
     }
 
     sealed interface Actions {
-        data class OpenProductInfo(val product: MenuProductExpanded): Actions
+        data class OpenProductInfo(val product: MenuProductExpanded) : Actions
     }
 
     data class UiState(
