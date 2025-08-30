@@ -3,6 +3,7 @@ package com.robinmaneiro.orderkiosk.welcome
 import android.content.Context
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,19 +27,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import com.robinmaneiro.orderkiosk.util.showToast
+import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -54,6 +62,9 @@ fun WelcomeScreen(
     }
 
     WelcomeScreenContent(
+        modifier = modifier,
+        languageOptions = uiState.languageOptions,
+        onLanguageClicked = { languageCode -> viewModel.updateLanguage(languageCode) },
         onEatInClicked = { navHostController.navigate(Screens.DashboardScreen("Eat In").route) },
         onTakeAwayClicked = { navHostController.navigate(Screens.DashboardScreen("Take Away").route) }
     )
@@ -79,44 +90,76 @@ fun HandleAction(action: WelcomeViewModel.Actions, context: Context) {
 
 @Composable
 fun WelcomeScreenContent(
+    languageOptions: List<LanguageData>,
+    modifier: Modifier = Modifier,
+    onLanguageClicked: (languageCode: String) -> Unit,
     onEatInClicked: () -> Unit = {},
     onTakeAwayClicked: () -> Unit = {}
 ) {
-    Column(
-        modifier = Modifier
+    Box(
+        modifier
             .fillMaxSize()
             .background(color = Iceberg.copy(alpha = 0.5F))
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "How would you like to enjoy your meal?",
-            fontSize = 72.sp,
-            color = DarkGrey,
-            textAlign = TextAlign.Center,
-            lineHeight = 90.sp
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Where you want to enjoy your meal?",
+                fontSize = 64.sp,
+                color = DarkGrey,
+                textAlign = TextAlign.Center,
+                lineHeight = 90.sp
+            )
 
-        Spacer(Modifier.height(40.dp))
+            Spacer(Modifier.height(height = 32.dp))
 
-        Row {
-            DeliveryTypeCard(text = "Eat In", onClick = onEatInClicked)
-            Spacer(Modifier.width(40.dp))
-            DeliveryTypeCard(text = "Take Away", onClick = onTakeAwayClicked)
+            Row {
+                DeliveryTypeCard(text = "Eat In", onClick = onEatInClicked)
+                Spacer(Modifier.width(40.dp))
+                DeliveryTypeCard(text = "Take Away", onClick = onTakeAwayClicked)
+            }
+
+            Spacer(Modifier.height(height = 32.dp))
+
+            LanguageSection(
+                languageOptions = languageOptions,
+                onOptionClicked = onLanguageClicked
+            )
+        }
+
+        LegalSection(Modifier.align(Alignment.BottomCenter))
+    }
+}
+
+@Composable
+fun LanguageSection(
+    languageOptions: List<LanguageData>,
+    modifier: Modifier = Modifier,
+    onOptionClicked: (languageAlpha2Code: String) -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        languageOptions.forEach { option ->
+            LanguageCard(option, onOptionClicked)
         }
     }
-
 }
 
 @Composable
 fun DeliveryTypeCard(
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = Modifier
-            .size(width = 450.dp, height = 400.dp)
+            .size(width = 360.dp, height = 300.dp)
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = Aquamarine40,
@@ -135,8 +178,87 @@ fun DeliveryTypeCard(
     }
 }
 
+@Composable
+fun LegalSection(
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        Text(
+            text = "Terms of Service",
+            style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
+        )
+        Text(
+            text = "Nutritional Values & Allergens",
+            style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
+        )
+    }
+}
+
+@Composable
+fun LanguageCard(
+    languageOption: LanguageData,
+    onLanguageClicked: (languageCode: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .run {
+                if (!languageOption.isSelected) return@run this
+                border(1.dp, Color.DarkGray)
+            }
+            .clickable { onLanguageClicked.invoke(languageOption.languageAlpha2Code) }
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AsyncImage(
+            contentScale = ContentScale.Crop,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(languageOption.countryFlag)
+                .build(),
+            modifier = Modifier
+                .size(70.dp)
+                .clip(CircleShape),
+            contentDescription = null
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            languageOption.languageLabel,
+            style = MaterialTheme.typography.labelLarge
+        )
+    }
+}
+
 @PixelTabletPreview
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreenContent()
+    val languageOptions = listOf(
+        LanguageData(
+            R.drawable.flag_gb,
+            languageAlpha2Code = "en",
+            "English",
+            true
+        ),
+        LanguageData(
+            R.drawable.flag_es,
+            "es",
+            "Spanish",
+            false
+        ),
+        LanguageData(
+            R.drawable.flag_de,
+            "de",
+            "German",
+            false
+        ),
+        LanguageData(
+            R.drawable.flag_fr,
+            "fr",
+            "French",
+            false
+        )
+    )
+    WelcomeScreenContent(languageOptions, onLanguageClicked = {})
 }
