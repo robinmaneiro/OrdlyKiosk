@@ -70,7 +70,7 @@ fun ProductOverlay(
                     AsyncImage(
                         modifier = Modifier.size(400.dp, 400.dp),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(R.drawable.big_mac)
+                            .data(R.drawable.item_test_big_mac)
                             .build(),
                         contentDescription = null
                     )
