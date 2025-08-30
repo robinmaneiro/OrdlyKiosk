@@ -63,7 +63,11 @@ private fun ProductCard(
     promotionMessage: String? = null
 ) {
     Card(
-        modifier = modifier.height(300.dp),
+        modifier = modifier
+            .height(300.dp)
+            .clickable {
+                onProductClicked.invoke(productId)
+            },
         border = BorderStroke(1.dp, Color.DarkGray),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
@@ -71,11 +75,7 @@ private fun ProductCard(
         shape = RoundedCornerShape(4.dp)
     ) {
         Column(
-            modifier = Modifier
-                .clickable {
-                    onProductClicked.invoke(productId)
-                }
-                .padding(10.dp),
+            modifier = Modifier.padding(10.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
