@@ -8,7 +8,6 @@ data class MenuProducts(
     @JsonProperty("items") val items: List<MenuProduct>
 )
 
-@JsonIgnoreProperties(ignoreUnknown = true) // TODO: Change to do this globally
 data class MenuProduct(
     @JsonProperty("id") val productId: String,
     @JsonProperty("title") val title: String,
