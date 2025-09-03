@@ -1,31 +1,29 @@
 package com.robinmaneiro.orderkiosk.dashboard.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices.PIXEL_TABLET
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
 fun BottomSection(
@@ -36,57 +34,41 @@ fun BottomSection(
     Box(
         modifier
             .shadow(
-            elevation = 5.dp,
-            clip = false,
-            ambientColor = Color.Black.copy(alpha = 0.50f),
-            spotColor = Color.Black.copy(alpha = 0.50f)
-        )
+                elevation = 5.dp,
+                clip = false,
+                ambientColor = Color.Black.copy(alpha = 0.50f),
+                spotColor = Color.Black.copy(alpha = 0.50f)
+            )
     ) {
         Row(
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .sizeIn(minWidth = 750.dp, minHeight = 150.dp)
-                .background(Color(0xFFebf8f9))
-                .padding(16.dp)
+                .background(White)
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Text(
+                text = bagProducts.sumOf { it.price }.toString(),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp),
+                modifier = Modifier.noRippleClickable(onSecondaryButtonClicked)
+            )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(
-                    modifier = modifier
-                        .size(width = 200.dp, height = 70.dp),
-                    onClick = {
-                        // go to the bag
-                    },
-                    shape = RoundedCornerShape(5.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Aquamarine40,
-                        contentColor = White
-                    )
-                ) {
-                    Text(
-                        text = "Go To Bag",
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                TextButton(
-                    onClick = onSecondaryButtonClicked
-                ) {
-                    Text(
-                        text = "Cancel Order",
-                        fontSize = 24.sp,
-                        color = SandyBrown40
-                    )
-                }
+                Icon(
+                    painter = painterResource(R.drawable.icn_meal_bag),
+                    contentDescription = "Vector icon",
+                    tint = Aquamarine40,
+                    modifier = Modifier.size(80.dp)
+                )
             }
         }
     }
 }
 
-@PixelTabletPreview
+@Preview(
+    device = PIXEL_TABLET,
+    showBackground = true
+)
 @Composable
 fun BottomSectionPreview() {
     BottomSection(listOf(), {})

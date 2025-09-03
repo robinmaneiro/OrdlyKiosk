@@ -3,6 +3,7 @@ package com.robinmaneiro.orderkiosk.dashboard.ui
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -18,9 +19,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
-fun RightPaneMenu(
+fun RightOptionsPane(
     modifier: Modifier = Modifier,
     onArrowClicked: (Boolean) -> Unit
 ) {
@@ -54,7 +56,7 @@ fun RotatingArrow(
         modifier = modifier
             .size(24.dp)
             .rotate(rotation)
-            .clickable {
+            .noRippleClickable {
                 rotated = !rotated
                 onToggle?.invoke(rotated)
             }

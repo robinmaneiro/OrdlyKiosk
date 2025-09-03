@@ -17,9 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.BottomAppBarDefaults.windowInsets
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -44,7 +40,7 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.BottomSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
-import com.robinmaneiro.orderkiosk.dashboard.ui.RightPaneMenu
+import com.robinmaneiro.orderkiosk.dashboard.ui.RightOptionsPane
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
@@ -130,14 +126,14 @@ fun DashboardScreenContent(
                     menuProducts = uiState.menuProducts, onProductClicked = { viewModel.onProductClicked(it) }
                 )
 
-                RightPaneMenu(
+                RightOptionsPane(
                     modifier = Modifier
                         .width(menuItemsWidth)
                         .fillMaxHeight()
                         .padding(vertical = 10.dp)
                         .background(Color.Red),
                     onArrowClicked = {
-//                        rightPaneMenuWidth  = if (it) 100.dp else 20.dp
+                        rightPaneMenuWidth  = if (it) 100.dp else 20.dp
                     }
                 )
             }
