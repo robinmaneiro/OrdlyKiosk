@@ -11,6 +11,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
+import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
 
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     clickable(
