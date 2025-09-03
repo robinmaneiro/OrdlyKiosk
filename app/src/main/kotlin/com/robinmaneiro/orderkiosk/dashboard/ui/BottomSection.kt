@@ -1,40 +1,50 @@
 package com.robinmaneiro.orderkiosk.dashboard.ui
 
-import android.graphics.RenderEffect
-import android.graphics.Shader
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.asComposeRenderEffect
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_TABLET
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
+import com.robinmaneiro.orderkiosk.ui.theme.PurpleGrey40
+import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.boxShadow
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
-@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun BottomSection(
     bagProducts: List<MenuProductExpanded>,
@@ -43,27 +53,48 @@ fun BottomSection(
 ) {
     Box(
         modifier
-            .boxShadow()
+            .shadow(
+                elevation = 5.dp,
+                ambientColor = Aquamarine40, //Color(0x80000000),
+                spotColor = Aquamarine40,//Color(0x80000000),
+                shape = RoundedCornerShape(percent = 50)
+            )
+            .background(White, shape = RoundedCornerShape(percent = 50))
+            .border(2.dp, Aquamarine40, shape = RoundedCornerShape(percent = 50))
+
     ) {
         Row(
             modifier = modifier
-                .background(White)
-                .padding(horizontal = 16.dp, vertical = 10.dp),
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val floatPrice = "%.2f".format(bagProducts.sumOf { it.price })
+            val count = bagProducts.count()
             Text(
-                text = bagProducts.sumOf { it.price }.toString(),
+                text = "£$floatPrice",
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp),
                 modifier = Modifier.noRippleClickable(onSecondaryButtonClicked)
             )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier
+                    .padding(10.dp)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.icn_meal_bag),
                     contentDescription = "Vector icon",
                     tint = Aquamarine40,
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(60.dp)
+                )
+                Text(
+                    count.toString(),
+                    color = White,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(end = 5.dp)
+                        .size(22.dp)
+                        .background(color = SandyBrown40, shape = CircleShape)
+                        .align(Alignment.TopEnd)
                 )
             }
         }
@@ -71,7 +102,6 @@ fun BottomSection(
 }
 
 @Preview(
-    device = PIXEL_TABLET,
     showBackground = true
 )
 @Composable
