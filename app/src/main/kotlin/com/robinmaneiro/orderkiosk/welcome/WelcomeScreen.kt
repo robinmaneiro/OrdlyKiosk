@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,6 +46,7 @@ import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.noRippleClickable
 import com.robinmaneiro.orderkiosk.util.showToast
 import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
 import org.koin.androidx.compose.koinViewModel
@@ -160,7 +163,7 @@ fun DeliveryTypeCard(
     Card(
         modifier = Modifier
             .size(width = 360.dp, height = 300.dp)
-            .clickable(onClick = onClick),
+            .noRippleClickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = Aquamarine40,
             contentColor = Color.White
@@ -209,7 +212,7 @@ fun LanguageCard(
                 if (!languageOption.isSelected) return@run this
                 border(1.dp, Color.DarkGray)
             }
-            .clickable { onLanguageClicked.invoke(languageOption.languageAlpha2Code) }
+            .noRippleClickable { onLanguageClicked.invoke(languageOption.languageAlpha2Code) }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
