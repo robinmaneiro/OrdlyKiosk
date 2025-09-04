@@ -35,11 +35,8 @@ fun MenuItemsSection(
 ) {
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Adaptive(220.dp),
+        columns = GridCells.Adaptive(200.dp),
         contentPadding = PaddingValues(
-            start = 20.dp,
-            end = 20.dp,
-            top = 10.dp,
             bottom = 100.dp
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),

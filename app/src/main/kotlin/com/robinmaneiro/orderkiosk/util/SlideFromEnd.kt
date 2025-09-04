@@ -72,7 +72,7 @@ fun SlideFromSide(
     Box(Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
-                .align(Alignment.TopStart)
+                .align(Alignment.CenterStart)
                 .onGloballyPositioned { coords ->
                     contentWidthPx = coords.size.width.toFloat()
                 }

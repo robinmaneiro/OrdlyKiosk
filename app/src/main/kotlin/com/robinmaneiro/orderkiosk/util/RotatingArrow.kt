@@ -1,10 +1,7 @@
-package com.robinmaneiro.orderkiosk.dashboard.ui
+package com.robinmaneiro.orderkiosk.util
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -19,21 +16,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.robinmaneiro.orderkiosk.util.noRippleClickable
-
-@Composable
-fun RightOptionsPane(
-    modifier: Modifier = Modifier,
-    onArrowClicked: (Boolean) -> Unit
-) {
-    Column(
-        modifier = modifier
-    ) {
-        RotatingArrow(
-            onToggle = onArrowClicked
-        )
-    }
-}
 
 @Composable
 fun RotatingArrow(
@@ -63,10 +45,3 @@ fun RotatingArrow(
             .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
     )
 }
-
-
-//@Preview
-//@Composable
-//fun RightMenuPreview() {
-//    RightMenu()
-//}
