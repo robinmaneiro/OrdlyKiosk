@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
@@ -34,8 +36,8 @@ fun MenuCategorySection(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        contentPadding = PaddingValues(start = 20.dp, top = 10.dp, bottom = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(bottom = 20.dp),
     ) {
         items(menuCategories) {
             MenuCard(
@@ -54,7 +56,7 @@ fun MenuCard(
 ) {
     Card(
         modifier = modifier
-            .size(300.dp, 60.dp)
+            .size(300.dp, 80.dp)
             .clickable { onCategoryClicked.invoke(category.id) },
         border = BorderStroke(if (category.isDefault) 2.dp else 1.dp,
             if (category.isDefault) Aquamarine40 else Color.DarkGray),
@@ -65,17 +67,20 @@ fun MenuCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.padding(2.dp)
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(R.drawable.item_test_big_mac)
                     .build(),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.size(80.dp)
             )
 
             Text(
                 text = category.categoryName,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
         }
