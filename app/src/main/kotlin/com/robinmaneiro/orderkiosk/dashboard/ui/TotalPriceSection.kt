@@ -1,34 +1,25 @@
 package com.robinmaneiro.orderkiosk.dashboard.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,10 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.LightGreyBackground
-import com.robinmaneiro.orderkiosk.ui.theme.PurpleGrey40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
-import com.robinmaneiro.orderkiosk.util.boxShadow
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
@@ -53,6 +41,7 @@ fun BottomSection(
 ) {
     Box(
         modifier
+            .widthIn(min = 200.dp)
             .shadow(
                 elevation = 5.dp,
                 ambientColor = Aquamarine40, //Color(0x80000000),
@@ -66,13 +55,14 @@ fun BottomSection(
         Row(
             modifier = modifier
                 .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             val floatPrice = "%.2f".format(bagProducts.sumOf { it.price })
             val count = bagProducts.count()
             Text(
                 text = "£$floatPrice",
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp),
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 40.sp),
                 modifier = Modifier.noRippleClickable(onSecondaryButtonClicked)
             )
             Box(
