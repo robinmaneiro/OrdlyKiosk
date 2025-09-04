@@ -32,6 +32,7 @@ fun SlideFromSide(
     animationDuration: Int = 700,
     horizontalPadding: Dp = 0.dp,          // padding from the screen edge (start or end)
     slideFromEnd: Boolean = true,           // true = slide from end (right in LTR), false = slide from start (left in LTR)
+    contentAlignment: Alignment,
     content: @Composable () -> Unit
 ) {
     val density = LocalDensity.current
@@ -72,7 +73,7 @@ fun SlideFromSide(
     Box(Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
-                .align(Alignment.CenterStart)
+                .align(contentAlignment)
                 .onGloballyPositioned { coords ->
                     contentWidthPx = coords.size.width.toFloat()
                 }

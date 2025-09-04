@@ -2,17 +2,18 @@ package com.robinmaneiro.orderkiosk.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -40,11 +41,11 @@ import com.robinmaneiro.orderkiosk.dashboard.ui.BottomSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
-import com.robinmaneiro.orderkiosk.util.RotatingArrow
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.RotatingArrow
 import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
 import org.koin.androidx.compose.koinViewModel
@@ -144,44 +145,79 @@ fun DashboardScreenContent(
 
         var show by remember { mutableStateOf(false) }
         RotatingArrow(
-            Modifier.align(Alignment.TopEnd)
+            Modifier
+                .padding(
+                    end = 20.dp
+                )
+                .size(60.dp)
+                .align(Alignment.TopEnd)
         ) {
             show = !show
         }
 
-        SlideFromSide(
+        NavigationArrows(
             visible = !show
+        )
+
+        MenuOptionsPane(
+            show
+        )
+    }
+}
+
+@Composable
+fun NavigationArrows(
+    visible: Boolean
+) {
+    SlideFromSide(
+        visible = visible,
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Column(
+            Modifier.padding(end = 20.dp)
         ) {
-            Column(
-                Modifier.padding(end = 20.dp)
-            ) {
-                RoundedSquareNavigateArrow(
-                    imageVector = Icons.Outlined.KeyboardArrowUp
-                )
+            RoundedSquareNavigateArrow(
+                imageVector = Icons.Outlined.KeyboardArrowUp
+            )
 
-                Spacer(
-                    Modifier.height(50.dp)
-                )
+            Spacer(
+                Modifier.height(50.dp)
+            )
 
-                RoundedSquareNavigateArrow(
-                    imageVector = Icons.Outlined.KeyboardArrowDown
-                )
-            }
+            RoundedSquareNavigateArrow(
+                imageVector = Icons.Outlined.KeyboardArrowDown
+            )
         }
+    }
+}
 
-        SlideFromSide(
-            visible = show,
-            horizontalPadding = 16.dp
+@Composable
+fun MenuOptionsPane(
+    visible: Boolean
+) {
+    SlideFromSide(
+        visible = visible,
+        contentAlignment = Alignment.BottomStart
+    ) {
+        Column(
+            Modifier
+                .fillMaxHeight()
+                .width(100.dp)
+                .padding(
+                    top = 100.dp,
+                    bottom = 40.dp
+                )
+                .background(Color.Red)
+            ,
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                Modifier
-                    .padding()
-            ) {
-                repeat(5) {
-                    PaneX()
-                    Spacer(Modifier.height(5.dp))
-                }
-            }
+
+            PaneX()
+//            repeat(5) {
+//                PaneX()
+//                Spacer(Modifier.height(5.dp))
+//            }
         }
     }
 }
@@ -195,6 +231,7 @@ fun PaneX() {
                 width = 80.dp
             )
             .border(2.dp, Color.Blue)
+            .background(Color.White)
     )
 }
 
