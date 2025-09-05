@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.koin
 
+import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.dashboard.DashboardViewModel
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetItemInfoUseCase
 import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuCategoriesUseCase
@@ -11,6 +12,7 @@ import org.koin.dsl.module
 val viewModelModules = module {
     factoryOf(::WelcomeViewModel)
     factoryOf(::DashboardViewModel)
+    factoryOf(::BagViewModel)
 }
 
 val useCaseModules = module {

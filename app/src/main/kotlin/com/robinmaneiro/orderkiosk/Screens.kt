@@ -24,4 +24,8 @@ sealed interface Screens {
             const val SERVICE_TYPE_SUB = "serviceType"
         }
     }
+
+    data object BagScreen: Screens {
+        override val route: String = "BagScreen"
+    }
 }
