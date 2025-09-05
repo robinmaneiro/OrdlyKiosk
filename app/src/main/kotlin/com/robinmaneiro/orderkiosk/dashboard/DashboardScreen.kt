@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.dashboard.ui.TotalPriceSection
@@ -80,6 +81,7 @@ fun DashboardScreen(
     }
 
     DashboardScreenContent(
+        navController = navController,
         viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
         uiState = uiState,
         serviceType = serviceType,
@@ -101,6 +103,7 @@ fun DashboardScreen(
 
 @Composable
 fun DashboardScreenContent(
+    navController: NavController,
     viewModel: DashboardViewModel,
     uiState: DashboardViewModel.UiState,
     serviceType: String?,
@@ -168,6 +171,7 @@ fun DashboardScreenContent(
         )
 
         MenuOptionsPane(
+            navController,
             show
         )
     }
@@ -205,6 +209,7 @@ fun NavigationArrows(
 
 @Composable
 fun MenuOptionsPane(
+    navController: NavController,
     visible: Boolean
 ) {
     SlideFromSide(
@@ -230,9 +235,9 @@ fun MenuOptionsPane(
             ) {
                 // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
                 listOf(
-                    "Sign In" to {},
-                    "Order History" to {},
-                    "Coupons" to {},
+                    "Sign In" to { navController.navigate(Screens.AccountScreen.route) },
+                    "Order History" to { navController.navigate(Screens.OrderHistoryScreen.route) },
+                    "Coupons" to { navController.navigate(Screens.CouponsScreen.route) },
                 ).forEach {
                     OptionsPaneItem(it.first, it.second)
                 }
@@ -288,6 +293,7 @@ fun RoundedSquareNavigateArrow(
 @Composable
 fun DashboardScreenPreview() {
     DashboardScreenContent(
+        navController = rememberNavController(),
         viewModel = koinViewModel<DashboardViewModel>(),
         uiState = DashboardViewModel.UiState(),
         onBagClick = {},

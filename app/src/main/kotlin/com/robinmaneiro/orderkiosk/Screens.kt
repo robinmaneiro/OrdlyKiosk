@@ -20,12 +20,25 @@ sealed interface Screens {
         val serviceType: String = SERVICE_TYPE_SUB.asPlaceholder()
     ) : Screens {
         override val route: String = "DashboardScreen".getParametrizedRoute(serviceType)
+
         companion object Companion {
             const val SERVICE_TYPE_SUB = "serviceType"
         }
     }
 
-    data object BagScreen: Screens {
+    data object BagScreen : Screens {
         override val route: String = "BagScreen"
+    }
+
+    data object AccountScreen : Screens {
+        override val route: String = "AccountScreen"
+    }
+
+    data object OrderHistoryScreen: Screens {
+        override val route: String = "OrderHistoryScreen"
+    }
+
+    data object CouponsScreen: Screens {
+        override val route: String = "CouponsScreen"
     }
 }
