@@ -34,12 +34,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
-import com.robinmaneiro.orderkiosk.dashboard.ui.BottomSection
+import com.robinmaneiro.orderkiosk.dashboard.ui.TotalPriceSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
@@ -55,7 +58,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun DashboardScreen(
     serviceType: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     val context = LocalContext.current
     val viewModel = koinViewModel<DashboardViewModel>()
@@ -79,6 +83,7 @@ fun DashboardScreen(
         viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
         uiState = uiState,
         serviceType = serviceType,
+        onBagClick = { navController.navigate(Screens.BagScreen.route) },
         modifier = modifier
     )
 
@@ -99,6 +104,7 @@ fun DashboardScreenContent(
     viewModel: DashboardViewModel,
     uiState: DashboardViewModel.UiState,
     serviceType: String?,
+    onBagClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box {
@@ -136,11 +142,11 @@ fun DashboardScreenContent(
                 Modifier
                     .fillMaxWidth()
             ) {
-                BottomSection(
+                TotalPriceSection(
                     uiState.bagProducts,
                     modifier = Modifier
                         .align(Alignment.Center),
-                    onSecondaryButtonClicked = { viewModel.cancelOrder() }
+                    onClick = onBagClick
                 )
             }
         }
@@ -180,7 +186,9 @@ fun NavigationArrows(
         ) {
             RoundedSquareNavigateArrow(
                 imageVector = Icons.Outlined.KeyboardArrowUp
-            )
+            ) {
+
+            }
 
             Spacer(
                 Modifier.height(50.dp)
@@ -188,7 +196,9 @@ fun NavigationArrows(
 
             RoundedSquareNavigateArrow(
                 imageVector = Icons.Outlined.KeyboardArrowDown
-            )
+            ) {
+
+            }
         }
     }
 }
@@ -218,11 +228,11 @@ fun MenuOptionsPane(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
                 listOf(
                     "Sign In" to {},
-                    "Sign In" to {},
-                    "Sign In" to {},
-                    "Sign In" to {}
+                    "Order History" to {},
+                    "Coupons" to {},
                 ).forEach {
                     OptionsPaneItem(it.first, it.second)
                 }
@@ -251,21 +261,24 @@ fun OptionsPaneItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = label
+            text = label,
+            textAlign = TextAlign.Center
         )
     }
 }
 
 @Composable
 fun RoundedSquareNavigateArrow(
-    imageVector: ImageVector
+    imageVector: ImageVector,
+    onClick: () -> Unit
 ) {
     Icon(
         imageVector = imageVector,
         contentDescription = null,
         modifier = Modifier
             .size(60.dp)
-            .border(2.dp, Aquamarine40, RoundedCornerShape(3.dp))
+            .border(2.dp, Aquamarine40, RoundedCornerShape(4.dp))
+            .clickable(onClick = onClick)
             .padding(5.dp)
     )
 }
@@ -275,14 +288,15 @@ fun RoundedSquareNavigateArrow(
 @Composable
 fun DashboardScreenPreview() {
     DashboardScreenContent(
-        koinViewModel<DashboardViewModel>(),
-        DashboardViewModel.UiState(),
-        "Take Away"
+        viewModel = koinViewModel<DashboardViewModel>(),
+        uiState = DashboardViewModel.UiState(),
+        onBagClick = {},
+        serviceType = "Take Away"
     )
 }
 
 @Preview
 @Composable
-fun PaneXPreview() {
+fun OptionsPaneItemPreview() {
     OptionsPaneItem("Test", {})
 }

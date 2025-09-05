@@ -5,11 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,9 +31,9 @@ import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
-fun BottomSection(
+fun TotalPriceSection(
     bagProducts: List<MenuProductExpanded>,
-    onSecondaryButtonClicked: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -50,7 +47,7 @@ fun BottomSection(
             )
             .background(White, shape = RoundedCornerShape(percent = 50))
             .border(2.dp, Aquamarine40, shape = RoundedCornerShape(percent = 50))
-
+            .noRippleClickable(onClick)
     ) {
         Row(
             modifier = modifier
@@ -62,8 +59,7 @@ fun BottomSection(
             val count = bagProducts.count()
             Text(
                 text = "£$floatPrice",
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 40.sp),
-                modifier = Modifier.noRippleClickable(onSecondaryButtonClicked)
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 40.sp)
             )
             Box(
                 modifier = Modifier
@@ -96,5 +92,5 @@ fun BottomSection(
 )
 @Composable
 fun BottomSectionPreview() {
-    BottomSection(listOf(), {})
+    TotalPriceSection(listOf(), {})
 }

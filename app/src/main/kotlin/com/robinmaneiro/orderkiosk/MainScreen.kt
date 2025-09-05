@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.robinmaneiro.orderkiosk.bag.BagScreen
 import com.robinmaneiro.orderkiosk.dashboard.DashboardScreen
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
 
@@ -18,17 +19,19 @@ fun MainScreen(
     NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
         composable(Screens.WelcomeScreen.route) { WelcomeScreen(modifier = Modifier, navHostController = navHostController) }
         composable(
-        route =  Screens.DashboardScreen().route,
+            route = Screens.DashboardScreen().route,
             arguments = listOf(
-                navArgument(Screens.DashboardScreen.SERVICE_TYPE_SUB) { type = NavType.StringType}
+                navArgument(Screens.DashboardScreen.SERVICE_TYPE_SUB) { type = NavType.StringType }
             )
         ) {
             val serviceType = navHostController.currentBackStackEntry?.arguments?.getString(Screens.DashboardScreen.SERVICE_TYPE_SUB)
             DashboardScreen(
                 modifier = Modifier,
-                serviceType = serviceType
+                serviceType = serviceType,
+                navController = navHostController
             )
         }
+        composable(route = Screens.BagScreen.route) {BagScreen(navController = navHostController) }
 //        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
 //        navAnimatedComposable(Screens.LoginScreen.route) { LoginScreen(navController = navHostController) }
 //        navAnimatedComposable(Screens.RegistrationScreen.route) { RegistrationScreen() }
