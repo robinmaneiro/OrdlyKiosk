@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -207,32 +209,51 @@ fun MenuOptionsPane(
                     top = 100.dp,
                     bottom = 40.dp
                 )
-                .background(Color.Red)
-            ,
-            verticalArrangement = Arrangement.Bottom,
+                .border(1.dp, Color.DarkGray)
+                .background(Color.White)
+                .padding(vertical = 16.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                listOf(
+                    "Sign In" to {},
+                    "Sign In" to {},
+                    "Sign In" to {},
+                    "Sign In" to {}
+                ).forEach {
+                    OptionsPaneItem(it.first, it.second)
+                }
+            }
 
-            PaneX()
-//            repeat(5) {
-//                PaneX()
-//                Spacer(Modifier.height(5.dp))
-//            }
+            OptionsPaneItem(
+                "Sit in", {}
+            )
         }
     }
 }
 
 @Composable
-fun PaneX() {
-    Box(
-        Modifier
-            .size(
-                height = 100.dp,
-                width = 80.dp
-            )
-            .border(2.dp, Color.Blue)
-            .background(Color.White)
-    )
+fun OptionsPaneItem(
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .size(width = 80.dp, height = 100.dp)
+            .border(1.dp, Color.DarkGray, RoundedCornerShape(4.dp))
+            .background(Iceberg.copy(alpha = 0.2f))
+            .clickable(onClick = onClick),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = label
+        )
+    }
 }
 
 @Composable
@@ -263,5 +284,5 @@ fun DashboardScreenPreview() {
 @Preview
 @Composable
 fun PaneXPreview() {
-    PaneX()
+    OptionsPaneItem("Test", {})
 }
