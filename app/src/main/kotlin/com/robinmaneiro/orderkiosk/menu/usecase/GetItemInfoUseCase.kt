@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.dashboard.usecase
+package com.robinmaneiro.orderkiosk.menu.usecase
 
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.networking.RequestManager
 
 class GetItemInfoUseCase {

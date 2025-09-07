@@ -1,13 +1,13 @@
-package com.robinmaneiro.orderkiosk.dashboard
+package com.robinmaneiro.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetItemInfoUseCase
-import com.robinmaneiro.orderkiosk.dashboard.usecase.GetMenuItemsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
+import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
+import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.usecase.GetItemInfoUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuItemsByCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,9 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.run
 
-class DashboardViewModel(
+class MenuViewModel(
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase(),
     private val getMenuItemsByCategoryUserCase: GetMenuItemsByCategoryUseCase = GetMenuItemsByCategoryUseCase(),
     private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase()

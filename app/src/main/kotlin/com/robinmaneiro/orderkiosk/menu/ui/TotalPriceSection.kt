@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.dashboard.ui
+package com.robinmaneiro.orderkiosk.menu.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.noRippleClickable

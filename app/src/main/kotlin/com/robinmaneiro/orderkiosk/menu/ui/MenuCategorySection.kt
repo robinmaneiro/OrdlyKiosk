@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.dashboard.ui
+package com.robinmaneiro.orderkiosk.menu.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuCategory
+import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 
 @Composable
