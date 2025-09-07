@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,12 +32,14 @@ import com.robinmaneiro.orderkiosk.dashboard.model.MenuProduct
 @Composable
 fun MenuItemsSection(
     menuProducts: List<MenuProduct>,
+    lazyGridState: LazyGridState,
     onProductClicked: (productId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(200.dp),
+        state = lazyGridState,
         contentPadding = PaddingValues(
             bottom = 100.dp
         ),

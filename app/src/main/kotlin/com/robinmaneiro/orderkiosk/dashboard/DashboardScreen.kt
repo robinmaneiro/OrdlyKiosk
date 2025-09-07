@@ -3,6 +3,8 @@ package com.robinmaneiro.orderkiosk.dashboard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -26,27 +29,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
-import com.robinmaneiro.orderkiosk.dashboard.ui.TotalPriceSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
+import com.robinmaneiro.orderkiosk.dashboard.ui.TotalPriceSection
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -54,7 +54,10 @@ import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import com.robinmaneiro.orderkiosk.util.RotatingArrow
 import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+
+private const val SCROLL_PIXELS_NUMBER = 300F
 
 @Composable
 fun DashboardScreen(
@@ -62,7 +65,6 @@ fun DashboardScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val context = LocalContext.current
     val viewModel = koinViewModel<DashboardViewModel>()
     val uiState: DashboardViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
     var shownProduct by remember { mutableStateOf<MenuProductExpanded?>(null) }
@@ -111,16 +113,15 @@ fun DashboardScreenContent(
     modifier: Modifier = Modifier
 ) {
     Box {
+        val lazyGridState = rememberLazyGridState()
+        val scope = rememberCoroutineScope()
+
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Iceberg.copy(alpha = 0.2f))
                 .padding(all = 20.dp)
         ) {
-            val totalWidth = with(LocalDensity.current) { LocalConfiguration.current.screenWidthDp.dp }
-            val menuCategoriesWidth: Dp = 300.dp
-            var rightPaneMenuWidth by remember { mutableStateOf(20.dp) } // TODO: Probably better to move this to the state
-            val menuItemsWidth: Dp = totalWidth - menuCategoriesWidth - rightPaneMenuWidth
 
             MenuCategorySection(
                 modifier = Modifier
@@ -134,12 +135,14 @@ fun DashboardScreenContent(
             )
 
             MenuItemsSection(
-                modifier = Modifier
-                    .width(900.dp),
                 menuProducts = uiState.menuProducts,
-                onProductClicked = { viewModel.onProductClicked(it) }
+                onProductClicked = { viewModel.onProductClicked(it) },
+                lazyGridState = lazyGridState,
+                modifier = Modifier.width(900.dp)
             )
         }
+
+        //region Animated content
         SlideFromBottom(visible = uiState.bagProducts.isNotEmpty()) {
             Box(
                 Modifier
@@ -167,19 +170,32 @@ fun DashboardScreenContent(
         }
 
         NavigationArrows(
-            visible = !show
+            visible = !show,
+            onUpArrowClicked = {
+                scope.launch {
+                    lazyGridState.animateScrollBy(-SCROLL_PIXELS_NUMBER) // Notice the minus symbol.
+                }
+            },
+            onDownArrowClicked = {
+                scope.launch {
+                    lazyGridState.animateScrollBy(SCROLL_PIXELS_NUMBER)
+                }
+            }
         )
 
         MenuOptionsPane(
             navController,
             show
         )
+        //endregion
     }
 }
 
 @Composable
 fun NavigationArrows(
-    visible: Boolean
+    visible: Boolean,
+    onUpArrowClicked: () -> Unit,
+    onDownArrowClicked: () -> Unit
 ) {
     SlideFromSide(
         visible = visible,
@@ -189,20 +205,18 @@ fun NavigationArrows(
             Modifier.padding(end = 20.dp)
         ) {
             RoundedSquareNavigateArrow(
-                imageVector = Icons.Outlined.KeyboardArrowUp
-            ) {
-
-            }
+                imageVector = Icons.Outlined.KeyboardArrowUp,
+                onClick = onUpArrowClicked
+            )
 
             Spacer(
                 Modifier.height(50.dp)
             )
 
             RoundedSquareNavigateArrow(
-                imageVector = Icons.Outlined.KeyboardArrowDown
-            ) {
-
-            }
+                imageVector = Icons.Outlined.KeyboardArrowDown,
+                onClick = onDownArrowClicked
+            )
         }
     }
 }

@@ -52,7 +52,7 @@ class DashboardViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = menuCategories,
-                    menuProducts = menuItemsResponse.items,
+                    menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
                     isLoading = false
                 )
             }
@@ -69,7 +69,7 @@ class DashboardViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                    menuProducts = updatedItemsResponse.items
+                    menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
                 )
             }
         }
