@@ -2,9 +2,10 @@ package com.robinmaneiro.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
-import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
-import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuItem
+import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.usecase.GetItemInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuItemsByCategoryUseCase
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 class MenuViewModel(
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase(),
     private val getMenuItemsByCategoryUserCase: GetMenuItemsByCategoryUseCase = GetMenuItemsByCategoryUseCase(),
-    private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase()
+    private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase(),
+    private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
@@ -48,10 +50,13 @@ class MenuViewModel(
                 return@launch
             }
 
+            val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrNull()
+
             _uiState.update {
                 it.copy(
                     menuCategories = menuCategories,
-                    menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                    menuItems = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                    diningOption = diningOption ?: it.diningOption,
                     isLoading = false
                 )
             }
@@ -68,7 +73,7 @@ class MenuViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                    menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
+                    menuItems = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
                 )
             }
         }
@@ -85,7 +90,7 @@ class MenuViewModel(
         }
     }
 
-    fun addToBasket(product: MenuProductExpanded) {
+    fun addToBasket(product: MenuItemExpanded) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(bagProducts = _uiState.value.bagProducts.toMutableList().apply { add(product) })
@@ -101,14 +106,28 @@ class MenuViewModel(
         }
     }
 
+    fun toggleDiningOption() {
+        val updatedDiningOption = when(uiState.value.diningOption) {
+            DiningOption.TAKE_AWAY -> DiningOption.EAT_IN
+            DiningOption.EAT_IN -> DiningOption.TAKE_AWAY
+        }
+
+        _uiState.update {
+            it.copy(
+                diningOption = updatedDiningOption
+            )
+        }
+    }
+
     sealed interface Actions {
-        data class OpenProductInfo(val product: MenuProductExpanded) : Actions
+        data class OpenProductInfo(val product: MenuItemExpanded) : Actions
     }
 
     data class UiState(
         val isLoading: Boolean = false,
         val menuCategories: List<MenuCategory> = emptyList(),
-        val menuProducts: List<MenuProduct> = emptyList(),
-        val bagProducts: List<MenuProductExpanded> = emptyList()
+        val menuItems: List<MenuItem> = emptyList(),
+        val bagProducts: List<MenuItemExpanded> = emptyList(),
+        val diningOption: DiningOption = DiningOption.TAKE_AWAY
     )
 }

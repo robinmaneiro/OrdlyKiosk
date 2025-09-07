@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MenuProducts(
     @JsonProperty("itemCount") val itemCount: Int,
-    @JsonProperty("items") val items: List<MenuProduct>
+    @JsonProperty("items") val items: List<MenuItem>
 )
 
-data class MenuProduct(
+data class MenuItem(
     @JsonProperty("id") val productId: String,
     @JsonProperty("title") val title: String,
     @JsonProperty("price") val price: Double,

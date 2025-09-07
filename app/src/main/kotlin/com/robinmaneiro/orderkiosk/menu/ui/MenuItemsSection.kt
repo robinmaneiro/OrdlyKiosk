@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
+import com.robinmaneiro.orderkiosk.menu.model.MenuItem
 
 @Composable
 fun MenuItemsSection(
-    menuProducts: List<MenuProduct>,
+    menuItems: List<MenuItem>,
     lazyGridState: LazyGridState,
     onProductClicked: (productId: String) -> Unit,
     modifier: Modifier = Modifier
@@ -45,7 +45,7 @@ fun MenuItemsSection(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(menuProducts) {
+        items(menuItems) {
             ProductCard(
                 productTitle = it.title,
                 productPrice = it.price.toString(),
