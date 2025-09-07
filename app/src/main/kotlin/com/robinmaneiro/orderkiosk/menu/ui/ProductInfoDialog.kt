@@ -32,15 +32,15 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 
 @Composable
 fun ProductOverlay(
-    product: MenuProductExpanded,
+    product: MenuItemExpanded,
     onDismiss: () -> Unit,
-    onAddToBasket: (MenuProductExpanded) -> Unit
+    onAddToBasket: (MenuItemExpanded) -> Unit
 ) {
     BackHandler(enabled = true) { onDismiss() }
 

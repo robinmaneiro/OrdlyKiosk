@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +39,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
+import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -68,8 +66,8 @@ fun WelcomeScreen(
         modifier = modifier,
         languageOptions = uiState.languageOptions,
         onLanguageClicked = { languageCode -> viewModel.updateLanguage(languageCode) },
-        onEatInClicked = { navHostController.navigate(Screens.DashboardScreen("Eat In").route) },
-        onTakeAwayClicked = { navHostController.navigate(Screens.DashboardScreen("Take Away").route) }
+        onEatInClicked = { navHostController.navigate(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route) },
+        onTakeAwayClicked = { navHostController.navigate(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route) }
     )
 }
 
@@ -121,9 +119,9 @@ fun WelcomeScreenContent(
             Spacer(Modifier.height(height = 32.dp))
 
             Row {
-                DeliveryTypeCard(text = "Eat In", onClick = onEatInClicked)
+                DeliveryTypeCard(text = DiningOption.EAT_IN.uiText, onClick = onEatInClicked)
                 Spacer(Modifier.width(40.dp))
-                DeliveryTypeCard(text = "Take Away", onClick = onTakeAwayClicked)
+                DeliveryTypeCard(text = DiningOption.TAKE_AWAY.uiText, onClick = onTakeAwayClicked)
             }
 
             Spacer(Modifier.height(height = 32.dp))

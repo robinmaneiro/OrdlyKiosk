@@ -25,14 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
 fun TotalPriceSection(
-    bagProducts: List<MenuProductExpanded>,
+    bagProducts: List<MenuItemExpanded>,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

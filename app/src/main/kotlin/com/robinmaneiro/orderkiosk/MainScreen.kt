@@ -10,7 +10,7 @@ import androidx.navigation.navArgument
 import com.robinmaneiro.orderkiosk.account.AccountScreen
 import com.robinmaneiro.orderkiosk.bag.BagScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
-import com.robinmaneiro.orderkiosk.menu.DashboardScreen
+import com.robinmaneiro.orderkiosk.menu.MenuScreen
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryScreen
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
 
@@ -22,13 +22,14 @@ fun MainScreen(
     NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
         composable(Screens.WelcomeScreen.route) { WelcomeScreen(modifier = Modifier, navHostController = navHostController) }
         composable(
-            route = Screens.DashboardScreen().route,
+            route = Screens.MenuScreen().route,
             arguments = listOf(
-                navArgument(Screens.DashboardScreen.SERVICE_TYPE_SUB) { type = NavType.StringType }
+                navArgument(Screens.MenuScreen.DINING_OPTION_SUB) { type = NavType.StringType }
             )
         ) {
-            val serviceType = navHostController.currentBackStackEntry?.arguments?.getString(Screens.DashboardScreen.SERVICE_TYPE_SUB)
-            DashboardScreen(
+            val serviceType = navHostController.currentBackStackEntry?.arguments?.getString(Screens.MenuScreen.DINING_OPTION_SUB)
+
+            MenuScreen(
                 modifier = Modifier,
                 serviceType = serviceType,
                 navController = navHostController

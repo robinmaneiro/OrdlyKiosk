@@ -16,13 +16,13 @@ sealed interface Screens {
         override val route: String = "WelcomeScreen"
     }
 
-    data class DashboardScreen(
-        val serviceType: String = SERVICE_TYPE_SUB.asPlaceholder()
+    data class MenuScreen(
+        val diningOption: String = DINING_OPTION_SUB.asPlaceholder()
     ) : Screens {
-        override val route: String = "DashboardScreen".getParametrizedRoute(serviceType)
+        override val route: String = "MenuScreen".getParametrizedRoute(diningOption)
 
         companion object Companion {
-            const val SERVICE_TYPE_SUB = "serviceType"
+            const val DINING_OPTION_SUB = "diningOption"
         }
     }
 

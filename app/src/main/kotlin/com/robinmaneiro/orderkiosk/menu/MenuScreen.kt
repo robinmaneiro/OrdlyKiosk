@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,11 +38,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.robinmaneiro.orderkiosk.Screens
-import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
@@ -55,18 +58,21 @@ import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 
 @Composable
-fun DashboardScreen(
+fun MenuScreen(
     serviceType: String?,
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val viewModel = koinViewModel<MenuViewModel>()
+    val viewModel = koinViewModel<MenuViewModel> {
+        parametersOf(serviceType)
+    }
     val uiState: MenuViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var shownProduct by remember { mutableStateOf<MenuProductExpanded?>(null) }
+    var shownProduct by remember { mutableStateOf<MenuItemExpanded?>(null) }
 
     if (uiState.isLoading) {
         KiLoadingSpinner()
@@ -81,11 +87,10 @@ fun DashboardScreen(
         }
     }
 
-    DashboardScreenContent(
+    MenuScreenContent(
         navController = navController,
         viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
         uiState = uiState,
-        serviceType = serviceType,
         onBagClick = { navController.navigate(Screens.BagScreen.route) },
         modifier = modifier
     )
@@ -103,11 +108,10 @@ fun DashboardScreen(
 }
 
 @Composable
-fun DashboardScreenContent(
+fun MenuScreenContent(
     navController: NavController,
     viewModel: MenuViewModel,
     uiState: MenuViewModel.UiState,
-    serviceType: String?,
     onBagClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -134,7 +138,7 @@ fun DashboardScreenContent(
             )
 
             MenuItemsSection(
-                menuProducts = uiState.menuProducts,
+                menuItems = uiState.menuItems,
                 onProductClicked = { viewModel.onProductClicked(it) },
                 lazyGridState = lazyGridState,
                 modifier = Modifier.width(900.dp)
@@ -183,8 +187,12 @@ fun DashboardScreenContent(
         )
 
         MenuOptionsPane(
-            navController,
-            show
+            navController = navController,
+            uiState = uiState,
+            visible = show,
+            toggleDiningOption = {
+                viewModel.toggleDiningOption()
+            }
         )
         //endregion
     }
@@ -223,8 +231,12 @@ fun NavigationArrows(
 @Composable
 fun MenuOptionsPane(
     navController: NavController,
-    visible: Boolean
+    uiState: MenuViewModel.UiState,
+    visible: Boolean,
+    toggleDiningOption: () -> Unit
 ) {
+    var shouldShowDialog by remember { mutableStateOf(false) }
+
     SlideFromSide(
         visible = visible,
         contentAlignment = Alignment.BottomStart
@@ -243,6 +255,7 @@ fun MenuOptionsPane(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -257,8 +270,43 @@ fun MenuOptionsPane(
             }
 
             OptionsPaneItem(
-                "Sit in", {}
+                uiState.diningOption.uiText, {
+                    shouldShowDialog = true
+                }
             )
+        }
+    }
+    if (shouldShowDialog) { // TODO: Move this content to an screen  
+        Box {
+            Dialog({
+                shouldShowDialog = false
+            }) {
+                Column {
+                    Text(
+                        modifier = Modifier.background(
+                            Color.White
+                        ), text = "Are you sure you want to change the dining option? "
+                    )
+
+                    Button(
+                        onClick = {
+                            // Call the method in the viewmodel
+                            toggleDiningOption.invoke()
+                            shouldShowDialog = false // and dismiss this
+                        }
+                    ) {
+                        Text("Yes")
+                    }
+
+                    Button(
+                        onClick = {
+                            shouldShowDialog = false
+                        }
+                    ) {
+                        Text("No")
+                    }
+                }
+            }
         }
     }
 }
@@ -305,12 +353,11 @@ fun RoundedSquareNavigateArrow(
 @PixelTabletPreview
 @Composable
 fun DashboardScreenPreview() {
-    DashboardScreenContent(
+    MenuScreenContent(
         navController = rememberNavController(),
         viewModel = koinViewModel<MenuViewModel>(),
         uiState = MenuViewModel.UiState(),
-        onBagClick = {},
-        serviceType = "Take Away"
+        onBagClick = {}
     )
 }
 
