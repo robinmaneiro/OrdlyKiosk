@@ -1,10 +1,9 @@
-package com.robinmaneiro.orderkiosk.dashboard
+package com.robinmaneiro.orderkiosk.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,11 +41,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.robinmaneiro.orderkiosk.Screens
-import com.robinmaneiro.orderkiosk.dashboard.model.MenuProductExpanded
-import com.robinmaneiro.orderkiosk.dashboard.ui.MenuCategorySection
-import com.robinmaneiro.orderkiosk.dashboard.ui.MenuItemsSection
-import com.robinmaneiro.orderkiosk.dashboard.ui.ProductOverlay
-import com.robinmaneiro.orderkiosk.dashboard.ui.TotalPriceSection
+import com.robinmaneiro.orderkiosk.menu.model.MenuProductExpanded
+import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
+import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
+import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
+import com.robinmaneiro.orderkiosk.menu.ui.TotalPriceSection
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -65,8 +64,8 @@ fun DashboardScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val viewModel = koinViewModel<DashboardViewModel>()
-    val uiState: DashboardViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val viewModel = koinViewModel<MenuViewModel>()
+    val uiState: MenuViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
     var shownProduct by remember { mutableStateOf<MenuProductExpanded?>(null) }
 
     if (uiState.isLoading) {
@@ -76,7 +75,7 @@ fun DashboardScreen(
     LaunchedEffect(viewModel) {
         viewModel.actions.collect { action ->
             when (action) {
-                is DashboardViewModel.Actions.OpenProductInfo -> shownProduct = action.product
+                is MenuViewModel.Actions.OpenProductInfo -> shownProduct = action.product
                 // handle other actions if needed
             }
         }
@@ -106,8 +105,8 @@ fun DashboardScreen(
 @Composable
 fun DashboardScreenContent(
     navController: NavController,
-    viewModel: DashboardViewModel,
-    uiState: DashboardViewModel.UiState,
+    viewModel: MenuViewModel,
+    uiState: MenuViewModel.UiState,
     serviceType: String?,
     onBagClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -308,8 +307,8 @@ fun RoundedSquareNavigateArrow(
 fun DashboardScreenPreview() {
     DashboardScreenContent(
         navController = rememberNavController(),
-        viewModel = koinViewModel<DashboardViewModel>(),
-        uiState = DashboardViewModel.UiState(),
+        viewModel = koinViewModel<MenuViewModel>(),
+        uiState = MenuViewModel.UiState(),
         onBagClick = {},
         serviceType = "Take Away"
     )

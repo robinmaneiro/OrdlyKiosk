@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.dashboard.model
+package com.robinmaneiro.orderkiosk.menu.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

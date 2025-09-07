@@ -1,6 +1,5 @@
-package com.robinmaneiro.orderkiosk.dashboard.model
+package com.robinmaneiro.orderkiosk.menu.model
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MenuProducts(
