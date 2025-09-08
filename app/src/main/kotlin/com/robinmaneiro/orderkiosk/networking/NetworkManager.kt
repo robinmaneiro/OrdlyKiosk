@@ -10,11 +10,12 @@ import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headers
 import io.ktor.serialization.jackson.jackson
 
-object RequestManager {
+object NetworkManager {
     private val successHttpCodes = listOf(
         HttpStatusCode.OK,
         HttpStatusCode.Created,
@@ -45,11 +46,12 @@ object RequestManager {
         return response.body<T>()
     }
 
-    suspend inline fun <reified T> postRequest(urlString: String): T? {
+    suspend inline fun <reified T> postRequest(urlString: String, stringBody: String): T? {
         val response = httpClient.post(urlString) {
             headers {
                 append(NetworkConstants.Headers.CONTENT_TYPE, NetworkConstants.Values.CONTENT_TYPE)
             }
+            setBody(stringBody)
         }
 
         return response.body()
