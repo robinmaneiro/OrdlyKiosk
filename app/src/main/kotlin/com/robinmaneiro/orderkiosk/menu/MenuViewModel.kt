@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.menu.model.MenuItem
@@ -21,6 +22,7 @@ class MenuViewModel(
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
     private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
     private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
+    private val addToBagUseCase: AddToBagUseCase,
     private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -92,6 +94,7 @@ class MenuViewModel(
 
     fun addToBasket(product: MenuItemExpanded) {
         viewModelScope.launch {
+            addToBagUseCase.invoke(product.productId)
             _uiState.update {
                 it.copy(bagProducts = _uiState.value.bagProducts.toMutableList().apply { add(product) })
             }

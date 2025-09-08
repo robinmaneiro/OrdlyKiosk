@@ -1,11 +1,11 @@
 package com.robinmaneiro.orderkiosk.bag.repository
 
 interface BagRepository {
-    fun fetchBagItems()
+    suspend fun fetchBagItems()
 
-    fun addToBag(productId: String)
+    suspend fun addToBag(productId: String)
 
-    fun removeFromBag(bagItemId: String)
+    suspend fun removeFromBag(bagItemId: String)
 
-    fun updateBagItem(bagItemId: String)
+    suspend fun updateBagItem(bagItemId: String)
 }
