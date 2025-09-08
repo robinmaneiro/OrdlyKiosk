@@ -6,7 +6,7 @@ import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
 class GetProductExtendedInfoUseCase(
     private val menuRepository: MenuRepository
 ) {
-    suspend operator fun invoke(itemId: String): MenuItemExpanded? {
+    suspend operator fun invoke(productId: String): MenuItemExpanded? {
         return menuRepository.getProductExtendedInfo(productId)
     }
 }
