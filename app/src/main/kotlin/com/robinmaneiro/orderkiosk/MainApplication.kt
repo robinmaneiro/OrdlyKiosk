@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk
 
 import android.app.Application
+import com.robinmaneiro.orderkiosk.koin.repositoryModules
 import com.robinmaneiro.orderkiosk.koin.useCaseModules
 import com.robinmaneiro.orderkiosk.koin.viewModelModules
 import org.koin.android.ext.koin.androidContext
@@ -14,6 +15,7 @@ class MainApplication: Application() {
             androidContext(this@MainApplication)
             modules(listOf(
                 viewModelModules,
+                repositoryModules,
                 useCaseModules
             ))
         }

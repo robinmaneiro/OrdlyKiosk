@@ -6,9 +6,9 @@ import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.menu.model.MenuItem
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
-import com.robinmaneiro.orderkiosk.menu.usecase.GetItemInfoUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuItemsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MenuViewModel(
-    private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase = GetMenuCategoriesUseCase(),
-    private val getMenuItemsByCategoryUserCase: GetMenuItemsByCategoryUseCase = GetMenuItemsByCategoryUseCase(),
-    private val getItemInfoUseCase: GetItemInfoUseCase = GetItemInfoUseCase(),
+    private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
+    private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
+    private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
     private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -81,7 +81,7 @@ class MenuViewModel(
 
     fun onProductClicked(productId: String) {
         viewModelScope.launch {
-            val expandedItemInfo = getItemInfoUseCase(productId) ?: run {
+            val expandedItemInfo = getProductExtendedInfoUseCase(productId) ?: run {
                 _uiState.update { it.copy(isLoading = false) }
                 return@launch
             }
