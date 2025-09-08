@@ -115,6 +115,7 @@ fun MenuScreenContent(
     onBagClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    //region Fixed content
     Box {
         val lazyGridState = rememberLazyGridState()
         val scope = rememberCoroutineScope()
@@ -144,6 +145,7 @@ fun MenuScreenContent(
                 modifier = Modifier.width(900.dp)
             )
         }
+        //endregion
 
         //region Animated content
         SlideFromBottom(visible = uiState.bagProducts.isNotEmpty()) {
@@ -276,7 +278,7 @@ fun MenuOptionsPane(
             )
         }
     }
-    if (shouldShowDialog) { // TODO: Move this content to an screen  
+    if (shouldShowDialog) { // TODO: Move this content to an screen
         Box {
             Dialog({
                 shouldShowDialog = false

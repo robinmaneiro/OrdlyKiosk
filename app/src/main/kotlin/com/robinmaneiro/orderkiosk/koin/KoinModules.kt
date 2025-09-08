@@ -4,9 +4,11 @@ import com.robinmaneiro.orderkiosk.account.AccountViewModel
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.coupons.CouponsViewModel
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
-import com.robinmaneiro.orderkiosk.menu.usecase.GetItemInfoUseCase
+import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
+import com.robinmaneiro.orderkiosk.menu.repository.MenuRepositoryImpl
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
-import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuItemsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
@@ -23,6 +25,10 @@ val viewModelModules = module {
 
 val useCaseModules = module {
     factoryOf(::GetMenuCategoriesUseCase)
-    factoryOf(::GetMenuItemsByCategoryUseCase)
-    factoryOf(::GetItemInfoUseCase)
+    factoryOf(::GetProductsByCategoryUseCase)
+    factoryOf(::GetProductExtendedInfoUseCase)
+}
+
+val repositoryModules = module {
+    single<MenuRepository> { MenuRepositoryImpl() }
 }
