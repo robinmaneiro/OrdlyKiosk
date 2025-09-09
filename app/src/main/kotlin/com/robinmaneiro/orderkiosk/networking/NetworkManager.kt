@@ -11,9 +11,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.utils.EmptyContent.contentType
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.headers
@@ -60,7 +58,7 @@ object NetworkManager {
             )
         }
 
-        return response.body()
+        return response.body<T>()
     }
 
     suspend inline fun <reified T> patchRequest(urlString: String): T? {

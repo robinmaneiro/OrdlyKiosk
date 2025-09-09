@@ -1,11 +1,13 @@
 package com.robinmaneiro.orderkiosk.bag.repository
 
+import com.robinmaneiro.orderkiosk.bag.model.BagItemResponse
+
 interface BagRepository {
-    suspend fun fetchBagItems()
+    suspend fun getBagItems(): BagItemResponse?
 
-    suspend fun addToBag(productId: String)
+    suspend fun addToBag(productId: String): BagItemResponse?
 
-    suspend fun removeFromBag(bagItemId: String)
+    suspend fun removeFromBag(bagItemId: String): BagItemResponse?
 
-    suspend fun updateBagItem(bagItemId: String)
+    suspend fun updateBagItem(bagItemId: String): BagItemResponse?
 }
