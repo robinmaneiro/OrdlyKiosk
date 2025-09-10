@@ -6,6 +6,7 @@ import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import com.robinmaneiro.orderkiosk.coupons.CouponsViewModel
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
@@ -33,6 +34,7 @@ val useCaseModules = module {
     factoryOf(::GetProductExtendedInfoUseCase)
     factoryOf(::AddToBagUseCase)
     factoryOf(::GetBagUseCase)
+    factoryOf(::RemoveFromBagUseCase)
 }
 
 val repositoryModules = module {
