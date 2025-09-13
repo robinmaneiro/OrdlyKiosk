@@ -42,8 +42,8 @@ fun TotalPriceSection(
             .widthIn(min = 200.dp)
             .shadow(
                 elevation = 5.dp,
-                ambientColor = Aquamarine40, //Color(0x80000000),
-                spotColor = Aquamarine40,//Color(0x80000000),
+                ambientColor = Aquamarine40,
+                spotColor = Aquamarine40,
                 shape = RoundedCornerShape(percent = 50)
             )
             .background(White, shape = RoundedCornerShape(percent = 50))
