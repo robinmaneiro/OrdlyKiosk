@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +45,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
@@ -263,18 +266,19 @@ fun MenuOptionsPane(
             ) {
                 // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
                 listOf(
-                    "Sign In" to { navController.navigate(Screens.AccountScreen.route) },
-                    "Order History" to { navController.navigate(Screens.OrderHistoryScreen.route) },
-                    "Coupons" to { navController.navigate(Screens.CouponsScreen.route) },
+                    Triple("Sign In", { navController.navigate(Screens.AccountScreen.route) }, R.drawable.icn_rounded_user),
+                    Triple("Order History", { navController.navigate(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
+                    Triple("Coupons", { navController.navigate(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
                 ).forEach {
-                    OptionsPaneItem(it.first, it.second)
+                    OptionsPaneItem(it.first, it.second, it.third)
                 }
             }
 
             OptionsPaneItem(
                 uiState.diningOption.uiText, {
                     shouldShowDialog = true
-                }
+                },
+                null
             )
         }
     }
@@ -317,6 +321,7 @@ fun MenuOptionsPane(
 fun OptionsPaneItem(
     label: String,
     onClick: () -> Unit,
+    @DrawableRes icnRes: Int?,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -328,6 +333,14 @@ fun OptionsPaneItem(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        icnRes?.let {
+            Icon(
+                painter = painterResource(icnRes),
+                contentDescription = "Vector icon",
+                tint = Aquamarine40,
+                modifier = Modifier.size(60.dp)
+            )
+        }
         Text(
             text = label,
             textAlign = TextAlign.Center
@@ -366,5 +379,5 @@ fun DashboardScreenPreview() {
 @Preview
 @Composable
 fun OptionsPaneItemPreview() {
-    OptionsPaneItem("Test", {})
+    OptionsPaneItem("Test", {}, null)
 }
