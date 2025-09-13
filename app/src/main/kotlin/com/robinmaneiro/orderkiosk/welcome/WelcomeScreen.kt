@@ -159,11 +159,11 @@ fun DeliveryTypeCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .size(width = 360.dp, height = 300.dp)
             .noRippleClickable(onClick = onClick),
         colors = CardDefaults.cardColors(
-            containerColor = Aquamarine40,
+            containerColor = Aquamarine40.copy(alpha = 0.8F),
             contentColor = Color.White
         )
     ) {
