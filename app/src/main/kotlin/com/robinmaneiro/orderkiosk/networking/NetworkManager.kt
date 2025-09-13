@@ -53,19 +53,24 @@ object NetworkManager {
             contentType(ContentType.Application.Json)
             setBody(
                 """
-        $stringBody
-        """.trimIndent()
+                    $stringBody
+                """.trimIndent()
             )
         }
 
         return response.body<T>()
     }
 
-    suspend inline fun <reified T> patchRequest(urlString: String): T? {
+    suspend inline fun <reified T> patchRequest(urlString: String, stringBody: String): T? {
         val response = httpClient.patch(urlString) {
             headers {
                 append(NetworkConstants.Headers.CONTENT_TYPE, NetworkConstants.Values.CONTENT_TYPE)
             }
+            setBody(
+                """
+                    $stringBody
+                """.trimIndent()
+            )
         }
 
         return response.body()
