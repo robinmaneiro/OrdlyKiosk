@@ -7,6 +7,7 @@ import com.robinmaneiro.orderkiosk.bag.model.BagItemResponse
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.menu.model.MenuItem
@@ -32,6 +33,7 @@ class MenuViewModel(
     private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
     private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
     private val addToBagUseCase: AddToBagUseCase,
+    private val getBagUseCase: GetBagUseCase,
     private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -51,6 +53,8 @@ class MenuViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
+
+            getBagUseCase()
 
             val menuCategories = getMenuCategoriesUseCase() ?: run {
                 _uiState.update { it.copy(isLoading = false) }
