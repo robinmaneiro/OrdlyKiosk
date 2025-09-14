@@ -326,11 +326,12 @@ fun OptionsPaneItem(
 ) {
     Column(
         modifier = modifier
-            .size(width = 80.dp, height = 100.dp)
+            .size(width = 80.dp, height = 110.dp)
             .border(1.dp, Color.DarkGray, RoundedCornerShape(4.dp))
             .background(Iceberg.copy(alpha = 0.2f))
-            .clickable(onClick = onClick),
-        verticalArrangement = Arrangement.Bottom,
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         icnRes?.let {
@@ -338,9 +339,10 @@ fun OptionsPaneItem(
                 painter = painterResource(icnRes),
                 contentDescription = "Vector icon",
                 tint = Aquamarine40,
-                modifier = Modifier.size(60.dp)
+                modifier = Modifier.size(50.dp)
             )
         }
+
         Text(
             text = label,
             textAlign = TextAlign.Center
