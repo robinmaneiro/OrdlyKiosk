@@ -50,6 +50,8 @@ import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
+import com.robinmaneiro.orderkiosk.menu.ui.MenuOptionsPane
+import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.menu.ui.TotalPriceSection
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
@@ -230,123 +232,6 @@ fun NavigationArrows(
                 onClick = onDownArrowClicked
             )
         }
-    }
-}
-
-@Composable
-fun MenuOptionsPane(
-    navController: NavController,
-    uiState: MenuViewModel.UiState,
-    visible: Boolean,
-    toggleDiningOption: () -> Unit
-) {
-    var shouldShowDialog by remember { mutableStateOf(false) }
-
-    SlideFromSide(
-        visible = visible,
-        contentAlignment = Alignment.BottomStart
-    ) {
-        Column(
-            Modifier
-                .fillMaxHeight()
-                .width(100.dp)
-                .padding(
-                    top = 100.dp,
-                    bottom = 40.dp
-                )
-                .border(1.dp, Color.DarkGray)
-                .background(Color.White)
-                .padding(vertical = 16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
-                listOf(
-                    Triple("Sign In", { navController.navigate(Screens.AccountScreen.route) }, R.drawable.icn_rounded_user),
-                    Triple("Order History", { navController.navigate(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-                    Triple("Coupons", { navController.navigate(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-                ).forEach {
-                    OptionsPaneItem(it.first, it.second, it.third)
-                }
-            }
-
-            OptionsPaneItem(
-                uiState.diningOption.uiText, {
-                    shouldShowDialog = true
-                },
-                null
-            )
-        }
-    }
-    if (shouldShowDialog) { // TODO: Move this content to an screen
-        Box {
-            Dialog({
-                shouldShowDialog = false
-            }) {
-                Column {
-                    Text(
-                        modifier = Modifier.background(
-                            Color.White
-                        ), text = "Are you sure you want to change the dining option? "
-                    )
-
-                    Button(
-                        onClick = {
-                            // Call the method in the viewmodel
-                            toggleDiningOption.invoke()
-                            shouldShowDialog = false // and dismiss this
-                        }
-                    ) {
-                        Text("Yes")
-                    }
-
-                    Button(
-                        onClick = {
-                            shouldShowDialog = false
-                        }
-                    ) {
-                        Text("No")
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun OptionsPaneItem(
-    label: String,
-    onClick: () -> Unit,
-    @DrawableRes icnRes: Int?,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .size(width = 80.dp, height = 110.dp)
-            .border(1.dp, Color.DarkGray, RoundedCornerShape(4.dp))
-            .background(Iceberg.copy(alpha = 0.2f))
-            .clickable(onClick = onClick)
-            .padding(vertical = 4.dp),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        icnRes?.let {
-            Icon(
-                painter = painterResource(icnRes),
-                contentDescription = "Vector icon",
-                tint = Aquamarine40,
-                modifier = Modifier.size(50.dp)
-            )
-        }
-
-        Text(
-            text = label,
-            textAlign = TextAlign.Center
-        )
     }
 }
 
