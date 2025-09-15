@@ -63,9 +63,7 @@ object NetworkManager {
 
     suspend inline fun <reified T> patchRequest(urlString: String, stringBody: String): T? {
         val response = httpClient.patch(urlString) {
-            headers {
-                append(NetworkConstants.Headers.CONTENT_TYPE, NetworkConstants.Values.CONTENT_TYPE)
-            }
+            contentType(ContentType.Application.Json)
             setBody(
                 """
                     $stringBody
@@ -73,7 +71,7 @@ object NetworkManager {
             )
         }
 
-        return response.body()
+        return response.body<T>()
     }
 
     suspend inline fun <reified T> deleteRequest(urlString: String): T? {
@@ -83,7 +81,7 @@ object NetworkManager {
             }
         }
 
-        return response.body()
+        return response.body<T>()
     }
     //endregion
 }
