@@ -24,7 +24,6 @@ fun BagScreen(
     val viewModel = koinViewModel<BagViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
     Scaffold(
         topBar = {
             SimpleTopBar(title = "My Screen", onBack = {
