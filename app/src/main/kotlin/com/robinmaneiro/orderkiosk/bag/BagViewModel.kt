@@ -25,8 +25,6 @@ class BagViewModel(
         viewModelScope.launch {
             val bagItems = getBagUseCase.invoke() ?: run { hideLoader(); return@launch }
 
-            delay(3000L)
-
             _uiState.update {
                 it.copy(
                     bagItems = bagItems,
@@ -36,13 +34,16 @@ class BagViewModel(
         }
     }
 
+    private fun showLoader() = _uiState.update { it.copy(isLoading = true) }
+
+    private fun hideLoader() = _uiState.update { it.copy(isLoading = false) }
+
     fun increaseQuantity(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.inc()
 
             val updatedBagResponse = updateBagItemUseCase.invoke(bagItem.productId, newQuantity) ?: run { hideLoader(); return@launch }
-            delay(2000L)
 
             _uiState.update {
                 it.copy(
@@ -68,10 +69,6 @@ class BagViewModel(
             }
         }
     }
-
-    fun showLoader() = _uiState.update { it.copy(isLoading = true) }
-
-    fun hideLoader() = _uiState.update { it.copy(isLoading = false) }
 
     data class UiState(
         val bagItems: List<BagItem> = emptyList(),
