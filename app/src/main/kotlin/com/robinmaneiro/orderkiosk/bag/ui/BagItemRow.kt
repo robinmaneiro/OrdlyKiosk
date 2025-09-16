@@ -109,8 +109,8 @@ fun BagItemRow(
 fun BagItemPreview() {
     BagItemRow(
         BagItem(
-            id = "",
-            productId = "TODO()",
+            itemId = "",
+            productId = "",
             quantity = 1,
             title = "Big Mac",
             description = "It's just bloody delicious",

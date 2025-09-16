@@ -3,7 +3,7 @@ package com.robinmaneiro.orderkiosk.bag.model
 class BagItemResponse: ArrayList<BagItem>()
 
 data class BagItem(
-    val id: Any,
+    val itemId: String,
     val productId: String,
     val quantity: Int,
     val title: String,
