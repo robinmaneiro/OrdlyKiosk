@@ -79,10 +79,6 @@ fun MenuScreen(
     val uiState: MenuViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
     var shownProduct by remember { mutableStateOf<MenuItemExpanded?>(null) }
 
-    if (uiState.isLoading) {
-        KiLoadingSpinner()
-    }
-
     LaunchedEffect(viewModel) {
         viewModel.actions.collect { action ->
             when (action) {
@@ -109,6 +105,10 @@ fun MenuScreen(
                 shownProduct = null
             }
         )
+    }
+
+    if (uiState.isLoading) {
+        KiLoadingSpinner()
     }
 }
 

@@ -21,12 +21,12 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val viewModelModules = module {
+    factoryOf(::WelcomeViewModel)
     factoryOf(::MenuViewModel)
     factoryOf(::BagViewModel)
     factoryOf(::AccountViewModel)
     factoryOf(::CouponsViewModel)
     factoryOf(::OrderHistoryViewModel)
-    factoryOf(::WelcomeViewModel)
 }
 
 val useCaseModules = module {

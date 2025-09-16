@@ -32,11 +32,6 @@ fun BagScreen(
             })
         }
     ) {
-        if (uiState.isLoading) {
-            KiLoadingSpinner()
-        }
-
-
         LazyColumn(
             modifier = Modifier
                 .padding(it)
@@ -54,5 +49,9 @@ fun BagScreen(
                     })
             }
         }
+    }
+
+    if (uiState.isLoading) {
+        KiLoadingSpinner()
     }
 }
