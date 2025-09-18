@@ -55,7 +55,7 @@ fun TotalPriceSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            val floatPrice = "%.2f".format(bagProducts.sumOf { it.price })
+            val floatPrice = "%.2f".format(bagProducts.sumOf { it.price.toDouble() }) // TODO: Create property in backend for total bag
             val count = bagProducts.count()
             Text(
                 text = "£$floatPrice",
