@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -34,73 +38,97 @@ fun BagItemRow(
     onPlusClick: (String) -> Unit,
     onMinusClick: (String) -> Unit
 ) {
-    Card(
-        Modifier.height(100.dp)
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
+
         Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(0.75f),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.width(600.dp)
         ) {
+            AsyncImage(
+                modifier = Modifier.size(120.dp),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(R.drawable.item_test_big_mac)
+                    .build(),
+                contentDescription = null
+            )
 
-            Row {
+            Spacer(Modifier.width(16.dp))
 
-                Column(
-                    Modifier
-                        .fillMaxHeight()
-                        .width(50.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.icn_filled_circle_plus),
-                        contentDescription = "Delete",
-                        tint = Aquamarine40,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickable {
-                                onPlusClick.invoke("")
-                            }
-                    )
-
-                    Text(
-                        text = bagItem.quantity.toString()
-                    )
-
-                    Icon(
-                        painter = painterResource(
-                            if (bagItem.quantity == 1) R.drawable.icn_bin else R.drawable.icn_filled_circle_minus
-                        ),
-                        contentDescription = "Delete",
-                        tint = Aquamarine40,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickable {
-                                onMinusClick.invoke("")
-                            }
-                    )
-                }
-                AsyncImage(
-                    modifier = Modifier.size(100.dp),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(R.drawable.item_test_big_mac)
-                        .build(),
-                    contentDescription = null
+            Column(
+                Modifier.padding(vertical = 8.dp)
+            ) {
+                Text(
+                    text = bagItem.title,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge,
                 )
-
-                Spacer(Modifier.width(16.dp))
-
-                Column {
-                    Text(
-                        text = bagItem.title,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(bagItem.description)
-                }
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = bagItem.description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 2,
+                    minLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
+
+        Text(
+            bagItem.price.toString(),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.width(150.dp)
+        )
+
+        Row(
+            Modifier
+                .width(150.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Icon(
+                painter = painterResource(
+                    if (bagItem.quantity == 1) R.drawable.icn_bin else R.drawable.icn_filled_circle_minus
+                ),
+                contentDescription = "Delete",
+                tint = Aquamarine40,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clickable {
+                        onMinusClick.invoke("")
+                    }
+            )
+
+            Text(
+                text = bagItem.quantity.toString(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.width(50.dp)
+            )
+
+            Icon(
+                painter = painterResource(R.drawable.icn_filled_circle_plus),
+                contentDescription = "Delete",
+                tint = Aquamarine40,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clickable {
+                        onPlusClick.invoke("")
+                    }
+            )
+        }
+
+        Text(
+            text = (bagItem.price * bagItem.quantity).toString(),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.width(150.dp),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -113,7 +141,7 @@ fun BagItemPreview() {
             productId = "",
             quantity = 1,
             title = "Big Mac",
-            description = "It's just bloody delicious",
+            description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
             price = 9.95
         ),
         onPlusClick = {},
