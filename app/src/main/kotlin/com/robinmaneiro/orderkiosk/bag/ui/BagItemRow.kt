@@ -142,7 +142,7 @@ fun BagItemPreview() {
             quantity = 1,
             title = "Big Mac",
             description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
-            price = 9.95
+            _price = 995
         ),
         onPlusClick = {},
         onMinusClick = {}
