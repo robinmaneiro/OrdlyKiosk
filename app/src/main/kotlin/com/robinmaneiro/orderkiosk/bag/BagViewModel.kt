@@ -23,11 +23,11 @@ class BagViewModel(
     init {
         showLoader()
         viewModelScope.launch {
-            val bagItems = getBagUseCase.invoke() ?: run { hideLoader(); return@launch }
+            val response = getBagUseCase.invoke() ?: run { hideLoader(); return@launch }
 
             _uiState.update {
                 it.copy(
-                    bagItems = bagItems,
+                    bagItems = response.items,
                     isLoading = false
                 )
             }
@@ -43,11 +43,11 @@ class BagViewModel(
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.inc()
 
-            val updatedBagResponse = updateBagItemUseCase.invoke(bagItem.itemId, newQuantity) ?: run { hideLoader(); return@launch }
+            val response = updateBagItemUseCase.invoke(bagItem.itemId, newQuantity) ?: run { hideLoader(); return@launch }
 
             _uiState.update {
                 it.copy(
-                    bagItems = updatedBagResponse,
+                    bagItems = response.items,
                     isLoading = false
                 )
             }
@@ -58,14 +58,14 @@ class BagViewModel(
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.dec()
 
-            val updatedBagResponse = if (newQuantity > 0) {
+            val response = if (newQuantity > 0) {
                 updateBagItemUseCase.invoke(bagItem.itemId, newQuantity)
             } else {
                 removeFromBagUseCase.invoke(bagItem.itemId)
             } ?: return@launch // TODO: Return for now, show loaders then
 
             _uiState.update {
-                it.copy(bagItems = updatedBagResponse)
+                it.copy(bagItems = response.items)
             }
         }
     }
