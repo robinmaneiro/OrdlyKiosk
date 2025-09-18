@@ -79,7 +79,7 @@ fun BagItemRow(
         }
 
         Text(
-            bagItem.price.toString(),
+            bagItem.unitPrice.toString(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.width(150.dp)
@@ -124,7 +124,7 @@ fun BagItemRow(
         }
 
         Text(
-            text = (bagItem.price * bagItem.quantity).toString(),
+            text = bagItem.price.toString(),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.width(150.dp),
             textAlign = TextAlign.Center
@@ -142,7 +142,8 @@ fun BagItemPreview() {
             quantity = 1,
             title = "Big Mac",
             description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
-            _price = 995
+            _price = 995,
+            _unitPrice = 995
         ),
         onPlusClick = {},
         onMinusClick = {}

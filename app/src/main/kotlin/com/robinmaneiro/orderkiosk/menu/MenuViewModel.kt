@@ -39,7 +39,7 @@ class MenuViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = combine(_uiState, bagRepository.bag) { state, bag ->
         state.copy(
-            bagProducts = bag?.toList().orEmpty()
+            bagProducts = bag?.items?.toList().orEmpty()
         )
     }.stateIn(
         scope = viewModelScope,
