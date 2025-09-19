@@ -3,11 +3,27 @@ package com.robinmaneiro.orderkiosk.bag.model
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class BagItemResponse(
-    @JsonProperty("items") val items: List<BagItem>,
-    @JsonProperty("totalPrice") private val _totalPrice: Int
+    @JsonProperty("totalCost") private val _totalCost: PriceData,
+    @JsonProperty("items") val items: List<BagItem>
 ) {
-    val totalPrice = _totalPrice.div(100.toDouble())
+    val totalPrice = _totalCost.withTax.div(100.toDouble())
 }
+
+data class PriceData(
+    @JsonProperty("currencyCode") val currencyCode: String,
+    @JsonProperty("withTax") val withTax: Int,
+    @JsonProperty("withoutTax") val withoutTax: Int,
+    @JsonProperty("tax") val tax: Tax,
+)
+
+data class Tax(
+    @JsonProperty("vat") val vat: TaxUnit
+)
+
+data class TaxUnit(
+    @JsonProperty("amount") val amount: Int,
+    @JsonProperty("rate") val rate: Int
+)
 
 data class BagItem(
     @JsonProperty("itemId") val itemId: String,
@@ -15,9 +31,13 @@ data class BagItem(
     @JsonProperty("quantity") val quantity: Int,
     @JsonProperty("title") val title: String,
     @JsonProperty("description") val description: String,
-    @JsonProperty("unitPrice") private val _unitPrice: Int,
-    @JsonProperty("price") private val _price: Int
+    @JsonProperty("price") private val _priceData: ItemPrice,
 ) {
-    val price = _price.div(100.toDouble())
-    val unitPrice = _unitPrice.div(100.toDouble())
+    val price = _priceData.total.withTax.div(100.toDouble())
+    val unitPrice = _priceData.unit.withTax.div(100.toDouble())
 }
+
+data class ItemPrice(
+    @JsonProperty("unit") val unit: PriceData,
+    @JsonProperty("total") val total: PriceData
+)
