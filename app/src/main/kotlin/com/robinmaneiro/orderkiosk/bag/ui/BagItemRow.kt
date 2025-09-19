@@ -5,14 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -132,20 +129,20 @@ fun BagItemRow(
     }
 }
 
-@PixelTabletPreview
-@Composable
-fun BagItemPreview() {
-    BagItemRow(
-        BagItem(
-            itemId = "",
-            productId = "",
-            quantity = 1,
-            title = "Big Mac",
-            description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
-            _price = 995,
-            _unitPrice = 995
-        ),
-        onPlusClick = {},
-        onMinusClick = {}
-    )
-}
+//@PixelTabletPreview TODO: Restore views
+//@Composable
+//fun BagItemPreview() {
+//    BagItemRow(
+//        BagItem(
+//            itemId = "",
+//            productId = "",
+//            quantity = 1,
+//            title = "Big Mac",
+//            description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
+//            _priceData = 995,
+//            _unitPrice = 995
+//        ),
+//        onPlusClick = {},
+//        onMinusClick = {}
+//    )
+//}
