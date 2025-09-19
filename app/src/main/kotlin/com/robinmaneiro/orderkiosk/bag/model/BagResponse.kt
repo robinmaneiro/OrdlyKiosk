@@ -2,11 +2,13 @@ package com.robinmaneiro.orderkiosk.bag.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class BagItemResponse(
+data class BagResponse(
     @JsonProperty("totalCost") private val _totalCost: PriceData,
     @JsonProperty("items") val items: List<BagItem>
 ) {
-    val totalPrice = _totalCost.withTax.div(100.toDouble())
+    val totalCost = _totalCost.withTax.div(100.toDouble())
+    val formattedTotalCost = "£${ "%.2f".format(totalCost) }"
+    val itemCount = items.count()
 }
 
 data class PriceData(
