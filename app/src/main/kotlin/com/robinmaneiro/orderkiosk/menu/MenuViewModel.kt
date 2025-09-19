@@ -2,10 +2,8 @@ package com.robinmaneiro.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.robinmaneiro.orderkiosk.bag.model.BagItem
-import com.robinmaneiro.orderkiosk.bag.model.BagItemResponse
+import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
-import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
@@ -19,8 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.WhileSubscribed
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -39,7 +35,7 @@ class MenuViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = combine(_uiState, bagRepository.bag) { state, bag ->
         state.copy(
-            bagProducts = bag?.items?.toList().orEmpty()
+            bagResponse = bag
         )
     }.stateIn(
         scope = viewModelScope,
@@ -140,7 +136,7 @@ class MenuViewModel(
         val isLoading: Boolean = false,
         val menuCategories: List<MenuCategory> = emptyList(),
         val menuItems: List<MenuItem> = emptyList(),
-        val bagProducts: List<BagItem> = emptyList(),
+        val bagResponse: BagResponse? = null, // TODO: Change to just set the formatted value here
         val diningOption: DiningOption = DiningOption.TAKE_AWAY
     )
 }

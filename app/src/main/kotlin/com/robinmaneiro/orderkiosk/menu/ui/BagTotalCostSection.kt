@@ -25,14 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
-fun TotalPriceSection(
-    bagProducts: List<BagItem>,
+fun BagTotalCostSection(
+    formattedTotalCost: String,
+    itemCount: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -55,10 +55,8 @@ fun TotalPriceSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            val floatPrice = "%.2f".format(bagProducts.sumOf { it.price }) // TODO: Create property in backend for total bag
-            val count = bagProducts.count()
             Text(
-                text = "£$floatPrice",
+                text = formattedTotalCost,
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 40.sp)
             )
             Box(
@@ -72,7 +70,7 @@ fun TotalPriceSection(
                     modifier = Modifier.size(60.dp)
                 )
                 Text(
-                    count.toString(),
+                    itemCount.toString(),
                     color = White,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
@@ -87,10 +85,10 @@ fun TotalPriceSection(
     }
 }
 
-@Preview(
-    showBackground = true
-)
-@Composable
-fun BottomSectionPreview() {
-    TotalPriceSection(listOf(), {})
-}
+//@Preview( TODO: Restore preview
+//    showBackground = true
+//)
+//@Composable
+//fun BottomSectionPreview() {
+//    BagTotalCostSection(listOf(), {})
+//}
