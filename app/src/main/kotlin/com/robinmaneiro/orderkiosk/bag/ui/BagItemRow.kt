@@ -76,7 +76,7 @@ fun BagItemRow(
         }
 
         Text(
-            bagItem.unitPrice.toString(),
+            bagItem.formattedUnitPrice,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.width(150.dp)
@@ -121,7 +121,7 @@ fun BagItemRow(
         }
 
         Text(
-            text = bagItem.price.toString(),
+            text = bagItem.formattedPrice,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.width(150.dp),
             textAlign = TextAlign.Center
