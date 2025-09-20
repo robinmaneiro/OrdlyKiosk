@@ -1,12 +1,12 @@
 package com.robinmaneiro.orderkiosk.menu.usecase
 
-import com.robinmaneiro.orderkiosk.menu.model.MenuProducts
+import com.robinmaneiro.orderkiosk.menu.model.MenuResponse
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
 
 class GetProductsByCategoryUseCase(
     private val menuRepository: MenuRepository
 ) {
-    suspend operator fun invoke(categoryId: String): MenuProducts? {
+    suspend operator fun invoke(categoryId: String): MenuResponse? {
         return menuRepository.getProductsByCategory(categoryId)
     }
 }

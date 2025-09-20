@@ -8,7 +8,7 @@ import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
-import com.robinmaneiro.orderkiosk.menu.model.MenuItem
+import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
@@ -74,7 +74,7 @@ class MenuViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = menuCategories,
-                    menuItems = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                    menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
                     diningOption = diningOption ?: it.diningOption,
                     isLoading = false
                 )
@@ -92,7 +92,7 @@ class MenuViewModel(
             _uiState.update {
                 it.copy(
                     menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                    menuItems = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
+                    menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
                 )
             }
         }
@@ -135,7 +135,7 @@ class MenuViewModel(
     data class UiState(
         val isLoading: Boolean = false,
         val menuCategories: List<MenuCategory> = emptyList(),
-        val menuItems: List<MenuItem> = emptyList(),
+        val menuProducts: List<MenuProduct> = emptyList(),
         val bagResponse: BagResponse? = null, // TODO: Change to just set the formatted value here
         val diningOption: DiningOption = DiningOption.TAKE_AWAY
     )

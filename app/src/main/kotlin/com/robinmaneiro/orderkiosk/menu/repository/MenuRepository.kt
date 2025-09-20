@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.menu.repository
 
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
-import com.robinmaneiro.orderkiosk.menu.model.MenuProducts
+import com.robinmaneiro.orderkiosk.menu.model.MenuResponse
 
 interface MenuRepository {
-    suspend fun getProductsByCategory(categoryId: String): MenuProducts?
+    suspend fun getProductsByCategory(categoryId: String): MenuResponse?
     suspend fun getProductExtendedInfo(productId: String): MenuItemExpanded?
 }

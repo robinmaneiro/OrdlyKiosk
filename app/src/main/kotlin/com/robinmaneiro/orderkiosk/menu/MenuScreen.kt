@@ -133,7 +133,7 @@ fun MenuScreenContent(
             )
 
             MenuItemsSection(
-                menuItems = uiState.menuItems,
+                menuProducts = uiState.menuProducts,
                 onProductClicked = { viewModel.onProductClicked(it) },
                 lazyGridState = lazyGridState,
                 modifier = Modifier.width(900.dp)
