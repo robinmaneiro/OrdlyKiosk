@@ -95,6 +95,8 @@ class MenuViewModel(
                     menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
                 )
             }
+
+            _actions.trySend(Actions.ResetLazyGridState)
         }
     }
 
@@ -130,6 +132,7 @@ class MenuViewModel(
 
     sealed interface Actions {
         data class OpenProductInfo(val product: MenuItemExpanded) : Actions
+        data object ResetLazyGridState : Actions
     }
 
     data class UiState(
