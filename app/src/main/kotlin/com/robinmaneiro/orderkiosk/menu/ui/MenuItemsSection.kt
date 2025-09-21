@@ -1,12 +1,17 @@
 package com.robinmaneiro.orderkiosk.menu.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,7 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +34,8 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
+import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
+import com.robinmaneiro.orderkiosk.util.fadingEdge
 
 @Composable
 fun MenuItemsSection(
@@ -36,10 +45,13 @@ fun MenuItemsSection(
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        modifier = modifier,
+        modifier = modifier
+            .fadingEdge()
+        ,
         columns = GridCells.Adaptive(200.dp),
         state = lazyGridState,
         contentPadding = PaddingValues(
+            top = 16.dp,
             bottom = 100.dp
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),

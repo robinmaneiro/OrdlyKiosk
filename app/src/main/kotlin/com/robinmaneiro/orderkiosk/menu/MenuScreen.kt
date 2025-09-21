@@ -118,7 +118,7 @@ fun MenuScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Iceberg.copy(alpha = 0.2f))
-                .padding(all = 20.dp)
+                .padding(horizontal = 20.dp, vertical = 4.dp)
         ) {
 
             MenuCategorySection(
