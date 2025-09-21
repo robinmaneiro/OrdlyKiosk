@@ -13,15 +13,6 @@ data class BagResponse(
     val itemCount = items.count()
 }
 
-data class Tax(
-    @JsonProperty("vat") val vat: TaxUnit
-)
-
-data class TaxUnit(
-    @JsonProperty("amount") val amount: Int,
-    @JsonProperty("rate") val rate: Int
-)
-
 data class BagItem(
     @JsonProperty("itemId") val itemId: String,
     @JsonProperty("productId") val productId: String,
@@ -54,3 +45,12 @@ data class PriceData(
     val withoutTax = _withoutTax.getDoublePrice()
     val formattedWithoutTax = withoutTax.getFormattedPrice(currencyCode)
 }
+
+data class Tax(
+    @JsonProperty("vat") val vat: TaxUnit
+)
+
+data class TaxUnit(
+    @JsonProperty("amount") val amount: Int,
+    @JsonProperty("rate") val rate: Int
+)

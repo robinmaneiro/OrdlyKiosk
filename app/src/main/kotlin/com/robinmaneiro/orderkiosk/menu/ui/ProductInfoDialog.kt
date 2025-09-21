@@ -88,7 +88,7 @@ fun ProductOverlay(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(text = product.price.toString(), style = MaterialTheme.typography.titleMedium)
+                    Text(text = product.formattedPrice, style = MaterialTheme.typography.titleMedium)
                 }
 
                 Row(

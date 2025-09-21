@@ -1,13 +1,16 @@
 package com.robinmaneiro.orderkiosk.menu.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.robinmaneiro.orderkiosk.util.getDoublePrice
+import com.robinmaneiro.orderkiosk.util.getFormattedPrice
 
 data class MenuItemExpanded(
     @JsonProperty("id") val productId: String,
     @JsonProperty("title") val title: String,
-    @JsonProperty("price") private val _price: Int,
+    @JsonProperty("price") private val _priceData: PriceData,
     @JsonProperty("description") val description: String,
     @JsonProperty("categories") val categories: List<String>
 ) {
-    val price = _price.div(100.toDouble())
+    val price = _priceData.withTax
+    val formattedPrice = _priceData.formattedWithTax
 }
