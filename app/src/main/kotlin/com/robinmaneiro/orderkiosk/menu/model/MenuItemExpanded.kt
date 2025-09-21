@@ -1,8 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.robinmaneiro.orderkiosk.util.getDoublePrice
-import com.robinmaneiro.orderkiosk.util.getFormattedPrice
 
 data class MenuItemExpanded(
     @JsonProperty("id") val productId: String,
