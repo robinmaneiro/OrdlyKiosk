@@ -27,7 +27,6 @@ import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 
 @Composable
 fun BagItemRow(

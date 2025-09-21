@@ -19,7 +19,7 @@ fun OrderHistoryScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "My Screen", onBack = {
+            SimpleTopBar(title = "Order History", onBack = {
                 navController.navigateUp()
             })
         }

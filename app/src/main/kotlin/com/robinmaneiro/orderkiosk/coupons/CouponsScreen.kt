@@ -19,7 +19,7 @@ fun CouponsScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "My Screen", onBack = {
+            SimpleTopBar(title = "Coupons", onBack = {
                 navController.navigateUp()
             })
         }
