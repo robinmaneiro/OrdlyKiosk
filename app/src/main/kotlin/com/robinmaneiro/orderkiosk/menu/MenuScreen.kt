@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -67,12 +68,13 @@ fun MenuScreen(
     }
     val uiState: MenuViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
     var shownProduct by remember { mutableStateOf<MenuItemExpanded?>(null) }
+    val lazyGridState = rememberLazyGridState()
 
     LaunchedEffect(viewModel) {
         viewModel.actions.collect { action ->
             when (action) {
                 is MenuViewModel.Actions.OpenProductInfo -> shownProduct = action.product
-                // handle other actions if needed
+                is MenuViewModel.Actions.ResetLazyGridState -> lazyGridState.scrollToItem(0)
             }
         }
     }
@@ -82,7 +84,8 @@ fun MenuScreen(
         viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
         uiState = uiState,
         onBagClick = { navController.navigate(Screens.BagScreen.route) },
-        modifier = modifier
+        modifier = modifier,
+        lazyGridState
     )
 
     shownProduct?.let {
@@ -107,11 +110,11 @@ fun MenuScreenContent(
     viewModel: MenuViewModel,
     uiState: MenuViewModel.UiState,
     onBagClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    lazyGridState: LazyGridState
 ) {
     //region Fixed content
     Box {
-        val lazyGridState = rememberLazyGridState()
         val scope = rememberCoroutineScope()
 
         Row(
@@ -250,7 +253,8 @@ fun DashboardScreenPreview() {
         navController = rememberNavController(),
         viewModel = koinViewModel<MenuViewModel>(),
         uiState = MenuViewModel.UiState(),
-        onBagClick = {}
+        onBagClick = {},
+        lazyGridState = rememberLazyGridState()
     )
 }
 
