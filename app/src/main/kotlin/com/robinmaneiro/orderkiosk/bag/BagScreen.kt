@@ -28,7 +28,7 @@ fun BagScreen(
 
     Scaffold(
         topBar = {
-            SimpleTopBar(title = "My Screen", onBack = {
+            SimpleTopBar(title = "Bag", onBack = {
                 navController.navigateUp()
             })
         }

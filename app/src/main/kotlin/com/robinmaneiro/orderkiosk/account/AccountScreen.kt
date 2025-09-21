@@ -22,7 +22,7 @@ fun AccountScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "My Screen", onBack = {
+            SimpleTopBar(title = "Account", onBack = {
                 navController.navigateUp()
             })
         }

@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BagViewModel(
-    val getBagUseCase: GetBagUseCase,
-    val updateBagItemUseCase: UpdateBagItemUseCase,
-    val removeFromBagUseCase: RemoveFromBagUseCase
+    private val getBagUseCase: GetBagUseCase,
+    private val updateBagItemUseCase: UpdateBagItemUseCase,
+    private val removeFromBagUseCase: RemoveFromBagUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
