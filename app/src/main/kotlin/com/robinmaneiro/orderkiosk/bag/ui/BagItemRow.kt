@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.bag.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,22 +34,24 @@ import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 @Composable
 fun BagItemRow(
     bagItem: BagItem,
-    onPlusClick: (String) -> Unit,
-    onMinusClick: (String) -> Unit
+    onPlusClick: () -> Unit,
+    onMinusClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .padding(horizontal = 16.dp, vertical = 0.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
         Row(
-            modifier = Modifier.width(600.dp)
+            modifier = Modifier
+                .size(600.dp, height = 100.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.height( 80.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(R.drawable.item_test_big_mac)
                     .build(),
@@ -56,7 +61,8 @@ fun BagItemRow(
             Spacer(Modifier.width(16.dp))
 
             Column(
-                Modifier.padding(vertical = 8.dp)
+                verticalArrangement = Arrangement.Top,
+                modifier = Modifier.height(80.dp)
             ) {
                 Text(
                     text = bagItem.title,
@@ -96,7 +102,7 @@ fun BagItemRow(
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                        onMinusClick.invoke("")
+                        onMinusClick.invoke()
                     }
             )
 
@@ -114,7 +120,7 @@ fun BagItemRow(
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                        onPlusClick.invoke("")
+                        onPlusClick.invoke()
                     }
             )
         }

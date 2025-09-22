@@ -1,6 +1,9 @@
 package com.robinmaneiro.orderkiosk.bag
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +20,7 @@ import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import com.robinmaneiro.orderkiosk.util.fadingEdge
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -33,30 +37,44 @@ fun BagScreen(
             })
         }
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-                .padding(20.dp),
+        Column(
+            Modifier.padding(it)
         ) {
-            itemsIndexed(uiState.bagItems) { index, bagItemData ->
-                BagItemRow(
-                    bagItem = bagItemData,
-                    onPlusClick = { itemId ->
-                        viewModel.increaseQuantity(bagItemData)
-                    },
-                    onMinusClick = { itemId ->
-                        viewModel.decreaseQuantity(bagItemData)
-                    }
-                )
-                if (index < uiState.bagItems.lastIndex) {
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                        thickness = 1.dp,
-                        color = Color.Gray
+            LazyColumn(
+                modifier = Modifier
+                    .fadingEdge()
+                    .fillMaxWidth()
+                    .weight(.85F),
+                contentPadding = PaddingValues(vertical = 16.dp)
+            ) {
+                itemsIndexed(uiState.bagItems) { index, bagItemData ->
+                    BagItemRow(
+                        bagItem = bagItemData,
+                        onPlusClick = {
+                            viewModel.increaseQuantity(bagItemData)
+                        },
+                        onMinusClick = {
+                            viewModel.decreaseQuantity(bagItemData)
+                        }
                     )
+                    if (index < uiState.bagItems.lastIndex) {
+                        HorizontalDivider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            thickness = 1.dp,
+                            color = Color.Gray
+                        )
+                    }
                 }
             }
+
+            Box(
+                Modifier
+                    .weight(.15f)
+                    .fillMaxWidth()
+                    .background(Color.Red)
+            )
         }
     }
 
