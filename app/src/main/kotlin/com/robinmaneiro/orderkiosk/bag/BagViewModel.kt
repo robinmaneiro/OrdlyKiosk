@@ -28,6 +28,8 @@ class BagViewModel(
             _uiState.update {
                 it.copy(
                     bagItems = response.items,
+                    itemCount = response.itemCount,
+                    formattedTotalCost = response.formattedTotalCost,
                     isLoading = false
                 )
             }
@@ -72,6 +74,8 @@ class BagViewModel(
 
     data class UiState(
         val bagItems: List<BagItem> = emptyList(),
+        val itemCount: Int = 0,
+        val formattedTotalCost: String = "",
         val isLoading: Boolean = false
     )
 }
