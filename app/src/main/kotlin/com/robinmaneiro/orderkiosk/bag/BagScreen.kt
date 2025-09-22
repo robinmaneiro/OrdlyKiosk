@@ -18,13 +18,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
+import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -37,6 +42,7 @@ fun BagScreen(
 ) {
     val viewModel = koinViewModel<BagViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var itemToRemove by remember { mutableStateOf<BagItem?>(null) }
 
     Scaffold(
         topBar = {
@@ -62,7 +68,11 @@ fun BagScreen(
                             viewModel.increaseQuantity(bagItemData)
                         },
                         onMinusClick = {
-                            viewModel.decreaseQuantity(bagItemData)
+                            if (bagItemData.quantity == 1) {
+                                itemToRemove = bagItemData
+                            } else {
+                                viewModel.decreaseQuantity(bagItemData)
+                            }
                         }
                     )
                     if (index < uiState.bagItems.lastIndex) {
@@ -95,7 +105,7 @@ fun BagScreen(
                         .fillMaxHeight()
                         .align(Alignment.Center),
                     verticalArrangement = Arrangement.Center
-                ){
+                ) {
                     Text(
                         text = "Total"
                     )
@@ -128,6 +138,22 @@ fun BagScreen(
                 }
             }
         }
+    }
+
+    itemToRemove?.let { bagItem ->
+        CustomDialog(
+            title = "Are you sure? ",
+            body = "Do you really want to remove this item from the bag?",
+            primaryButtonLabel = "Remove item",
+            secondaryButtonLabel = "Cancel",
+            onPrimaryButtonClicked = {
+                viewModel.removeItem(bagItem)
+                itemToRemove = null
+            },
+            onSecondaryButtonClicked = {
+                itemToRemove = null
+            }
+        )
     }
 
     if (uiState.isLoading) {
