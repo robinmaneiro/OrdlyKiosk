@@ -129,7 +129,9 @@ fun BagScreen(
                     }
 
                     TextButton(
-                        onClick = {}
+                        onClick = {
+                            viewModel.removeAllItems()
+                        }
                     ) {
                         Text(
                             "Cancel Order"
