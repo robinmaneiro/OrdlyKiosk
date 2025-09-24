@@ -7,7 +7,6 @@ import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
