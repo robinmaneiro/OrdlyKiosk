@@ -43,6 +43,7 @@ fun BagScreen(
     val viewModel = koinViewModel<BagViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var itemToRemove by remember { mutableStateOf<BagItem?>(null) }
+    var showClearBagDialog by remember { mutableStateOf(false)}
 
     Scaffold(
         topBar = {
@@ -130,7 +131,7 @@ fun BagScreen(
 
                     TextButton(
                         onClick = {
-                            viewModel.removeAllItems()
+                            showClearBagDialog = true
                         }
                     ) {
                         Text(
@@ -154,6 +155,22 @@ fun BagScreen(
             },
             onSecondaryButtonClicked = {
                 itemToRemove = null
+            }
+        )
+    }
+
+    if (showClearBagDialog) {
+        CustomDialog(
+            title = "Are you sure?",
+            body = "This action will remove ALL items from the bag",
+            primaryButtonLabel = "Clear Basket",
+            secondaryButtonLabel = "Cancel",
+            onPrimaryButtonClicked = {
+                viewModel.removeAllItems()
+                showClearBagDialog = false
+            },
+            onSecondaryButtonClicked = {
+                showClearBagDialog = false
             }
         )
     }
