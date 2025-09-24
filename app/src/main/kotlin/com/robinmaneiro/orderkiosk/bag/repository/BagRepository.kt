@@ -9,7 +9,9 @@ interface BagRepository {
 
     suspend fun addToBag(productId: String, quantity: Int): BagResponse?
 
+    suspend fun updateBagItem(bagItemId: String, newQuantity: Int): BagResponse?
+
     suspend fun removeFromBag(bagItemId: String): BagResponse?
 
-    suspend fun updateBagItem(bagItemId: String, newQuantity: Int): BagResponse?
+    suspend fun removeAllBagItems(): BagResponse?
 }
