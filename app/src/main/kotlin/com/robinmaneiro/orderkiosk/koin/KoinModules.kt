@@ -19,15 +19,17 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelModules = module {
-    factoryOf(::WelcomeViewModel)
-    factoryOf(::MenuViewModel)
-    factoryOf(::BagViewModel)
-    factoryOf(::AccountViewModel)
-    factoryOf(::CouponsViewModel)
-    factoryOf(::OrderHistoryViewModel)
+    viewModelOf(::WelcomeViewModel)
+    viewModelOf(::MenuViewModel)
+    viewModelOf(::BagViewModel)
+    viewModelOf(::AccountViewModel)
+    viewModelOf(::CouponsViewModel)
+    viewModelOf(::OrderHistoryViewModel)
+    viewModelOf(::SharedViewModel)
 }
 
 val useCaseModules = module {
