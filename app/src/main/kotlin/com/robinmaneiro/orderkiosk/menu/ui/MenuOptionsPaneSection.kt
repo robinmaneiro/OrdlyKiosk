@@ -5,14 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,11 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
+import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
@@ -42,7 +40,7 @@ fun MenuOptionsPane(
     visible: Boolean,
     toggleDiningOption: () -> Unit
 ) {
-    var shouldShowDialog by remember { mutableStateOf(false) }
+    var shouldShowDiningOptionDialog by remember { mutableStateOf(false) }
 
     SlideFromSide(
         visible = visible,
@@ -78,44 +76,26 @@ fun MenuOptionsPane(
 
             OptionsPaneItem(
                 uiState.diningOption.uiText, {
-                    shouldShowDialog = true
+                    shouldShowDiningOptionDialog = true
                 },
                 null
             )
         }
     }
-    if (shouldShowDialog) { // TODO: Move this content to an screen
-        Box {
-            Dialog({
-                shouldShowDialog = false
-            }) {
-                Column {
-                    Text(
-                        modifier = Modifier.background(
-                            Color.White
-                        ), text = "Are you sure you want to change the dining option? "
-                    )
-
-                    Button(
-                        onClick = {
-                            // Call the method in the viewmodel
-                            toggleDiningOption.invoke()
-                            shouldShowDialog = false // and dismiss this
-                        }
-                    ) {
-                        Text("Yes")
-                    }
-
-                    Button(
-                        onClick = {
-                            shouldShowDialog = false
-                        }
-                    ) {
-                        Text("No")
-                    }
-                }
+    if (shouldShowDiningOptionDialog) { // TODO: Move this content to an screen
+        CustomDialog(
+            title = "Warning",
+            body = "Are you sure you want to change the dining option?",
+            primaryButtonLabel = "Change",
+            secondaryButtonLabel = "Cancel",
+            onPrimaryButtonClicked = {
+                toggleDiningOption.invoke()
+                shouldShowDiningOptionDialog = false
+            },
+            onSecondaryButtonClicked = {
+                shouldShowDiningOptionDialog = false
             }
-        }
+        )
     }
 }
 
