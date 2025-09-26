@@ -19,13 +19,13 @@ data class BagItem(
     @JsonProperty("quantity") val quantity: Int,
     @JsonProperty("title") val title: String,
     @JsonProperty("description") val description: String,
-    @JsonProperty("price") private val _priceData: ItemPrice,
+    @JsonProperty("price") private val _itemPrice: ItemPrice,
 ) {
-    val price = _priceData.total.withTax
-    val formattedPrice = _priceData.total.formattedWithTax
+    val price = _itemPrice.total.withTax
+    val formattedPrice = _itemPrice.total.formattedWithTax
 
-    val unitPrice = _priceData.unit.withTax
-    val formattedUnitPrice = _priceData.unit.formattedWithTax
+    val unitPrice = _itemPrice.unit.withTax
+    val formattedUnitPrice = _itemPrice.unit.formattedWithTax
 }
 
 data class ItemPrice(
@@ -47,7 +47,7 @@ data class PriceData(
 }
 
 data class Tax(
-    @JsonProperty("vat") val vat: TaxUnit
+    @JsonProperty("vat") val vat: TaxUnit = TaxUnit(0,0)
 )
 
 data class TaxUnit(
