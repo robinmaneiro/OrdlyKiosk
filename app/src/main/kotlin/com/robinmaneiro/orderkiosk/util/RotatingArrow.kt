@@ -2,12 +2,12 @@ package com.robinmaneiro.orderkiosk.util
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -34,23 +35,22 @@ fun RotatingArrow(
         animationSpec = tween(durationMillis)
     )
 
-    Column {
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-            contentDescription = if (rotated) "Expanded" else "Collapsed",
-            modifier = modifier
-                .size(24.dp)
-                .rotate(rotation)
-                .noRippleClickable {
-                    rotated = !rotated
-                    onToggle?.invoke(rotated)
-                }
-                .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
-        )
-
-    }
-
-    Text(
-        "Close Pane"
+    Icon(
+        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, // TODO: Replace icon with excessive padding
+        contentDescription = if (rotated) "Expanded" else "Collapsed",
+        modifier = modifier
+            .size(60.dp)
+            .rotate(rotation)
+            .noRippleClickable {
+                rotated = !rotated
+                onToggle?.invoke(rotated)
+            }
+            .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
     )
+}
+
+@Preview
+@Composable
+fun PreviewRotatingArrow() {
+    RotatingArrow {}
 }
