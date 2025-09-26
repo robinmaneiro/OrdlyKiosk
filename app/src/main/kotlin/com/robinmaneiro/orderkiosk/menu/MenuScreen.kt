@@ -38,12 +38,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
+import com.robinmaneiro.orderkiosk.menu.ui.BagTotalCostSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuOptionsPane
 import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
-import com.robinmaneiro.orderkiosk.menu.ui.BagTotalCostSection
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -53,7 +53,6 @@ import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 
