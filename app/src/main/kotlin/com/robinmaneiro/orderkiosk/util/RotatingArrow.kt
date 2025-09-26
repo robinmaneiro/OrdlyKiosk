@@ -2,10 +2,12 @@ package com.robinmaneiro.orderkiosk.util
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,16 +34,23 @@ fun RotatingArrow(
         animationSpec = tween(durationMillis)
     )
 
-    Icon(
-        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-        contentDescription = if (rotated) "Expanded" else "Collapsed",
-        modifier = modifier
-            .size(24.dp)
-            .rotate(rotation)
-            .noRippleClickable {
-                rotated = !rotated
-                onToggle?.invoke(rotated)
-            }
-            .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
+    Column {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            contentDescription = if (rotated) "Expanded" else "Collapsed",
+            modifier = modifier
+                .size(24.dp)
+                .rotate(rotation)
+                .noRippleClickable {
+                    rotated = !rotated
+                    onToggle?.invoke(rotated)
+                }
+                .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
+        )
+
+    }
+
+    Text(
+        "Close Pane"
     )
 }
