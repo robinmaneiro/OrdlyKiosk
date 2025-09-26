@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -161,15 +163,19 @@ fun MenuScreenContent(
         }
 
         var show by remember { mutableStateOf(false) }
-        RotatingArrow(
-            Modifier
-                .padding(
-                    end = 20.dp
-                )
-                .size(60.dp)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .width(100.dp)
                 .align(Alignment.TopEnd)
         ) {
-            show = !show
+            RotatingArrow {
+                show = !show
+            }
+
+            Text(
+                text = if (show) "Close" else "Open"
+            )
         }
 
         NavigationArrows(
