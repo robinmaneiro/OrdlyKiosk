@@ -55,6 +55,7 @@ import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 

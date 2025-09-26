@@ -82,17 +82,17 @@ fun MenuOptionsPane(
             )
         }
     }
-    if (shouldShowDiningOptionDialog) { // TODO: Move this content to an screen
+    if (shouldShowDiningOptionDialog) {
         CustomDialog(
             title = "Warning",
             body = "Are you sure you want to change the dining option?",
             primaryButtonLabel = "Change",
             secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClicked = {
+            onPrimaryButtonClick = {
                 toggleDiningOption.invoke()
                 shouldShowDiningOptionDialog = false
             },
-            onSecondaryButtonClicked = {
+            onSecondaryButtonClick = {
                 shouldShowDiningOptionDialog = false
             }
         )

@@ -39,16 +39,17 @@ fun CustomDialog(
     body: String,
     primaryButtonLabel: String,
     secondaryButtonLabel: String,
-    onPrimaryButtonClicked: () -> Unit,
-    onSecondaryButtonClicked: () -> Unit
+    onPrimaryButtonClick: () -> Unit,
+    onSecondaryButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    BackHandler(enabled = true) { onSecondaryButtonClicked() }
+    BackHandler(enabled = true) { onSecondaryButtonClick() }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.40f)) // TODO: Move to an independent color?
-            .clickable { onSecondaryButtonClicked() },
+            .clickable { onSecondaryButtonClick() },
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -86,7 +87,7 @@ fun CustomDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     TextButton(
-                        onClick = onSecondaryButtonClicked
+                        onClick = onSecondaryButtonClick
                     ) {
                         Text(
                             text = secondaryButtonLabel,
@@ -102,7 +103,7 @@ fun CustomDialog(
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(5.dp),
-                        onClick = { onPrimaryButtonClicked.invoke() }
+                        onClick = { onPrimaryButtonClick.invoke() }
                     ) {
                         Text(
                             text = primaryButtonLabel,

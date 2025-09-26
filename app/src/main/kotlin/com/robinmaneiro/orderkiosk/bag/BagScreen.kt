@@ -149,11 +149,11 @@ fun BagScreen(
             body = "Do you really want to remove this item from the bag?",
             primaryButtonLabel = "Remove item",
             secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClicked = {
+            onPrimaryButtonClick = {
                 viewModel.removeItem(bagItem)
                 itemToRemove = null
             },
-            onSecondaryButtonClicked = {
+            onSecondaryButtonClick = {
                 itemToRemove = null
             }
         )
@@ -165,11 +165,11 @@ fun BagScreen(
             body = "This action will remove ALL items from the bag",
             primaryButtonLabel = "Clear Basket",
             secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClicked = {
+            onPrimaryButtonClick = {
                 viewModel.removeAllItems()
                 showClearBagDialog = false
             },
-            onSecondaryButtonClicked = {
+            onSecondaryButtonClick = {
                 showClearBagDialog = false
             }
         )
