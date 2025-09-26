@@ -22,8 +22,11 @@ import androidx.compose.ui.unit.dp
 fun SimpleTopBar(
     title: String,
     onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier
+    ) {
         TopAppBar(
             title = {
                 Box(

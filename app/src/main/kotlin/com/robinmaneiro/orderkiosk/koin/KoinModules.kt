@@ -29,7 +29,6 @@ val viewModelModules = module {
     viewModelOf(::AccountViewModel)
     viewModelOf(::CouponsViewModel)
     viewModelOf(::OrderHistoryViewModel)
-    viewModelOf(::SharedViewModel)
 }
 
 val useCaseModules = module {
