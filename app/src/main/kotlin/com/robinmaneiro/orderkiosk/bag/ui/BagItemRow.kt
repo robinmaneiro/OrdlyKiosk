@@ -1,6 +1,5 @@
 package com.robinmaneiro.orderkiosk.bag.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,7 +26,12 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
+import com.robinmaneiro.orderkiosk.bag.model.ItemPrice
+import com.robinmaneiro.orderkiosk.bag.model.PriceData
+import com.robinmaneiro.orderkiosk.bag.model.Tax
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
 fun BagItemRow(
@@ -51,7 +53,7 @@ fun BagItemRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                modifier = Modifier.height( 80.dp),
+                modifier = Modifier.height(80.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(R.drawable.item_test_big_mac)
                     .build(),
@@ -101,7 +103,7 @@ fun BagItemRow(
                 tint = Aquamarine40,
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable {
+                    .noRippleClickable {
                         onMinusClick.invoke()
                     }
             )
@@ -119,7 +121,7 @@ fun BagItemRow(
                 tint = Aquamarine40,
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable {
+                    .noRippleClickable {
                         onPlusClick.invoke()
                     }
             )
@@ -134,20 +136,25 @@ fun BagItemRow(
     }
 }
 
-//@PixelTabletPreview TODO: Restore views
-//@Composable
-//fun BagItemPreview() {
-//    BagItemRow(
-//        BagItem(
-//            itemId = "",
-//            productId = "",
-//            quantity = 1,
-//            title = "Big Mac",
-//            description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
-//            _priceData = 995,
-//            _unitPrice = 995
-//        ),
-//        onPlusClick = {},
-//        onMinusClick = {}
-//    )
-//}
+@PixelTabletPreview
+@Composable
+fun BagItemPreview() {
+    val priceData = PriceData(
+        currencyCode = "GBP",
+        _withTax = 99500,
+        _withoutTax = 99500,
+        tax = Tax()
+    )
+    BagItemRow(
+        BagItem(
+            itemId = "",
+            productId = "",
+            quantity = 1,
+            title = "Big Mac",
+            description = "It's just bloody delicious, you won't believe it when you try it. This is something else to occupy the second line and forcing the text to",
+            _itemPrice = ItemPrice(priceData, priceData)
+        ),
+        onPlusClick = {},
+        onMinusClick = {}
+    )
+}

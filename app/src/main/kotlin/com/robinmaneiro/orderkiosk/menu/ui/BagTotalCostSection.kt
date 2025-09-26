@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
@@ -84,10 +85,8 @@ fun BagTotalCostSection(
     }
 }
 
-//@Preview( TODO: Restore preview
-//    showBackground = true
-//)
-//@Composable
-//fun BottomSectionPreview() {
-//    BagTotalCostSection(listOf(), {})
-//}
+@Preview
+@Composable
+fun BottomSectionPreview() {
+    BagTotalCostSection("42.95", 6, {})
+}
