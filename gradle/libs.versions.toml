@@ -14,7 +14,7 @@ coil-compose = "3.3.0" #
 koin = "4.1.1"
 detekt = "1.23.8"
 compose-detekt-rules = "0.4.27"
-ktor-client = "3.2.3"
+ktor-client = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
