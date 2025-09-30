@@ -17,6 +17,8 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
+import com.robinmaneiro.orderkiosk.util.DataStoreRepository
+import com.robinmaneiro.orderkiosk.util.DataStoreRepositoryImpl
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
@@ -44,6 +46,7 @@ val useCaseModules = module {
 }
 
 val repositoryModules = module {
+    single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }
     single<MenuRepository> { MenuRepositoryImpl() }
     single<BagRepository> { BagRepositoryImpl() }
 }

@@ -57,6 +57,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //region AndroidX
+    implementation(libs.datastore)
+    //endregion
+
     //region Third party
     implementation(libs.lottie.compose)
     implementation(libs.androidx.navigation.compose)
