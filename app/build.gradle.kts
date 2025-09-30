@@ -79,6 +79,10 @@ dependencies {
     implementation(libs.ktor.okhttp)
     //endregion
 
+    //region Crypto
+    implementation(libs.tink)
+    //endregion
+
     detektPlugins(libs.compose.detekt.rules)
 }
 
