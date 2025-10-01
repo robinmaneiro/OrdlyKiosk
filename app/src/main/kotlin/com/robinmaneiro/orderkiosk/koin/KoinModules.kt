@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.koin
 
-import com.robinmaneiro.orderkiosk.account.AccountViewModel
+import com.robinmaneiro.orderkiosk.account.LoginViewModel
+import com.robinmaneiro.orderkiosk.account.RegistrationViewModel
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
@@ -19,7 +20,6 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.util.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.DataStoreRepositoryImpl
-import com.robinmaneiro.orderkiosk.util.EncryptionUtil
 import com.robinmaneiro.orderkiosk.util.EncryptionUtil.initialize
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
@@ -30,7 +30,8 @@ val viewModelModules = module {
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::MenuViewModel)
     viewModelOf(::BagViewModel)
-    viewModelOf(::AccountViewModel)
+    viewModelOf(::RegistrationViewModel)
+    viewModelOf(::LoginViewModel)
     viewModelOf(::CouponsViewModel)
     viewModelOf(::OrderHistoryViewModel)
 }

@@ -66,7 +66,7 @@ fun MenuOptionsPane(
             ) {
                 // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
                 listOf(
-                    Triple("Sign In", { navController.navigate(Screens.AccountScreen.route) }, R.drawable.icn_rounded_user),
+                    Triple("Sign In", { navController.navigate(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
                     Triple("Order History", { navController.navigate(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
                     Triple("Coupons", { navController.navigate(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
                 ).forEach {

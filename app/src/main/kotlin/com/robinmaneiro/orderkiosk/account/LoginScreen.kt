@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import org.koin.androidx.compose.koinViewModel
@@ -39,7 +40,7 @@ fun AccountScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val viewModel = koinViewModel<AccountViewModel>()
+    val viewModel = koinViewModel<LoginViewModel>()
 
     Scaffold(
         modifier = modifier,
@@ -49,12 +50,17 @@ fun AccountScreen(
             })
         }
     ) {
-        AccountScreenContent(it)
+        LoginScreenContent(it) {
+            navController.navigate(Screens.RegistrationScreen.route)
+        }
     }
 }
 
 @Composable
-fun AccountScreenContent(paddingValues: PaddingValues) {
+fun LoginScreenContent(
+    paddingValues: PaddingValues,
+    goToRegistration: () -> Unit
+) {
     Box(
         Modifier
             .padding(paddingValues)
@@ -121,7 +127,7 @@ fun AccountScreenContent(paddingValues: PaddingValues) {
 
                 TextButton(
                     {
-
+                        goToRegistration.invoke()
                     }
                 ) {
                     Text("Register")
@@ -134,5 +140,5 @@ fun AccountScreenContent(paddingValues: PaddingValues) {
 @PixelTabletPreview
 @Composable
 fun AccountScreenContentPreview() {
-    AccountScreenContent(PaddingValues(20.dp))
+    LoginScreenContent(PaddingValues(20.dp)) {}
 }
