@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.robinmaneiro.orderkiosk.account.AccountScreen
+import com.robinmaneiro.orderkiosk.account.RegistrationScreen
 import com.robinmaneiro.orderkiosk.bag.BagScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
 import com.robinmaneiro.orderkiosk.menu.MenuScreen
@@ -36,7 +37,8 @@ fun MainScreen(
             )
         }
         composable(route = Screens.BagScreen.route) { BagScreen(navController = navHostController) }
-        composable(route = Screens.AccountScreen.route) { AccountScreen(navController = navHostController) }
+        composable(route = Screens.RegistrationScreen.route) { RegistrationScreen(navController = navHostController) }
+        composable(route = Screens.LoginScreen.route) { AccountScreen(navController = navHostController) }
         composable(route = Screens.CouponsScreen.route) { CouponsScreen(navController = navHostController) }
         composable(route = Screens.OrderHistoryScreen.route) { OrderHistoryScreen(navController = navHostController) }
 

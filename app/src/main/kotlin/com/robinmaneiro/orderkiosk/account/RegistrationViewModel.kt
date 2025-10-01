@@ -2,6 +2,6 @@ package com.robinmaneiro.orderkiosk.account
 
 import androidx.lifecycle.ViewModel
 
-class AccountViewModel : ViewModel() {
+class RegistrationViewModel: ViewModel() {
 
 }
