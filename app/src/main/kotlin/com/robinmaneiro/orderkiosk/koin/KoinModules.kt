@@ -61,9 +61,3 @@ val repositoryModules = module {
     single<MenuRepository> { MenuRepositoryImpl() }
     single<BagRepository> { BagRepositoryImpl() }
 }
-
-val tinkModule = module {
-    single {
-        initialize(get())
-    }
-}
