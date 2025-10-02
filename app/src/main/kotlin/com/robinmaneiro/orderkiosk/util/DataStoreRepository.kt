@@ -11,11 +11,14 @@ import kotlinx.coroutines.flow.firstOrNull
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
-private val tokenKey = stringPreferencesKey("token")
+private val accessTokenKey = stringPreferencesKey("access_token")
+private val refreshTokenKey = stringPreferencesKey("refresh_token")
 
 interface DataStoreRepository {
-    suspend fun saveEncryptedToken(token: String)
-    suspend fun getEncryptedToken(): String
+    suspend fun saveAccessToken(accessToken: String)
+    suspend fun getAccessToken(): String
+    suspend fun saveRefreshToken(refreshToken: String)
+    suspend fun getRefreshToken(): String
 }
 
 class DataStoreRepositoryImpl(
@@ -28,15 +31,27 @@ class DataStoreRepositoryImpl(
 
     //endregion
 
-    override suspend fun saveEncryptedToken(token: String) {
+    override suspend fun saveAccessToken(token: String) {
         val encryptedToken = EncryptionUtil.encrypt(token)
         dataStore.edit {
-            it[tokenKey] = encryptedToken
+            it[accessTokenKey] = encryptedToken
         }
     }
 
-    override suspend fun getEncryptedToken(): String {
-        val encryptedToken = getDataStore()?.get(tokenKey) ?: return ""
+    override suspend fun getAccessToken(): String {
+        val encryptedToken = getDataStore()?.get(accessTokenKey) ?: return ""
+        return EncryptionUtil.decrypt(encryptedToken)
+    }
+
+    override suspend fun saveRefreshToken(refreshToken: String) {
+        val encryptedToken = EncryptionUtil.encrypt(refreshToken)
+        dataStore.edit {
+            it[refreshTokenKey] = encryptedToken
+        }
+    }
+
+    override suspend fun getRefreshToken(): String {
+        val encryptedToken = getDataStore()?.get(refreshTokenKey) ?: return ""
         return EncryptionUtil.decrypt(encryptedToken)
     }
 

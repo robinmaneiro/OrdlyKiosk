@@ -9,12 +9,14 @@ class AccountRepositoryImpl : AccountRepository {
         NetworkManager.postRequest<RegisterResponse>("", payload)
     }
 
-    override suspend fun login(userName: String, password: String) {
+    override suspend fun login(email: String, password: String): LoginResponse? {
         val payload = """
-            userName: $userName,
-            password: $password
+            {
+            "email": "$email",
+            "password": "$password"
+            }
             """
 
-        NetworkManager.postRequest<LoginResponse>("", payload)
+        return NetworkManager.postRequest<LoginResponse>("http://192.168.1.162:8080/auth/login", payload)
     }
 }
