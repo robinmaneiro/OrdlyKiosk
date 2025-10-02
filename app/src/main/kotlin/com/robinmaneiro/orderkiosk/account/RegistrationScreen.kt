@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import org.koin.androidx.compose.koinViewModel
@@ -39,12 +40,17 @@ fun RegistrationScreen(
             })
         }
     ) {
-        RegistrationScreenContent(it)
+        RegistrationScreenContent(it) { registrationPayload ->
+            viewModel.registerAccount(registrationPayload)
+        }
     }
 }
 
 @Composable
-fun RegistrationScreenContent(paddingValues: PaddingValues) {
+fun RegistrationScreenContent(
+    paddingValues: PaddingValues,
+    registerAccount: (RegisterPayload) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -103,7 +109,15 @@ fun RegistrationScreenContent(paddingValues: PaddingValues) {
             Modifier.height(20.dp)
         )
 
-        Button({}) {
+        Button({
+            registerAccount.invoke(RegisterPayload(
+                title = title,
+                firstName = firstName,
+                lastName = lastName,
+                email = emailAddress,
+                password = password
+            ))
+        }) {
             Text("Register")
         }
     }
@@ -112,5 +126,5 @@ fun RegistrationScreenContent(paddingValues: PaddingValues) {
 @PixelTabletPreview
 @Composable
 fun RegistrationScreenContentPreview() {
-    RegistrationScreenContent(PaddingValues(20.dp))
+    RegistrationScreenContent(PaddingValues(20.dp)) {}
 }

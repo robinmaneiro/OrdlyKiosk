@@ -2,6 +2,10 @@ package com.robinmaneiro.orderkiosk.koin
 
 import com.robinmaneiro.orderkiosk.account.LoginViewModel
 import com.robinmaneiro.orderkiosk.account.RegistrationViewModel
+import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
+import com.robinmaneiro.orderkiosk.account.repository.AccountRepositoryImpl
+import com.robinmaneiro.orderkiosk.account.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
@@ -37,6 +41,9 @@ val viewModelModules = module {
 }
 
 val useCaseModules = module {
+    factoryOf(::RegisterAccountUseCase)
+    factoryOf(::LoginUserUseCase)
+
     factoryOf(::GetMenuCategoriesUseCase)
     factoryOf(::GetProductsByCategoryUseCase)
     factoryOf(::GetProductExtendedInfoUseCase)
@@ -49,6 +56,7 @@ val useCaseModules = module {
 }
 
 val repositoryModules = module {
+    single<AccountRepository> { AccountRepositoryImpl() }
     single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }
     single<MenuRepository> { MenuRepositoryImpl() }
     single<BagRepository> { BagRepositoryImpl() }

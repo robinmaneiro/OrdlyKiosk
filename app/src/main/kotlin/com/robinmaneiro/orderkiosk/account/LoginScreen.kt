@@ -50,15 +50,19 @@ fun AccountScreen(
             })
         }
     ) {
-        LoginScreenContent(it) {
-            navController.navigate(Screens.RegistrationScreen.route)
-        }
+        LoginScreenContent(
+            it,
+            loginUser = { user, pass -> viewModel.loginUser(user, pass) },
+            goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) }
+
+        )
     }
 }
 
 @Composable
 fun LoginScreenContent(
     paddingValues: PaddingValues,
+    loginUser: (String, String) -> Unit,
     goToRegistration: () -> Unit
 ) {
     Box(
@@ -76,6 +80,7 @@ fun LoginScreenContent(
                 .blur(10.dp),
             contentScale = ContentScale.Crop
         )
+
         Box(
             modifier = Modifier
                 .size(600.dp, 500.dp)
@@ -116,7 +121,9 @@ fun LoginScreenContent(
                 )
 
                 Button(
-                    {}
+                    {
+                        loginUser.invoke(userName, password)
+                    }
                 ) {
                     Text("Login")
                 }
@@ -140,5 +147,5 @@ fun LoginScreenContent(
 @PixelTabletPreview
 @Composable
 fun AccountScreenContentPreview() {
-    LoginScreenContent(PaddingValues(20.dp)) {}
+    LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {})
 }
