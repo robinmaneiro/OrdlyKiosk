@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
+import com.robinmaneiro.orderkiosk.account.model.LoginPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
 import org.koin.androidx.compose.koinViewModel
@@ -52,9 +53,8 @@ fun AccountScreen(
     ) {
         LoginScreenContent(
             it,
-            loginUser = { user, pass -> viewModel.loginUser(user, pass) },
+            loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
             goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) }
-
         )
     }
 }

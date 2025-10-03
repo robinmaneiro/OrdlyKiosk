@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.account.model.LoginPayload
 import com.robinmaneiro.orderkiosk.account.usecase.LoginUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,9 +15,9 @@ class LoginViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    fun loginUser(user: String, pass: String) {
+    fun loginUser(payload: LoginPayload) {
         viewModelScope.launch {
-            loginUserUseCase.invoke(user, pass)
+            loginUserUseCase.invoke(payload)
         }
     }
 
