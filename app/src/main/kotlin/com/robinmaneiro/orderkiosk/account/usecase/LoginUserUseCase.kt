@@ -1,15 +1,16 @@
 package com.robinmaneiro.orderkiosk.account.usecase
 
+import com.robinmaneiro.orderkiosk.account.model.LoginPayload
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.util.DataStoreRepository
-import com.robinmaneiro.orderkiosk.util.DataStoreRepositoryImpl
+import com.robinmaneiro.orderkiosk.util.Mapper
 
 class LoginUserUseCase(
     private val accountRepository: AccountRepository,
     private val dataStore: DataStoreRepository
 ) {
-    suspend operator fun invoke(userName: String, password: String) {
-        val response = accountRepository.login(userName, password)
+    suspend operator fun invoke(payload: LoginPayload) {
+        val response = accountRepository.login(Mapper.asSerializedString(payload) ?: return)
         response?.let {
             dataStore.saveAccessToken(response.accessToken)
             dataStore.saveRefreshToken(response.refreshToken) // TODO: Save both at once

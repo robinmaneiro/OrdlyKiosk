@@ -1,10 +1,10 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
 import com.robinmaneiro.orderkiosk.account.model.LoginResponse
-import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
 
 interface AccountRepository {
-    suspend fun registerUser(payload: String)
+    suspend fun registerUser(payload: String): RegistrationResponse?
 
-    suspend fun login(email: String, password: String): LoginResponse?
+    suspend fun login(payload: String): LoginResponse?
 }

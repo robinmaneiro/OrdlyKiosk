@@ -2,6 +2,6 @@ package com.robinmaneiro.orderkiosk.account.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class RegisterResponse(
-    @JsonProperty("userId") val userId: String
+data class RegistrationResponse(
+    @JsonProperty("id") val id: String
 )
