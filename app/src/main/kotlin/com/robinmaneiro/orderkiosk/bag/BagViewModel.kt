@@ -25,8 +25,9 @@ class BagViewModel(
     init {
         showLoader()
         viewModelScope.launch {
-            val response = getBagUseCase.invoke() ?: run { hideLoader(); return@launch }
-            response.updateUiState()
+            getBagUseCase.invoke()
+                .onSuccess { it.updateUiState() }
+                .onFailure { hideLoader() }
         }
     }
 
@@ -49,8 +50,13 @@ class BagViewModel(
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.inc()
-            val response = updateBagItemUseCase.invoke(bagItem.itemId, newQuantity) ?: run { hideLoader(); return@launch }
-            response.updateUiState()
+            updateBagItemUseCase.invoke(bagItem.itemId, newQuantity)
+                .onSuccess { response ->
+                    response.updateUiState()
+                }
+                .onFailure {
+                    hideLoader()
+                }
         }
     }
 
@@ -58,24 +64,39 @@ class BagViewModel(
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.dec()
-            val response = updateBagItemUseCase.invoke(bagItem.itemId, newQuantity) ?: return@launch // TODO: Return for now, show loaders then
-            response.updateUiState()
+            updateBagItemUseCase.invoke(bagItem.itemId, newQuantity)
+                .onSuccess { response ->
+                    response.updateUiState()
+                }
+                .onFailure {
+                    hideLoader()
+                }
         }
     }
 
     fun removeItem(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
-            val response = removeFromBagUseCase.invoke(bagItem.itemId) ?: return@launch // TODO: Return for now, show loaders then
-            response.updateUiState()
+            removeFromBagUseCase.invoke(bagItem.itemId)
+                .onSuccess { response ->
+                    response.updateUiState()
+                }
+                .onFailure {
+                    // TODO:  Handle error
+                }
         }
     }
 
     fun removeAllItems() {
         showLoader()
         viewModelScope.launch {
-            val response = removeAllBagItemsUseCase.invoke() ?: return@launch
-            response.updateUiState()
+            removeAllBagItemsUseCase.invoke()
+                .onSuccess { bagResponse ->
+                    bagResponse.updateUiState()
+                }
+                .onFailure {
+                    // TODO: Handle error
+                }
         }
     }
 

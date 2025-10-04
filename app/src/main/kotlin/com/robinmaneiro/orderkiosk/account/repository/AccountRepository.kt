@@ -4,7 +4,7 @@ import com.robinmaneiro.orderkiosk.account.model.LoginResponse
 import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
 
 interface AccountRepository {
-    suspend fun registerUser(payload: String): RegistrationResponse?
+    suspend fun registerUser(payload: String): Result<RegistrationResponse>
 
-    suspend fun login(payload: String): LoginResponse?
+    suspend fun login(payload: String): Result<LoginResponse>
 }
