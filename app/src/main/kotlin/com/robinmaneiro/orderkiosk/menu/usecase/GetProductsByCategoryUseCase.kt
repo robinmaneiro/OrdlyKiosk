@@ -6,7 +6,7 @@ import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
 class GetProductsByCategoryUseCase(
     private val menuRepository: MenuRepository
 ) {
-    suspend operator fun invoke(categoryId: String): MenuResponse? {
+    suspend operator fun invoke(categoryId: String): Result<MenuResponse> {
         return menuRepository.getProductsByCategory(categoryId)
     }
 }

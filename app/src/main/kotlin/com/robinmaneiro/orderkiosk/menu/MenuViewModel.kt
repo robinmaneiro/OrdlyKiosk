@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu
 
+import androidx.compose.animation.expandIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
@@ -62,52 +63,55 @@ class MenuViewModel(
             }?.id ?: run {
                 _uiState.update { it.copy(isLoading = false) }
                 return@launch
-            }
+            } // TODO: Refactor these to handle Result<T>
 
-            val menuItemsResponse = getMenuItemsByCategoryUserCase(defaultCategoryId) ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
+            getMenuItemsByCategoryUserCase(defaultCategoryId)
+                .onSuccess { menuItemsResponse ->
+                    val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrElse { uiState.value.diningOption }
 
-            val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrNull()
-
-            _uiState.update {
-                it.copy(
-                    menuCategories = menuCategories,
-                    menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
-                    diningOption = diningOption ?: it.diningOption,
-                    isLoading = false
-                )
-            }
+                    _uiState.update {
+                        it.copy(
+                            menuCategories = menuCategories,
+                            menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                            diningOption = diningOption,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
         }
     }
 
     fun updateItemsOnCategorySelected(categoryId: String) {
         viewModelScope.launch {
-            val updatedItemsResponse = getMenuItemsByCategoryUserCase(categoryId) ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
+            getMenuItemsByCategoryUserCase(categoryId)
+                .onSuccess { updatedItemsResponse ->
+                    _uiState.update {
+                        it.copy(
+                            menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
+                            menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
+                        )
+                    }
 
-            _uiState.update {
-                it.copy(
-                    menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                    menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
-                )
-            }
-
-            _actions.trySend(Actions.ResetLazyGridState)
+                    _actions.trySend(Actions.ResetLazyGridState)
+                }
+                .onFailure {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
         }
     }
 
     fun onProductClicked(productId: String) {
         viewModelScope.launch {
-            val expandedItemInfo = getProductExtendedInfoUseCase(productId) ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
-
-            _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
+            getProductExtendedInfoUseCase(productId)
+                .onSuccess { expandedItemInfo ->
+                    _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
+                }
+                .onFailure {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
         }
     }
 
