@@ -31,8 +31,8 @@ class DataStoreRepositoryImpl(
 
     //endregion
 
-    override suspend fun saveAccessToken(token: String) {
-        val encryptedToken = EncryptionUtil.encrypt(token)
+    override suspend fun saveAccessToken(accessToken: String) {
+        val encryptedToken = EncryptionUtil.encrypt(accessToken)
         dataStore.edit {
             it[accessTokenKey] = encryptedToken
         }
