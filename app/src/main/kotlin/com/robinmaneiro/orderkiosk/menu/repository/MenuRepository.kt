@@ -4,6 +4,6 @@ import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.model.MenuResponse
 
 interface MenuRepository {
-    suspend fun getProductsByCategory(categoryId: String): MenuResponse?
-    suspend fun getProductExtendedInfo(productId: String): MenuItemExpanded?
+    suspend fun getProductsByCategory(categoryId: String): Result<MenuResponse>
+    suspend fun getProductExtendedInfo(productId: String): Result<MenuItemExpanded>
 }

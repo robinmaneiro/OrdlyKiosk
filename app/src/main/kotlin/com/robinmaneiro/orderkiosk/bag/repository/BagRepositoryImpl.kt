@@ -11,33 +11,33 @@ class BagRepositoryImpl : BagRepository {
     private val _bag: MutableStateFlow<BagResponse?> = MutableStateFlow(null)
     override val bag: StateFlow<BagResponse?> = _bag.asStateFlow()
 
-    override suspend fun addToBag(productId: String, quantity: Int): BagResponse? {
+    override suspend fun addToBag(productId: String, quantity: Int): Result<BagResponse> {
         val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/basket", "{ \"productId\": \"$productId\",\"quantity\": $quantity}")
-        _bag.update { response }
+        response.onSuccess { _bag::update }
         return response
     }
 
-    override suspend fun getBagItems(): BagResponse? {
+    override suspend fun getBagItems(): Result<BagResponse> {
         val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/basket")
-        _bag.update { response }
+        response.onSuccess { _bag::update }
         return response
     }
 
-    override suspend fun updateBagItem(bagItemId: String, newQuantity: Int): BagResponse? {
+    override suspend fun updateBagItem(bagItemId: String, newQuantity: Int): Result<BagResponse> {
         val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId", "{ \"productId\": \"$bagItemId\",\"quantity\": $newQuantity}")
-        _bag.update { response }
+        response.onSuccess { _bag::update }
         return response
     }
 
-    override suspend fun removeFromBag(bagItemId: String): BagResponse? {
+    override suspend fun removeFromBag(bagItemId: String): Result<BagResponse> {
         val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId")
-        _bag.update { response }
+        response.onSuccess { _bag::update }
         return response
     }
 
-    override suspend fun removeAllBagItems(): BagResponse? {
+    override suspend fun removeAllBagItems(): Result<BagResponse> {
         val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/basket/all")
-        _bag.update { response }
+        response.onSuccess { _bag::update }
         return response
     }
 }
