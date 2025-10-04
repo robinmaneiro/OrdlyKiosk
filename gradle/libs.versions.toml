@@ -17,6 +17,7 @@ compose-detekt-rules = "0.4.27"
 ktor-client = "3.3.0"
 datastore = "1.1.7"
 tink = "1.18.0"
+chucker = "4.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,7 +63,11 @@ ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "k
 #endregion
 
 #region Crypto
-tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = "tink"}
+tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = "tink" }
+#endregion
+
+#region Debug
+chucker-debug = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 #endregion
 
 [plugins]
