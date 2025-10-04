@@ -10,10 +10,10 @@ class LoginUserUseCase(
     private val dataStore: DataStoreRepository
 ) {
     suspend operator fun invoke(payload: LoginPayload) {
-        val response = accountRepository.login(Mapper.asSerializedString(payload) ?: return)
-        response?.let {
-            dataStore.saveAccessToken(response.accessToken)
-            dataStore.saveRefreshToken(response.refreshToken) // TODO: Save both at once
-        }
+        accountRepository.login(Mapper.asSerializedString(payload) ?: return)
+            .onSuccess { response ->
+                dataStore.saveAccessToken(response.accessToken)
+                dataStore.saveRefreshToken(response.refreshToken) // TODO: Save both at once
+            }
     }
 }

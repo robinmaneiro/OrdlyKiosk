@@ -6,7 +6,7 @@ import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 class GetBagUseCase(
     private val bagRepository: BagRepository
 ) {
-    suspend operator fun invoke(): BagResponse? {
+    suspend operator fun invoke(): Result<BagResponse> {
         return bagRepository.getBagItems()
     }
 }

@@ -8,6 +8,7 @@ import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
+import com.robinmaneiro.orderkiosk.menu.model.MenuCategories
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
@@ -50,38 +51,48 @@ class MenuViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
-
-            getBagUseCase()
-
-            val menuCategories = getMenuCategoriesUseCase() ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            }
-
-            val defaultCategoryId = menuCategories.run {
-                find { it.isDefault } ?: firstOrNull()
-            }?.id ?: run {
-                _uiState.update { it.copy(isLoading = false) }
-                return@launch
-            } // TODO: Refactor these to handle Result<T>
-
-            getMenuItemsByCategoryUserCase(defaultCategoryId)
-                .onSuccess { menuItemsResponse ->
-                    val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrElse { uiState.value.diningOption }
-
-                    _uiState.update {
-                        it.copy(
-                            menuCategories = menuCategories,
-                            menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
-                            diningOption = diningOption,
-                            isLoading = false
-                        )
-                    }
-                }
-                .onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
-                }
+            loadCategories()
         }
+    }
+
+    private suspend fun loadCategories() {
+        getMenuCategoriesUseCase()
+            .onSuccess { menuCategories ->
+                val defaultCategoryId = menuCategories.run {
+                    find { it.isDefault } ?: firstOrNull()
+                }?.id ?: run {
+                    _uiState.update {
+                        it.copy(isLoading = false) // TODO: Handle also failure here
+                    }
+                    return
+                }
+
+                getBagUseCase()
+                loadProducts(defaultCategoryId, menuCategories)
+            }
+            .onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+                return
+            }
+    }
+
+    private suspend fun loadProducts(defaultCategoryId: String, menuCategories: MenuCategories) {
+        getMenuItemsByCategoryUserCase(defaultCategoryId)
+            .onSuccess { menuItemsResponse ->
+                val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrElse { uiState.value.diningOption }
+
+                _uiState.update {
+                    it.copy(
+                        menuCategories = menuCategories,
+                        menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                        diningOption = diningOption,
+                        isLoading = false
+                    )
+                }
+            }
+            .onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+            }
     }
 
     fun updateItemsOnCategorySelected(categoryId: String) {
