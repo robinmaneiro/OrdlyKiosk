@@ -40,12 +40,13 @@ import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 fun ProductOverlay(
     product: MenuItemExpanded,
     onDismiss: () -> Unit,
-    onAddToBasket: (MenuItemExpanded) -> Unit
+    onAddToBasket: (MenuItemExpanded) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     BackHandler(enabled = true) { onDismiss() }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.40f)) // TODO: Move to an independent color?
             .clickable { onDismiss() },

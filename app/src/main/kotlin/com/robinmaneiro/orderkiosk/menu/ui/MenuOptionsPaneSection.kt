@@ -38,7 +38,8 @@ fun MenuOptionsPane(
     navController: NavController,
     uiState: MenuViewModel.UiState,
     visible: Boolean,
-    toggleDiningOption: () -> Unit
+    toggleDiningOption: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var shouldShowDiningOptionDialog by remember { mutableStateOf(false) }
 
@@ -47,7 +48,7 @@ fun MenuOptionsPane(
         contentAlignment = Alignment.BottomStart
     ) {
         Column(
-            Modifier
+            modifier
                 .fillMaxHeight()
                 .width(100.dp)
                 .padding(

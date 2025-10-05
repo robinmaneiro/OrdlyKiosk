@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
+@Suppress("ModifierComposed") // TODO: Refactor to Modifier.Node when time permits.
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     clickable(
         interactionSource = remember { MutableInteractionSource() },

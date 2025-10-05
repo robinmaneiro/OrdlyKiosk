@@ -1,6 +1,5 @@
 package com.robinmaneiro.orderkiosk.bag.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,17 +30,18 @@ import com.robinmaneiro.orderkiosk.bag.model.ItemPrice
 import com.robinmaneiro.orderkiosk.bag.model.PriceData
 import com.robinmaneiro.orderkiosk.bag.model.Tax
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 
 @Composable
 fun BagItemRow(
     bagItem: BagItem,
     onPlusClick: () -> Unit,
-    onMinusClick: () -> Unit
+    onMinusClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 16.dp, vertical = 0.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -136,9 +137,9 @@ fun BagItemRow(
     }
 }
 
-@PixelTabletPreview
+@PreviewPixelTablet
 @Composable
-fun BagItemPreview() {
+private fun BagItemPreview() {
     val priceData = PriceData(
         currencyCode = "GBP",
         _withTax = 99500,

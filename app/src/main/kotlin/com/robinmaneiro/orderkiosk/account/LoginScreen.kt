@@ -33,7 +33,7 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.model.LoginPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -63,10 +63,11 @@ fun AccountScreen(
 fun LoginScreenContent(
     paddingValues: PaddingValues,
     loginUser: (String, String) -> Unit,
-    goToRegistration: () -> Unit
+    goToRegistration: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        Modifier
+        modifier
             .padding(paddingValues)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -144,8 +145,8 @@ fun LoginScreenContent(
     }
 }
 
-@PixelTabletPreview
+@PreviewPixelTablet
 @Composable
-fun AccountScreenContentPreview() {
+private fun AccountScreenContentPreview() {
     LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {})
 }

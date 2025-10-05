@@ -49,7 +49,7 @@ import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.util.RotatingArrow
 import com.robinmaneiro.orderkiosk.util.SlideFromBottom
 import com.robinmaneiro.orderkiosk.util.SlideFromSide
@@ -62,8 +62,8 @@ private const val SCROLL_PIXELS_NUMBER = 300F
 @Composable
 fun MenuScreen(
     serviceType: String?,
-    modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<MenuViewModel> {
         parametersOf(serviceType)
@@ -92,7 +92,7 @@ fun MenuScreen(
         uiState = uiState,
         onBagClick = { navController.navigate(Screens.BagScreen.route) },
         modifier = modifier,
-        lazyGridState
+        lazyGridState = lazyGridState
     )
 
     shownProduct?.let {
@@ -116,12 +116,12 @@ fun MenuScreenContent(
     navController: NavController,
     viewModel: MenuViewModel,
     uiState: MenuViewModel.UiState,
+    lazyGridState: LazyGridState,
     onBagClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    lazyGridState: LazyGridState
+    modifier: Modifier = Modifier
 ) {
     //region Fixed content
-    Box {
+    Box(modifier) {
         val scope = rememberCoroutineScope()
 
         Row(
@@ -135,7 +135,7 @@ fun MenuScreenContent(
                 modifier = Modifier
                     .width(240.dp),
                 menuCategories = uiState.menuCategories,
-                onCategoryClicked = { viewModel.updateItemsOnCategorySelected(it) }
+                onCategoryClick = { viewModel.updateItemsOnCategorySelected(it) }
             )
 
             Spacer(
@@ -144,7 +144,7 @@ fun MenuScreenContent(
 
             MenuItemsSection(
                 menuProducts = uiState.menuProducts,
-                onProductClicked = { viewModel.onProductClicked(it) },
+                onProductClick = { viewModel.onProductClicked(it) },
                 lazyGridState = lazyGridState,
                 modifier = Modifier.width(900.dp)
             )
@@ -186,12 +186,12 @@ fun MenuScreenContent(
 
         NavigationArrows(
             visible = !show,
-            onUpArrowClicked = {
+            onUpArrowClick = {
                 scope.launch {
                     lazyGridState.animateScrollBy(-SCROLL_PIXELS_NUMBER) // Notice the minus symbol.
                 }
             },
-            onDownArrowClicked = {
+            onDownArrowClick = {
                 scope.launch {
                     lazyGridState.animateScrollBy(SCROLL_PIXELS_NUMBER)
                 }
@@ -213,8 +213,9 @@ fun MenuScreenContent(
 @Composable
 fun NavigationArrows(
     visible: Boolean,
-    onUpArrowClicked: () -> Unit,
-    onDownArrowClicked: () -> Unit
+    onUpArrowClick: () -> Unit,
+    onDownArrowClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     SlideFromSide(
         visible = visible,
@@ -225,7 +226,7 @@ fun NavigationArrows(
         ) {
             RoundedSquareNavigateArrow(
                 imageVector = Icons.Outlined.KeyboardArrowUp,
-                onClick = onUpArrowClicked
+                onClick = onUpArrowClick
             )
 
             Spacer(
@@ -234,7 +235,7 @@ fun NavigationArrows(
 
             RoundedSquareNavigateArrow(
                 imageVector = Icons.Outlined.KeyboardArrowDown,
-                onClick = onDownArrowClicked
+                onClick = onDownArrowClick
             )
         }
     }
@@ -243,12 +244,13 @@ fun NavigationArrows(
 @Composable
 fun RoundedSquareNavigateArrow(
     imageVector: ImageVector,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Icon(
         imageVector = imageVector,
         contentDescription = null,
-        modifier = Modifier
+        modifier = modifier
             .size(60.dp)
             .border(2.dp, Aquamarine40, RoundedCornerShape(4.dp))
             .clickable(onClick = onClick)
@@ -257,9 +259,9 @@ fun RoundedSquareNavigateArrow(
 }
 
 
-@PixelTabletPreview
+@PreviewPixelTablet
 @Composable
-fun DashboardScreenPreview() {
+private fun DashboardScreenPreview() {
     MenuScreenContent(
         navController = rememberNavController(),
         viewModel = koinViewModel<MenuViewModel>(),
@@ -271,6 +273,6 @@ fun DashboardScreenPreview() {
 
 @Preview
 @Composable
-fun OptionsPaneItemPreview() {
+private fun OptionsPaneItemPreview() {
     OptionsPaneItem("Test", {}, null)
 }

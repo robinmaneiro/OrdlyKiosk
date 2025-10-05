@@ -50,7 +50,7 @@ fun BagTotalCostSection(
             .noRippleClickable(onClick)
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp)
@@ -87,6 +87,6 @@ fun BagTotalCostSection(
 
 @Preview
 @Composable
-fun BottomSectionPreview() {
+private fun BottomSectionPreview() {
     BagTotalCostSection("42.95", 6, {})
 }
