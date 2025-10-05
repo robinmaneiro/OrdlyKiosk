@@ -13,7 +13,8 @@ navigation-compose = "2.9.3" #https://developer.android.com/develop/ui/compose/n
 coil-compose = "3.3.0" #
 koin = "4.1.1"
 detekt = "1.23.8"
-compose-detekt-rules = "0.4.27"
+detekt-rules-compose = "0.4.27"
+detekt-rules-ktlint = "2.0.0-alpha.0"
 ktor-client = "3.3.0"
 datastore = "1.1.7"
 tink = "1.18.0"
@@ -51,7 +52,10 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 #endregion
 
 #region Detekt
-compose-detekt-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "compose-detekt-rules" }
+detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose" }
+detekt-rules-ktlint = { group = "dev.detekt", name = "detekt-rules-ktlint-wrapper", version.ref = "detekt-rules-ktlint" }
+detekt-rules-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
+detekt-rules-ruleauthors = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-ruleauthors", version.ref = "detekt" }
 #endregion
 
 #region Network
