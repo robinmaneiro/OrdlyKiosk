@@ -51,6 +51,6 @@ fun RotatingArrow(
 
 @Preview
 @Composable
-fun PreviewRotatingArrow() {
+private fun PreviewRotatingArrow() {
     RotatingArrow {}
 }

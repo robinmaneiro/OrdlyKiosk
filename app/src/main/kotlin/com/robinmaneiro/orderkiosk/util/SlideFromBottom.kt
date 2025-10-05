@@ -26,6 +26,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SlideFromBottom(
     visible: Boolean,
+    modifier: Modifier = Modifier,
     animationDuration: Int = 700,
     bottomPadding: Dp = 30.dp,
     content: @Composable () -> Unit
@@ -54,7 +55,7 @@ fun SlideFromBottom(
     }
 
     Box(
-        Modifier
+        modifier
             .fillMaxSize()
     ) {
         Box(

@@ -43,7 +43,7 @@ import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.util.noRippleClickable
 import com.robinmaneiro.orderkiosk.util.showToast
 import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
@@ -65,9 +65,9 @@ fun WelcomeScreen(
     WelcomeScreenContent(
         modifier = modifier,
         languageOptions = uiState.languageOptions,
-        onLanguageClicked = { languageCode -> viewModel.updateLanguage(languageCode) },
-        onEatInClicked = { navHostController.navigate(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route) },
-        onTakeAwayClicked = { navHostController.navigate(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route) }
+        onLanguageClick = { languageCode -> viewModel.updateLanguage(languageCode) },
+        onEatInClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route) },
+        onTakeAwayClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route) }
     )
 }
 
@@ -92,10 +92,10 @@ fun HandleAction(action: WelcomeViewModel.Actions, context: Context) {
 @Composable
 fun WelcomeScreenContent(
     languageOptions: List<LanguageData>,
-    modifier: Modifier = Modifier,
-    onLanguageClicked: (languageCode: String) -> Unit,
-    onEatInClicked: () -> Unit = {},
-    onTakeAwayClicked: () -> Unit = {}
+    onLanguageClick: (languageCode: String) -> Unit,
+    onEatInClick: () -> Unit,
+    onTakeAwayClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier
@@ -119,16 +119,16 @@ fun WelcomeScreenContent(
             Spacer(Modifier.height(height = 32.dp))
 
             Row {
-                DeliveryTypeCard(text = DiningOption.EAT_IN.uiText, onClick = onEatInClicked)
+                DeliveryTypeCard(text = DiningOption.EAT_IN.uiText, onClick = onEatInClick)
                 Spacer(Modifier.width(40.dp))
-                DeliveryTypeCard(text = DiningOption.TAKE_AWAY.uiText, onClick = onTakeAwayClicked)
+                DeliveryTypeCard(text = DiningOption.TAKE_AWAY.uiText, onClick = onTakeAwayClick)
             }
 
             Spacer(Modifier.height(height = 32.dp))
 
             LanguageSection(
                 languageOptions = languageOptions,
-                onOptionClicked = onLanguageClicked
+                onOptionClick = onLanguageClick
             )
         }
 
@@ -139,15 +139,15 @@ fun WelcomeScreenContent(
 @Composable
 fun LanguageSection(
     languageOptions: List<LanguageData>,
-    modifier: Modifier = Modifier,
-    onOptionClicked: (languageAlpha2Code: String) -> Unit
+    onOptionClick: (languageAlpha2Code: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         languageOptions.forEach { option ->
-            LanguageCard(option, onOptionClicked)
+            LanguageCard(option, onOptionClick)
         }
     }
 }
@@ -201,7 +201,7 @@ fun LegalSection(
 @Composable
 fun LanguageCard(
     languageOption: LanguageData,
-    onLanguageClicked: (languageCode: String) -> Unit,
+    onLanguageClick: (languageCode: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -210,7 +210,7 @@ fun LanguageCard(
                 if (!languageOption.isSelected) return@run this
                 border(1.dp, Color.DarkGray)
             }
-            .noRippleClickable { onLanguageClicked.invoke(languageOption.languageAlpha2Code) }
+            .noRippleClickable { onLanguageClick.invoke(languageOption.languageAlpha2Code) }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -232,9 +232,9 @@ fun LanguageCard(
     }
 }
 
-@PixelTabletPreview
+@PreviewPixelTablet
 @Composable
-fun WelcomeScreenPreview() {
+private fun WelcomeScreenPreview() {
     val languageOptions = listOf(
         LanguageData(
             R.drawable.flag_gb,
@@ -261,5 +261,5 @@ fun WelcomeScreenPreview() {
             false
         )
     )
-    WelcomeScreenContent(languageOptions, onLanguageClicked = {})
+    WelcomeScreenContent(languageOptions, onLanguageClick = {}, onEatInClick = {}, onTakeAwayClick = {})
 }

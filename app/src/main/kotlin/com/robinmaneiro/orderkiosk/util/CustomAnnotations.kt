@@ -11,4 +11,4 @@ import androidx.compose.ui.tooling.preview.Preview
     showBackground = true,
     device = PIXEL_TABLET
 )
-annotation class PixelTabletPreview
+annotation class PreviewPixelTablet

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.util.PixelTabletPreview
+import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -40,21 +40,23 @@ fun RegistrationScreen(
             })
         }
     ) {
-        RegistrationScreenContent(it) { registrationPayload ->
-            viewModel.registerAccount(registrationPayload)
-        }
+        RegistrationScreenContent(
+            paddingValues = it,
+            onRegisterClick = viewModel::registerAccount
+        )
     }
 }
 
 @Composable
 fun RegistrationScreenContent(
     paddingValues: PaddingValues,
-    registerAccount: (RegisterPayload) -> Unit
+    onRegisterClick: (RegisterPayload) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
             .padding(paddingValues)
             .fillMaxSize()
     ) {
@@ -110,21 +112,23 @@ fun RegistrationScreenContent(
         )
 
         Button({
-            registerAccount.invoke(RegisterPayload(
-                title = title,
-                firstName = firstName,
-                lastName = lastName,
-                email = emailAddress,
-                password = password
-            ))
+            onRegisterClick.invoke(
+                RegisterPayload(
+                    title = title,
+                    firstName = firstName,
+                    lastName = lastName,
+                    email = emailAddress,
+                    password = password
+                )
+            )
         }) {
             Text("Register")
         }
     }
 }
 
-@PixelTabletPreview
+@PreviewPixelTablet
 @Composable
-fun RegistrationScreenContentPreview() {
-    RegistrationScreenContent(PaddingValues(20.dp)) {}
+private fun RegistrationScreenContentPreview() {
+    RegistrationScreenContent(paddingValues = PaddingValues(20.dp), onRegisterClick = {})
 }

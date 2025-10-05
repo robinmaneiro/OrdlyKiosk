@@ -32,7 +32,7 @@ import com.robinmaneiro.orderkiosk.util.fadingEdge
 @Composable
 fun MenuCategorySection(
     menuCategories: List<MenuCategory>,
-    onCategoryClicked: (categoryId: String) -> Unit,
+    onCategoryClick: (categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -47,7 +47,7 @@ fun MenuCategorySection(
         items(menuCategories) {
             MenuCard(
                 category = it,
-                onCategoryClicked = onCategoryClicked
+                onCategoryClick = onCategoryClick
             )
         }
     }
@@ -56,13 +56,13 @@ fun MenuCategorySection(
 @Composable
 fun MenuCard(
     category: MenuCategory,
-    onCategoryClicked: (String) -> Unit,
+    onCategoryClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier
             .size(300.dp, 80.dp)
-            .clickable { onCategoryClicked.invoke(category.id) },
+            .clickable { onCategoryClick.invoke(category.id) },
         border = BorderStroke(if (category.isDefault) 2.dp else 1.dp,
             if (category.isDefault) Aquamarine40 else Color.DarkGray),
         colors = CardDefaults.cardColors().copy(

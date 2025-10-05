@@ -38,9 +38,9 @@ fun CustomDialog(
     title: String,
     body: String,
     primaryButtonLabelToAct: Pair<String, () -> Unit>,
+    modifier: Modifier = Modifier,
     secondaryButtonLabelToAct: Pair<String, () -> Unit>? = null,
-    onDismiss: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    onDismiss: (() -> Unit)? = null
 ) {
     BackHandler(enabled = true) { onDismiss?.invoke() }
 

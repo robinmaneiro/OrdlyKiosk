@@ -38,7 +38,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BagScreen(
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<BagViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -46,6 +47,7 @@ fun BagScreen(
     var showClearBagDialog by remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Bag", onBack = {
                 navController.navigateUp()

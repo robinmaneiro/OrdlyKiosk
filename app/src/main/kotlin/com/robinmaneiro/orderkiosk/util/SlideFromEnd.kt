@@ -27,11 +27,12 @@ import kotlin.math.roundToInt
 
 @Composable
 fun SlideFromSide(
+    contentAlignment: Alignment,
     visible: Boolean,
+    modifier: Modifier = Modifier,
     animationDuration: Int = 700,
     horizontalPadding: Dp = 0.dp,          // padding from the screen edge (start or end)
     slideFromEnd: Boolean = true,           // true = slide from end (right in LTR), false = slide from start (left in LTR)
-    contentAlignment: Alignment,
     content: @Composable () -> Unit
 ) {
     val density = LocalDensity.current
@@ -46,7 +47,7 @@ fun SlideFromSide(
 
     // Get appropriate inset for the absolute edge
     val edgeInsetPx = with(density) {
-        if (slidingFromRight) windowInsets.getRight(density, layoutDirection) else  windowInsets.getLeft(density, layoutDirection)
+        if (slidingFromRight) windowInsets.getRight(density, layoutDirection) else windowInsets.getLeft(density, layoutDirection)
     }
 
     var contentWidthPx by remember { mutableFloatStateOf(0f) }
@@ -69,7 +70,7 @@ fun SlideFromSide(
         }
     }
 
-    Box(Modifier.fillMaxSize()) {
+    Box(modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .align(contentAlignment)
