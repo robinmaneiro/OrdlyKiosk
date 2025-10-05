@@ -45,6 +45,7 @@ import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuOptionsPane
 import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
+import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
@@ -78,6 +79,11 @@ fun MenuScreen(
                 is MenuViewModel.Actions.ResetLazyGridState -> lazyGridState.scrollToItem(0)
             }
         }
+    }
+
+    if (uiState.hasError) {
+        ErrorDialog { navController.popBackStack() }
+        return
     }
 
     MenuScreenContent(

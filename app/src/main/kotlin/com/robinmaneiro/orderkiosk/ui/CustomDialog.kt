@@ -37,19 +37,18 @@ import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 fun CustomDialog(
     title: String,
     body: String,
-    primaryButtonLabel: String,
-    secondaryButtonLabel: String,
-    onPrimaryButtonClick: () -> Unit,
-    onSecondaryButtonClick: () -> Unit,
+    primaryButtonLabelToAct: Pair<String, () -> Unit>,
+    secondaryButtonLabelToAct: Pair<String, () -> Unit>? = null,
+    onDismiss: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
-    BackHandler(enabled = true) { onSecondaryButtonClick() }
+    BackHandler(enabled = true) { onDismiss?.invoke() }
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.40f)) // TODO: Move to an independent color?
-            .clickable { onSecondaryButtonClick() },
+            .clickable { onDismiss?.invoke() },
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -86,16 +85,21 @@ fun CustomDialog(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    TextButton(
-                        onClick = onSecondaryButtonClick
-                    ) {
-                        Text(
-                            text = secondaryButtonLabel,
-                            color = SandyBrown40,
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                    secondaryButtonLabelToAct?.let { (label, action) ->
+                        TextButton(
+                            onClick = action
+                        ) {
+                            Text(
+                                text = label,
+                                color = SandyBrown40,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+
+
+                    val (primaryButtonLabel, onPrimaryButtonClick) = primaryButtonLabelToAct
                     Button(
                         modifier = Modifier.size(150.dp, 50.dp),
                         colors = buttonColors(

@@ -43,7 +43,7 @@ fun BagScreen(
     val viewModel = koinViewModel<BagViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var itemToRemove by remember { mutableStateOf<BagItem?>(null) }
-    var showClearBagDialog by remember { mutableStateOf(false)}
+    var showClearBagDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -144,34 +144,34 @@ fun BagScreen(
     }
 
     itemToRemove?.let { bagItem ->
+        val primaryButtonAction = {
+            viewModel.removeItem(bagItem)
+            itemToRemove = null
+        }
+        val secondaryButtonAction = {
+            itemToRemove = null
+        }
         CustomDialog(
             title = "Are you sure? ",
             body = "Do you really want to remove this item from the bag?",
-            primaryButtonLabel = "Remove item",
-            secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClick = {
-                viewModel.removeItem(bagItem)
-                itemToRemove = null
-            },
-            onSecondaryButtonClick = {
-                itemToRemove = null
-            }
+            primaryButtonLabelToAct = "Remove item" to primaryButtonAction,
+            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction,
         )
     }
 
     if (showClearBagDialog) {
+        val primaryButtonAction = {
+            viewModel.removeAllItems()
+            showClearBagDialog = false
+        }
+        val secondaryButtonAction = {
+            showClearBagDialog = false
+        }
         CustomDialog(
             title = "Are you sure?",
             body = "This action will remove ALL items from the bag",
-            primaryButtonLabel = "Clear Basket",
-            secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClick = {
-                viewModel.removeAllItems()
-                showClearBagDialog = false
-            },
-            onSecondaryButtonClick = {
-                showClearBagDialog = false
-            }
+            primaryButtonLabelToAct = "Clear Basket" to primaryButtonAction,
+            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction,
         )
     }
 
