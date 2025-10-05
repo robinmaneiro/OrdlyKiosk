@@ -26,7 +26,7 @@ fun RotatingArrow(
     durationMillis: Int = 300,
     toggledRotation: Float = 180f,
     initialRotated: Boolean = false,
-    onToggle: ((Boolean) -> Unit)? = null
+    onToggle: (() -> Unit)? = null
 ) {
     var rotated by remember { mutableStateOf(initialRotated) }
     val target = if (rotated) toggledRotation else 0f
@@ -43,7 +43,7 @@ fun RotatingArrow(
             .rotate(rotation)
             .noRippleClickable {
                 rotated = !rotated
-                onToggle?.invoke(rotated)
+                onToggle?.invoke()
             }
             .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
     )
