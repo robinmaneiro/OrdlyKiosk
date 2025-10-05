@@ -83,18 +83,18 @@ fun MenuOptionsPane(
         }
     }
     if (shouldShowDiningOptionDialog) {
+        val primaryButtonAction = {
+            toggleDiningOption.invoke()
+            shouldShowDiningOptionDialog = false
+        }
+        val secondaryButtonAction = {
+            shouldShowDiningOptionDialog = false
+        }
         CustomDialog(
             title = "Warning",
             body = "Are you sure you want to change the dining option?",
-            primaryButtonLabel = "Change",
-            secondaryButtonLabel = "Cancel",
-            onPrimaryButtonClick = {
-                toggleDiningOption.invoke()
-                shouldShowDiningOptionDialog = false
-            },
-            onSecondaryButtonClick = {
-                shouldShowDiningOptionDialog = false
-            }
+            primaryButtonLabelToAct = "Change" to primaryButtonAction,
+            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction
         )
     }
 }

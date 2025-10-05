@@ -1,6 +1,5 @@
 package com.robinmaneiro.orderkiosk.menu
 
-import androidx.compose.animation.expandIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
@@ -10,10 +9,10 @@ import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategories
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
-import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
-import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
+import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -61,9 +60,7 @@ class MenuViewModel(
                 val defaultCategoryId = menuCategories.run {
                     find { it.isDefault } ?: firstOrNull()
                 }?.id ?: run {
-                    _uiState.update {
-                        it.copy(isLoading = false) // TODO: Handle also failure here
-                    }
+                    handleError()
                     return
                 }
 
@@ -71,7 +68,7 @@ class MenuViewModel(
                 loadProducts(defaultCategoryId, menuCategories)
             }
             .onFailure {
-                _uiState.update { it.copy(isLoading = false) }
+                handleError()
                 return
             }
     }
@@ -95,6 +92,13 @@ class MenuViewModel(
             }
     }
 
+    private fun handleError() = _uiState.update {
+        it.copy(
+            isLoading = false,
+            hasError = true
+        )
+    }
+
     fun updateItemsOnCategorySelected(categoryId: String) {
         viewModelScope.launch {
             getMenuItemsByCategoryUserCase(categoryId)
@@ -109,7 +113,7 @@ class MenuViewModel(
                     _actions.trySend(Actions.ResetLazyGridState)
                 }
                 .onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
+                    handleError()
                 }
         }
     }
@@ -121,7 +125,7 @@ class MenuViewModel(
                     _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
                 }
                 .onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
+                    handleError()
                 }
         }
     }
@@ -154,7 +158,8 @@ class MenuViewModel(
         val isLoading: Boolean = false,
         val menuCategories: List<MenuCategory> = emptyList(),
         val menuProducts: List<MenuProduct> = emptyList(),
-        val bagResponse: BagResponse? = null, // TODO: Change to just set the formatted value here
-        val diningOption: DiningOption = DiningOption.TAKE_AWAY
+        val bagResponse: BagResponse? = null,
+        val diningOption: DiningOption = DiningOption.TAKE_AWAY,
+        val hasError: Boolean = false
     )
 }
