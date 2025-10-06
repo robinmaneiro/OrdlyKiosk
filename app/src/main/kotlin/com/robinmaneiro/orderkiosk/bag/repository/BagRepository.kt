@@ -10,7 +10,7 @@ interface BagRepository {
 
     suspend fun addToBag(payload: String): Result<BagResponse>
 
-    suspend fun updateBagItem(bagItemId: String, newQuantity: Int): Result<BagResponse>
+    suspend fun updateBagItem(payload: String, bagItemId: String): Result<BagResponse>
 
     suspend fun removeFromBag(bagItemId: String): Result<BagResponse>
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
+import com.robinmaneiro.orderkiosk.bag.model.UpdateBagItemPayload
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
@@ -50,7 +51,11 @@ class BagViewModel(
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.inc()
-            updateBagItemUseCase.invoke(bagItem.itemId, newQuantity)
+            val updateBagItemPayload = UpdateBagItemPayload(
+                bagItemId = bagItem.itemId,
+                quantity = newQuantity
+            )
+            updateBagItemUseCase.invoke(updateBagItemPayload)
                 .onSuccess { response ->
                     response.updateUiState()
                 }
@@ -64,7 +69,11 @@ class BagViewModel(
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.dec()
-            updateBagItemUseCase.invoke(bagItem.itemId, newQuantity)
+            val updateBagItemPayload = UpdateBagItemPayload(
+                bagItemId = bagItem.itemId,
+                quantity = newQuantity
+            )
+            updateBagItemUseCase.invoke(updateBagItemPayload)
                 .onSuccess { response ->
                     response.updateUiState()
                 }
