@@ -11,8 +11,8 @@ class BagRepositoryImpl : BagRepository {
     private val _bag: MutableStateFlow<BagResponse?> = MutableStateFlow(null)
     override val bag: StateFlow<BagResponse?> = _bag.asStateFlow()
 
-    override suspend fun addToBag(productId: String, quantity: Int): Result<BagResponse> {
-        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/basket", "{ \"productId\": \"$productId\",\"quantity\": $quantity}")
+    override suspend fun addToBag(payload: String): Result<BagResponse> {
+        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/basket", payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }

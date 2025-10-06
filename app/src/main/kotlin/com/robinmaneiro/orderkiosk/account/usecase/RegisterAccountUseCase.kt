@@ -8,7 +8,7 @@ class RegisterAccountUseCase(
     val accountRepository: AccountRepository
 ) {
     suspend operator fun invoke(payload: RegisterPayload) {
-        accountRepository.registerUser(Mapper.asSerializedString(payload) ?: return) // TODO: Need to return some error based on the error responses
+        accountRepository.registerUser(Mapper.asSerializedStringOrNull(payload) ?: return) // TODO: Need to return some error based on the error responses
         // TODO: Need to track the registration maybe?
     }
 }

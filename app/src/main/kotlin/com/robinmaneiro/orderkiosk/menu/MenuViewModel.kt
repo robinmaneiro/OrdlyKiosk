@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
@@ -132,7 +133,11 @@ class MenuViewModel(
 
     fun addToBasket(product: MenuItemExpanded) {
         viewModelScope.launch {
-            addToBagUseCase.invoke(product.productId)
+            val addToBagPayload = AddToBagPayload(
+                product.productId,
+                1
+            )
+            addToBagUseCase.invoke(addToBagPayload)
         }
     }
 

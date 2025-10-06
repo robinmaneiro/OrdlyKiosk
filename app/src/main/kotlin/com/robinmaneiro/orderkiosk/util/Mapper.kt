@@ -12,11 +12,11 @@ object Mapper {
         objectMapper.readValue(json, clazz)
     }.getOrNull()
 
-    fun <T> asSerializedString(obj: T) = runCatching {
+    fun <T> asSerializedStringOrNull(obj: T) = asSerializedStringResult(obj).getOrNull()
+
+    fun <T> asSerializedStringResult(obj: T) = runCatching {
         objectMapper
             .writerWithDefaultPrettyPrinter()
             .writeValueAsString(obj)
-    }.getOrNull()
-
-
+    }
 }
