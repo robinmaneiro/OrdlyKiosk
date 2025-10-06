@@ -23,8 +23,8 @@ class BagRepositoryImpl : BagRepository {
         return response
     }
 
-    override suspend fun updateBagItem(bagItemId: String, newQuantity: Int): Result<BagResponse> {
-        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId", "{ \"productId\": \"$bagItemId\",\"quantity\": $newQuantity}")
+    override suspend fun updateBagItem(payload: String, bagItemId: String): Result<BagResponse> {
+        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId", payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
