@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

@@ -50,10 +50,10 @@ import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
-import com.robinmaneiro.orderkiosk.util.RotatingArrow
-import com.robinmaneiro.orderkiosk.util.SlideFromBottom
-import com.robinmaneiro.orderkiosk.util.SlideFromSide
+import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.RotatingArrow
+import com.robinmaneiro.orderkiosk.ui.SlideFromBottom
+import com.robinmaneiro.orderkiosk.ui.SlideFromSide
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf

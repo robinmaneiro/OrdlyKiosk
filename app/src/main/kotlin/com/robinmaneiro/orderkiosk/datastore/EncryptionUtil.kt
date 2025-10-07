@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.datastore
 
 import android.content.Context
 import com.google.crypto.tink.Aead
@@ -27,11 +27,11 @@ object EncryptionUtil {
 
     fun encrypt(plainText: String): String {
         val cipherBytes = aead?.encrypt(plainText.toByteArray(), null) ?: return ""
-        return Base64.encode(cipherBytes)
+        return Base64.Default.encode(cipherBytes)
     }
 
     fun decrypt(encryptedText: String): String {
-        val cipherBytes = Base64.decode(encryptedText)
+        val cipherBytes = Base64.Default.decode(encryptedText)
         val plainBytes = aead?.decrypt(cipherBytes, null) ?: return ""
         return String(plainBytes)
     }

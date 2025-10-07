@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
