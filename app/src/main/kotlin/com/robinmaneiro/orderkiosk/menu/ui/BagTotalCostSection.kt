@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
-import com.robinmaneiro.orderkiosk.util.noRippleClickable
+import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 
 @Composable
 fun BagTotalCostSection(

@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.util.extensions
 
 fun Int?.orZero() = this ?: 0
 

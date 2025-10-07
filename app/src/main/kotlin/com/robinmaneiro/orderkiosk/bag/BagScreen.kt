@@ -33,7 +33,7 @@ import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.util.fadingEdge
+import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

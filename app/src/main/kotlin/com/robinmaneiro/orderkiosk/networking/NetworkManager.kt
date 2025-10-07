@@ -16,7 +16,6 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.headers
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
 
@@ -45,9 +44,7 @@ object NetworkManager {
     suspend inline fun <reified T> getRequest(urlString: String): Result<T> {
         return runCatching {
             val response = httpClient.get(urlString) {
-                headers {
-                    append(NetworkConstants.Headers.CONTENT_TYPE, NetworkConstants.Values.CONTENT_TYPE)
-                }
+                contentType(ContentType.Application.Json)
             }
 
             response.body<T>()
@@ -95,9 +92,7 @@ object NetworkManager {
     suspend inline fun <reified T> deleteRequest(urlString: String): Result<T> {
         return runCatching {
             val response = httpClient.delete(urlString) {
-                headers {
-                    append(NetworkConstants.Headers.CONTENT_TYPE, NetworkConstants.Values.CONTENT_TYPE)
-                }
+                contentType(ContentType.Application.Json)
             }
 
             response.body<T>()
