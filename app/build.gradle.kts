@@ -86,10 +86,14 @@ dependencies {
     //region Debug
     debugImplementation(libs.chucker.debug)
     //endregion
+
+    //region Detekt Plugins
     detektPlugins(libs.detekt.compose.rules)
+    detektPlugins(libs.detekt.rules.formatting)
     detektPlugins(libs.detekt.rules.ktlint)
     detektPlugins(libs.detekt.rules.libraries)
     detektPlugins(libs.detekt.rules.ruleauthors)
+    //endregion
 }
 
 detekt {

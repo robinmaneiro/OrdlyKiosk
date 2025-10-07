@@ -53,6 +53,7 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 
 #region Detekt
 detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose" }
+detekt-rules-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt"}
 detekt-rules-ktlint = { group = "dev.detekt", name = "detekt-rules-ktlint-wrapper", version.ref = "detekt-rules-ktlint" }
 detekt-rules-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
 detekt-rules-ruleauthors = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-ruleauthors", version.ref = "detekt" }
