@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.util.extensions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

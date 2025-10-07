@@ -27,7 +27,7 @@ import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.util.fadingEdge
+import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 
 @Composable
 fun MenuCategorySection(

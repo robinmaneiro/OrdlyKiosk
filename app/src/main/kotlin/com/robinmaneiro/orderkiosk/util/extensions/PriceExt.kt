@@ -1,5 +1,6 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.util.extensions
 
+import com.robinmaneiro.orderkiosk.util.DEFAULT_CURRENCY_CODE
 import java.text.NumberFormat
 import java.util.Currency
 
@@ -12,12 +13,11 @@ fun Double.getFormattedPrice(currencyCode: String): String {
     return try {
         performFormat(currencyCode)
     } catch (e: IllegalArgumentException) {
-        // TODO: Log error here
+        errorLog(e) { "There was an error when attempting to parse the currency code: $currencyCode" }
         try {
-            // TODO: Add log
             performFormat(DEFAULT_CURRENCY_CODE)
         } catch (e: IllegalArgumentException) {
-            // TODO: Add log
+            errorLog(e) { "There was an error when attempting to parse DEFAULT currency code: $DEFAULT_CURRENCY_CODE" }
             toString()
         }
     }

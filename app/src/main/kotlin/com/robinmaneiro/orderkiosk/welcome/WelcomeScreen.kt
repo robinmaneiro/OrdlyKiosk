@@ -44,8 +44,8 @@ import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
-import com.robinmaneiro.orderkiosk.util.noRippleClickable
-import com.robinmaneiro.orderkiosk.util.showToast
+import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
+import com.robinmaneiro.orderkiosk.util.extensions.showToast
 import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
 import org.koin.androidx.compose.koinViewModel
 

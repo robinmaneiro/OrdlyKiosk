@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.util.extensions
 
 import android.content.Context
 import android.widget.Toast
