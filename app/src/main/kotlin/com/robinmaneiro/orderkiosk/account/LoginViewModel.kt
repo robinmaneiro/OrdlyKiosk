@@ -25,4 +25,3 @@ class LoginViewModel(
         val hasError: Boolean = false
     )
 }
-

@@ -31,8 +31,8 @@ fun SlideFromSide(
     visible: Boolean,
     modifier: Modifier = Modifier,
     animationDuration: Int = 700,
-    horizontalPadding: Dp = 0.dp,          // padding from the screen edge (start or end)
-    slideFromEnd: Boolean = true,           // true = slide from end (right in LTR), false = slide from start (left in LTR)
+    horizontalPadding: Dp = 0.dp, // padding from the screen edge (start or end)
+    slideFromEnd: Boolean = true, // true = slide from end (right in LTR), false = slide from start (left in LTR)
     content: @Composable () -> Unit
 ) {
     val density = LocalDensity.current

@@ -38,7 +38,6 @@ fun SlideFromBottom(
     val insetBottomDp = with(density) { windowInsets.getBottom(density).toDp() }
     val bottomInsetPx = with(density) { insetBottomDp.toPx() }
 
-
     var contentHeightPx by remember { mutableFloatStateOf(0f) }
     val offsetY = remember { Animatable(screenHeightPx) }
 

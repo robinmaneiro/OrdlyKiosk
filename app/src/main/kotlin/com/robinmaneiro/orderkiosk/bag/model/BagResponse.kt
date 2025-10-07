@@ -47,7 +47,7 @@ data class PriceData(
 }
 
 data class Tax(
-    @JsonProperty("vat") val vat: TaxUnit = TaxUnit(0,0)
+    @JsonProperty("vat") val vat: TaxUnit = TaxUnit(0, 0)
 )
 
 data class TaxUnit(

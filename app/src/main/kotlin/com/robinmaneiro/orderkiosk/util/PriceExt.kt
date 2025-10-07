@@ -16,7 +16,7 @@ fun Double.getFormattedPrice(currencyCode: String): String {
         try {
             // TODO: Add log
             performFormat(DEFAULT_CURRENCY_CODE)
-        }  catch (e: IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             // TODO: Add log
             toString()
         }

@@ -72,7 +72,6 @@ fun LoginScreenContent(
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
         Image(
             painterResource(R.drawable.background_test),
             contentDescription = null,

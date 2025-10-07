@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -120,98 +121,126 @@ fun MenuScreenContent(
     onBagClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    //region Fixed content
     Box(modifier) {
-        val scope = rememberCoroutineScope()
-
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Iceberg.copy(alpha = 0.2f))
-                .padding(horizontal = 20.dp, vertical = 4.dp)
-        ) {
-
-            MenuCategorySection(
-                modifier = Modifier
-                    .width(240.dp),
-                menuCategories = uiState.menuCategories,
-                onCategoryClick = { viewModel.updateItemsOnCategorySelected(it) }
-            )
-
-            Spacer(
-                Modifier.width(16.dp)
-            )
-
-            MenuItemsSection(
-                menuProducts = uiState.menuProducts,
-                onProductClick = { viewModel.onProductClicked(it) },
-                lazyGridState = lazyGridState,
-                modifier = Modifier.width(900.dp)
-            )
-        }
-        //endregion
-
-        //region Animated content
-        SlideFromBottom(visible = uiState.bagResponse?.itemCount != 0) { // TODO: Change for extension function here
-            uiState.bagResponse ?: return@SlideFromBottom
-            Box(
-                Modifier
-                    .fillMaxWidth()
-            ) {
-                BagTotalCostSection(
-                    uiState.bagResponse.formattedTotalCost,
-                    uiState.bagResponse.itemCount,
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    onClick = onBagClick
-                )
-            }
-        }
-
-        var show by remember { mutableStateOf(false) }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .width(100.dp)
-                .align(Alignment.TopEnd)
-        ) {
-            RotatingArrow {
-                show = !show
-            }
-
-            Text(
-                text = if (show) "Close" else "Open"
-            )
-        }
-
-        NavigationArrows(
-            visible = !show,
-            onUpArrowClick = {
-                scope.launch {
-                    lazyGridState.animateScrollBy(-SCROLL_PIXELS_NUMBER) // Notice the minus symbol.
-                }
-            },
-            onDownArrowClick = {
-                scope.launch {
-                    lazyGridState.animateScrollBy(SCROLL_PIXELS_NUMBER)
-                }
-            }
-        )
-
-        MenuOptionsPane(
-            navController = navController,
+        FixedContent(
             uiState = uiState,
-            visible = show,
-            toggleDiningOption = {
-                viewModel.toggleDiningOption()
-            }
+            lazyGridState = lazyGridState,
+            onProductClicked = viewModel::onProductClicked,
+            onCategoryClick = viewModel::updateItemsOnCategorySelected
         )
-        //endregion
+
+        AnimatedContent(
+            uiState = uiState,
+            viewModel = viewModel,
+            lazyGridState = lazyGridState,
+            navController = navController,
+            onBagClick = onBagClick
+        )
     }
 }
 
 @Composable
-fun NavigationArrows(
+private fun FixedContent(
+    uiState: MenuViewModel.UiState,
+    lazyGridState: LazyGridState,
+    onProductClicked: (productId: String) -> Unit,
+    onCategoryClick: (categoryId: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Iceberg.copy(alpha = 0.2f))
+            .padding(horizontal = 20.dp, vertical = 4.dp)
+    ) {
+        MenuCategorySection(
+            modifier = Modifier
+                .width(240.dp),
+            menuCategories = uiState.menuCategories,
+            onCategoryClick = onCategoryClick
+        )
+
+        Spacer(
+            Modifier.width(16.dp)
+        )
+
+        MenuItemsSection(
+            menuProducts = uiState.menuProducts,
+            onProductClick = onProductClicked,
+            lazyGridState = lazyGridState,
+            modifier = Modifier.width(900.dp)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.AnimatedContent(
+    uiState: MenuViewModel.UiState,
+    viewModel: MenuViewModel,
+    lazyGridState: LazyGridState,
+    navController: NavController,
+    onBagClick: () -> Unit
+) {
+    val scope = rememberCoroutineScope()
+
+    SlideFromBottom(visible = uiState.bagResponse?.itemCount != 0) { // TODO: Change for extension function here
+        uiState.bagResponse ?: return@SlideFromBottom
+        Box(
+            Modifier
+                .fillMaxWidth()
+        ) {
+            BagTotalCostSection(
+                uiState.bagResponse.formattedTotalCost,
+                uiState.bagResponse.itemCount,
+                modifier = Modifier
+                    .align(Alignment.Center),
+                onClick = onBagClick
+            )
+        }
+    }
+
+    var show by remember { mutableStateOf(false) }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .width(100.dp)
+            .align(Alignment.TopEnd)
+    ) {
+        RotatingArrow {
+            show = !show
+        }
+
+        Text(
+            text = if (show) "Close" else "Open"
+        )
+    }
+
+    NavigationArrows(
+        visible = !show,
+        onUpArrowClick = {
+            scope.launch {
+                lazyGridState.animateScrollBy(-SCROLL_PIXELS_NUMBER) // Notice the minus symbol.
+            }
+        },
+        onDownArrowClick = {
+            scope.launch {
+                lazyGridState.animateScrollBy(SCROLL_PIXELS_NUMBER)
+            }
+        }
+    )
+
+    MenuOptionsPane(
+        navController = navController,
+        uiState = uiState,
+        visible = show,
+        toggleDiningOption = {
+            viewModel.toggleDiningOption()
+        }
+    )
+}
+
+@Composable
+private fun NavigationArrows(
     visible: Boolean,
     onUpArrowClick: () -> Unit,
     onDownArrowClick: () -> Unit,
@@ -219,7 +248,8 @@ fun NavigationArrows(
 ) {
     SlideFromSide(
         visible = visible,
-        contentAlignment = Alignment.CenterStart
+        contentAlignment = Alignment.CenterStart,
+        modifier = modifier
     ) {
         Column(
             Modifier.padding(end = 20.dp)
@@ -242,7 +272,7 @@ fun NavigationArrows(
 }
 
 @Composable
-fun RoundedSquareNavigateArrow(
+private fun RoundedSquareNavigateArrow(
     imageVector: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -257,7 +287,6 @@ fun RoundedSquareNavigateArrow(
             .padding(5.dp)
     )
 }
-
 
 @PreviewPixelTablet
 @Composable

@@ -61,7 +61,6 @@ fun MenuOptionsPane(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -76,7 +75,8 @@ fun MenuOptionsPane(
             }
 
             OptionsPaneItem(
-                uiState.diningOption.uiText, {
+                uiState.diningOption.uiText,
+                {
                     shouldShowDiningOptionDialog = true
                 },
                 null

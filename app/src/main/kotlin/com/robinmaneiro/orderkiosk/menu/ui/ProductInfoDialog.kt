@@ -66,7 +66,6 @@ fun ProductOverlay(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Column {
                     AsyncImage(
                         modifier = Modifier.size(400.dp, 400.dp),
@@ -92,36 +91,47 @@ fun ProductOverlay(
                     Text(text = product.formattedPrice, style = MaterialTheme.typography.titleMedium)
                 }
 
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextButton(
-                        onClick = onDismiss
-                    ) {
-                        Text(
-                            text = "Close",
-                            color = SandyBrown40,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        modifier = Modifier.size(150.dp, 50.dp),
-                        colors = buttonColors(
-                            containerColor = Aquamarine40,
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(5.dp),
-                        onClick = { onAddToBasket(product) }
-                    ) {
-                        Text(
-                            text = "Add to basket",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                SectionButtons(
+                    onDismiss = onDismiss,
+                    onAddToBasket = { onAddToBasket.invoke(product) }
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun SectionButtons(
+    onDismiss: () -> Unit,
+    onAddToBasket: () -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextButton(
+            onClick = onDismiss
+        ) {
+            Text(
+                text = "Close",
+                color = SandyBrown40,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Button(
+            modifier = Modifier.size(150.dp, 50.dp),
+            colors = buttonColors(
+                containerColor = Aquamarine40,
+                contentColor = Color.White
+            ),
+            shape = RoundedCornerShape(5.dp),
+            onClick = { onAddToBasket.invoke() }
+        ) {
+            Text(
+                text = "Add to basket",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }

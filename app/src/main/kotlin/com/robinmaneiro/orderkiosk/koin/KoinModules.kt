@@ -18,8 +18,8 @@ import com.robinmaneiro.orderkiosk.coupons.CouponsViewModel
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepositoryImpl
-import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
+import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.util.DataStoreRepository

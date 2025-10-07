@@ -38,8 +38,7 @@ fun MenuItemsSection(
 ) {
     LazyVerticalGrid(
         modifier = modifier
-            .fadingEdge()
-        ,
+            .fadingEdge(),
         columns = GridCells.Adaptive(200.dp),
         state = lazyGridState,
         contentPadding = PaddingValues(
