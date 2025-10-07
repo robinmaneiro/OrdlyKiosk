@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.util
+package com.robinmaneiro.orderkiosk.ui
 
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_TABLET
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 
 /**
@@ -8,6 +8,6 @@ import androidx.compose.ui.tooling.preview.Preview
  */
 @Preview(
     showBackground = true,
-    device = PIXEL_TABLET
+    device = Devices.PIXEL_TABLET
 )
 annotation class PreviewPixelTablet

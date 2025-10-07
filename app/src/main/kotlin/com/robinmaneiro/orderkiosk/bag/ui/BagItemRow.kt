@@ -29,7 +29,7 @@ import com.robinmaneiro.orderkiosk.bag.model.ItemPrice
 import com.robinmaneiro.orderkiosk.bag.model.PriceData
 import com.robinmaneiro.orderkiosk.bag.model.Tax
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 
 @Composable

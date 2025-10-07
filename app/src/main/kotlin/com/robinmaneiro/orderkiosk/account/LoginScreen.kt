@@ -33,7 +33,7 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.model.LoginPayload
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.util.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

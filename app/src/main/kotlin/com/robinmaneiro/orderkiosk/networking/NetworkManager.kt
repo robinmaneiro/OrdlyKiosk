@@ -20,7 +20,7 @@ import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
 
 object NetworkManager {
-    lateinit var httpClient: HttpClient // TODO: Dangerous or not? :/
+    lateinit var httpClient: HttpClient // TODO: Change this!
 
     fun initializeChucker(context: Context) {
         val okhttpEngine = OkHttp.create {
