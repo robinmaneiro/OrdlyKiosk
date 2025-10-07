@@ -30,13 +30,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlin {
-    jvmToolchain(17)
+        jvmToolchain(17)
+        compilerOptions.freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
+
     buildFeatures {
         compose = true
-    }
-    kotlinOptions {
-        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
     }
 }
 
