@@ -85,6 +85,7 @@ dependencies {
 
     //region Debug
     debugImplementation(libs.chucker.debug)
+    implementation(libs.timber)
     //endregion
 
     //region Detekt Plugins

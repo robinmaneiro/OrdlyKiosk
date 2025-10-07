@@ -19,6 +19,7 @@ ktor-client = "3.3.0"
 datastore = "1.1.7"
 tink = "1.18.0"
 chucker = "4.2.0"
+timber = "5.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,7 +54,7 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 
 #region Detekt
 detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose" }
-detekt-rules-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt"}
+detekt-rules-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-rules-ktlint = { group = "dev.detekt", name = "detekt-rules-ktlint-wrapper", version.ref = "detekt-rules-ktlint" }
 detekt-rules-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
 detekt-rules-ruleauthors = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-ruleauthors", version.ref = "detekt" }
@@ -73,6 +74,7 @@ tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = 
 
 #region Debug
 chucker-debug = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 #endregion
 
 [plugins]

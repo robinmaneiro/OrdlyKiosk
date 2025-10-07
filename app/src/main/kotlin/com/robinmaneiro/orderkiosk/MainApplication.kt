@@ -8,11 +8,15 @@ import com.robinmaneiro.orderkiosk.networking.NetworkManager
 import com.robinmaneiro.orderkiosk.util.EncryptionUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import timber.log.Timber
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+//        if (BuildConfig.DEBUG) { TODO: Uncomment when adding build types to gradle
+            Timber.plant(Timber.DebugTree())
+//        }
         startKoin {
             androidContext(this@MainApplication)
             modules(listOf(
