@@ -63,8 +63,10 @@ fun MenuCard(
         modifier = modifier
             .size(300.dp, 80.dp)
             .clickable { onCategoryClick.invoke(category.id) },
-        border = BorderStroke(if (category.isDefault) 2.dp else 1.dp,
-            if (category.isDefault) Aquamarine40 else Color.DarkGray),
+        border = BorderStroke(
+            if (category.isDefault) 2.dp else 1.dp,
+            if (category.isDefault) Aquamarine40 else Color.DarkGray
+        ),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
         ),

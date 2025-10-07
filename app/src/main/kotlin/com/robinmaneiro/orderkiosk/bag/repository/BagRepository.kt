@@ -1,6 +1,5 @@
 package com.robinmaneiro.orderkiosk.bag.repository
 
-import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import kotlinx.coroutines.flow.StateFlow
 

@@ -65,7 +65,6 @@ fun CustomDialog(
                     .heightIn(250.dp)
                     .padding(16.dp)
             ) {
-
                 Column {
                     Text(
                         text = title,
@@ -76,46 +75,54 @@ fun CustomDialog(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = body, style = MaterialTheme.typography.bodyLarge,
+                        text = body,
+                        style = MaterialTheme.typography.bodyLarge,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
 
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    secondaryButtonLabelToAct?.let { (label, action) ->
-                        TextButton(
-                            onClick = action
-                        ) {
-                            Text(
-                                text = label,
-                                color = SandyBrown40,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                    }
-
-
-                    val (primaryButtonLabel, onPrimaryButtonClick) = primaryButtonLabelToAct
-                    Button(
-                        modifier = Modifier.size(150.dp, 50.dp),
-                        colors = buttonColors(
-                            containerColor = Aquamarine40,
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(5.dp),
-                        onClick = { onPrimaryButtonClick.invoke() }
-                    ) {
-                        Text(
-                            text = primaryButtonLabel,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                }
+                SectionButtons(primaryButtonLabelToAct, secondaryButtonLabelToAct)
             }
+        }
+    }
+}
+
+@Composable
+private fun SectionButtons(
+    primaryButtonLabelToAct: Pair<String, () -> Unit>,
+    secondaryButtonLabelToAct: Pair<String, () -> Unit>?
+) {
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        secondaryButtonLabelToAct?.let { (label, action) ->
+            TextButton(
+                onClick = action
+            ) {
+                Text(
+                    text = label,
+                    color = SandyBrown40,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+
+        val (primaryButtonLabel, onPrimaryButtonClick) = primaryButtonLabelToAct
+        Button(
+            modifier = Modifier.size(150.dp, 50.dp),
+            colors = buttonColors(
+                containerColor = Aquamarine40,
+                contentColor = Color.White
+            ),
+            shape = RoundedCornerShape(5.dp),
+            onClick = { onPrimaryButtonClick.invoke() }
+        ) {
+            Text(
+                text = primaryButtonLabel,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }

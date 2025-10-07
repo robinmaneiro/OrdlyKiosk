@@ -2,6 +2,4 @@ package com.robinmaneiro.orderkiosk.orderhistory
 
 import androidx.lifecycle.ViewModel
 
-class OrderHistoryViewModel: ViewModel() {
-
-}
+class OrderHistoryViewModel : ViewModel()

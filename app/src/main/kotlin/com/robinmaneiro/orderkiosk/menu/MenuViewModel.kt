@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Suppress("LongParameterList")
 class MenuViewModel(
     private val bagRepository: BagRepository,
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,

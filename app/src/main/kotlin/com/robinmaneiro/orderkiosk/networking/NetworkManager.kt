@@ -61,7 +61,7 @@ object NetworkManager {
                 setBody(
                     """
                     $stringBody
-                """.trimIndent()
+                    """.trimIndent()
                 )
             }
 
@@ -80,7 +80,7 @@ object NetworkManager {
                 setBody(
                     """
                     $stringBody
-                """.trimIndent()
+                    """.trimIndent()
                 )
             }
 

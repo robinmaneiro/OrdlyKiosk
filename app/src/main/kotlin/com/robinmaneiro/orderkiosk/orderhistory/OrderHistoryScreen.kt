@@ -14,7 +14,7 @@ import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 @Composable
 fun OrderHistoryScreen(
     navController: NavController,
-    modifier: Modifier= Modifier
+    modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,

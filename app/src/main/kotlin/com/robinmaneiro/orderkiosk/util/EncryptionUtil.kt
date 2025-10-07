@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.RegistryConfiguration
 import com.google.crypto.tink.aead.AeadKeyTemplates
-
 import com.google.crypto.tink.config.TinkConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import kotlin.io.encoding.Base64
