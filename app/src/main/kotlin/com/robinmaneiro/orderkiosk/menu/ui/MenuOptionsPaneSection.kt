@@ -29,9 +29,9 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
+import com.robinmaneiro.orderkiosk.ui.SlideFromSide
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.ui.SlideFromSide
 
 @Composable
 fun MenuOptionsPane(
