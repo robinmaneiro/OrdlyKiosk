@@ -91,6 +91,7 @@ class BagViewModel(
                     response.updateUiState()
                 }
                 .onFailure {
+                    hideLoader()
                     // TODO:  Handle error
                 }
         }
@@ -104,6 +105,7 @@ class BagViewModel(
                     bagResponse.updateUiState()
                 }
                 .onFailure {
+                    hideLoader()
                     // TODO: Handle error
                 }
         }

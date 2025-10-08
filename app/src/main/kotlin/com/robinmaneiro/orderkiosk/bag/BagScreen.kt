@@ -61,7 +61,7 @@ fun BagScreen(
                 modifier = Modifier
                     .fadingEdge()
                     .fillMaxWidth()
-                    .weight(.85F),
+                    .weight(weight = .85F),
                 contentPadding = PaddingValues(vertical = 16.dp)
             ) {
                 itemsIndexed(uiState.bagItems) { index, bagItemData ->
@@ -92,7 +92,7 @@ fun BagScreen(
 
             Box(
                 Modifier
-                    .weight(.15f)
+                    .weight(weight = .15f)
                     .background(Iceberg)
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
