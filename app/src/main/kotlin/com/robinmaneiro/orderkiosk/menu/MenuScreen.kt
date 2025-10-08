@@ -48,12 +48,12 @@ import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.RotatingArrow
 import com.robinmaneiro.orderkiosk.ui.SlideFromBottom
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
+import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
+import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf

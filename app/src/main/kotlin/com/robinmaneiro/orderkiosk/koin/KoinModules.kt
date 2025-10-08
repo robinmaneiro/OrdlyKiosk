@@ -15,6 +15,8 @@ import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
 import com.robinmaneiro.orderkiosk.coupons.CouponsViewModel
+import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
+import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepository
 import com.robinmaneiro.orderkiosk.menu.repository.MenuRepositoryImpl
@@ -22,8 +24,6 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
-import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
-import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
