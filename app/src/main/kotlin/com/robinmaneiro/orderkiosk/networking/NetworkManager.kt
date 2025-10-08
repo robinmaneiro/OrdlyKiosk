@@ -55,11 +55,7 @@ object NetworkManager {
         return runCatching {
             val response = httpClient.post(urlString) {
                 contentType(ContentType.Application.Json)
-                setBody(
-                    """
-                    $stringBody
-                    """.trimIndent()
-                )
+                setBody(stringBody)
             }
 
             if (!response.status.isSuccess()) {
@@ -74,11 +70,7 @@ object NetworkManager {
         return runCatching {
             val response = httpClient.patch(urlString) {
                 contentType(ContentType.Application.Json)
-                setBody(
-                    """
-                    $stringBody
-                    """.trimIndent()
-                )
+                setBody(stringBody)
             }
 
             if (!response.status.isSuccess()) {
