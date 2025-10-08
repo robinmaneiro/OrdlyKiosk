@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,10 +29,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.model.LoginPayload
+import com.robinmaneiro.orderkiosk.menu.MenuViewModel
+import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import org.koin.androidx.compose.koinViewModel
@@ -42,6 +46,15 @@ fun AccountScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<LoginViewModel>()
+    val uiState: LoginViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.actions.collect { action ->
+            when (action) {
+                is LoginViewModel.Actions.NavigateBack -> navController.popBackStack()
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -56,6 +69,11 @@ fun AccountScreen(
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
             goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) }
         )
+
+        if (uiState.hasError) {
+            ErrorDialog { navController.popBackStack() }
+            return@Scaffold
+        }
     }
 }
 
@@ -84,7 +102,7 @@ fun LoginScreenContent(
         Box(
             modifier = Modifier
                 .size(600.dp, 500.dp)
-                .background(Color.White.copy(0.8F)),
+                .background(Color.White.copy(alpha = 0.8F)),
             contentAlignment = Alignment.Center
         ) {
             Column(
