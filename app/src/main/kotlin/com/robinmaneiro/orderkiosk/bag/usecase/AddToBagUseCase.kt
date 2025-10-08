@@ -8,7 +8,8 @@ import com.robinmaneiro.orderkiosk.util.Mapper
 class AddToBagUseCase(
     private val bagRepository: BagRepository
 ) {
-    suspend operator fun invoke(payload: AddToBagPayload): Result<BagResponse> {
-        return bagRepository.addToBag(Mapper.asSerializedStringResult(payload).getOrElse { return Result.failure(it) })
+    suspend operator fun invoke(addToBagPayload: AddToBagPayload): Result<BagResponse> {
+        val payload = Mapper.asSerializedStringResult(addToBagPayload).getOrElse { exception -> return Result.failure(exception) }
+        return bagRepository.addToBag(payload)
     }
 }
