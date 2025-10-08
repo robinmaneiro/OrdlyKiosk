@@ -9,8 +9,9 @@ class UpdateBagItemUseCase(
     private val bagRepository: BagRepository
 ) {
     suspend operator fun invoke(updateBagItemPayload: UpdateBagItemPayload): Result<BagResponse> {
+        val payload = Mapper.asSerializedStringResult(updateBagItemPayload).getOrElse { exception -> return Result.failure(exception) }
         return bagRepository.updateBagItem(
-            payload = Mapper.asSerializedStringResult(updateBagItemPayload).getOrElse { return Result.failure(it) },
+            payload = payload,
             bagItemId = updateBagItemPayload.bagItemId
         )
     }

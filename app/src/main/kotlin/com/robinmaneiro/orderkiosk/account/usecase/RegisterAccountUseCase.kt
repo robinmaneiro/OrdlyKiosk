@@ -8,8 +8,8 @@ import com.robinmaneiro.orderkiosk.util.Mapper
 class RegisterAccountUseCase(
     val accountRepository: AccountRepository
 ) {
-    suspend operator fun invoke(payload: RegisterPayload): Result<RegistrationResponse> {
-        return accountRepository.registerUser(Mapper.asSerializedStringResult(payload).getOrElse { return Result.failure(it) })
-        // TODO: Need to track the registration maybe?
+    suspend operator fun invoke(registrationPayload: RegisterPayload): Result<RegistrationResponse> {
+        val payload = Mapper.asSerializedStringResult(registrationPayload).getOrElse { exception -> return Result.failure(exception) }
+        return accountRepository.registerUser(payload)
     }
 }
