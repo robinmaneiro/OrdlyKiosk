@@ -4,4 +4,4 @@ fun Boolean?.orTrue(): Boolean = this ?: true
 
 fun Boolean?.orFalse(): Boolean = this ?: false
 
-inline fun <reified T> List<T>?.isNotNullOrEmpty(): Boolean = !this.isNullOrEmpty()
+fun <T> List<T>?.isNotNullOrEmpty(): Boolean = !this.isNullOrEmpty()
