@@ -27,8 +27,12 @@ class BagViewModel(
         showLoader()
         viewModelScope.launch {
             getBagUseCase.invoke()
-                .onSuccess { it.updateUiState() }
-                .onFailure { hideLoader() }
+                .onSuccess {
+                    response -> response.updateUiState()
+                }
+                .onFailure {
+                    hideLoader()
+                }
         }
     }
 

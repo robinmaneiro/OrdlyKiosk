@@ -11,11 +11,13 @@ import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.http.headers
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
 
@@ -45,6 +47,7 @@ object NetworkManager {
         return runCatching {
             val response = httpClient.get(urlString) {
                 contentType(ContentType.Application.Json)
+                header("Authentication", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2OGUwMTUyNmRkMWQ0NmQ3NWRmY2U4NDgiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzYwMDI1MTIzLCJleHAiOjE3NjAwMjYwMjN9._LXcQA1a-tCkzB1smPLUUkvkoKj10lMt28-PAKWlyLs")
             }
 
             response.body<T>()
