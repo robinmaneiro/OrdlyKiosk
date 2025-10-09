@@ -7,11 +7,11 @@ import com.robinmaneiro.orderkiosk.networking.NetworkManager
 
 class AccountRepositoryImpl : AccountRepository {
     override suspend fun registerUser(payload: String): Result<RegistrationResponse> {
-        return NetworkManager.postRequest<RegistrationResponse>("http://192.168.1.162:8080/auth/register", payload)
+        return NetworkManager.postRequest<RegistrationResponse>("http://192.168.1.162:8080/auth/register", stringBody = payload)
     }
 
     override suspend fun login(payload: String): Result<LoginResponse> {
-        return NetworkManager.postRequest<LoginResponse>("http://192.168.1.162:8080/auth/login", payload)
+        return NetworkManager.postRequest<LoginResponse>("http://192.168.1.162:8080/auth/login", stringBody = payload)
     }
 
     override suspend fun getAccountDetails(): Result<AccountResponse> {

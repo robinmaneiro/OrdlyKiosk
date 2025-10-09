@@ -20,6 +20,9 @@ import io.ktor.http.contentType
 import io.ktor.http.headers
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.forEach
 
 object NetworkManager {
     lateinit var httpClient: HttpClient // TODO: Change this!
@@ -43,21 +46,29 @@ object NetworkManager {
     }
 
     //region Network Requests
-    suspend inline fun <reified T> getRequest(urlString: String): Result<T> {
+    suspend inline fun <reified T> getRequest(
+        urlString: String,
+        headers: Map<String, String> = emptyMap()
+    ): Result<T> {
         return runCatching {
             val response = httpClient.get(urlString) {
                 contentType(ContentType.Application.Json)
-                header("Authentication", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2OGUwMTUyNmRkMWQ0NmQ3NWRmY2U4NDgiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzYwMDI1MTIzLCJleHAiOjE3NjAwMjYwMjN9._LXcQA1a-tCkzB1smPLUUkvkoKj10lMt28-PAKWlyLs")
+                headers.forEach { (name, value) -> header(name, value) }
             }
 
             response.body<T>()
         }
     }
 
-    suspend inline fun <reified T> postRequest(urlString: String, stringBody: String): Result<T> {
+    suspend inline fun <reified T> postRequest(
+        urlString: String,
+        headers: Map<String, String> = emptyMap(),
+        stringBody: String
+    ): Result<T> {
         return runCatching {
             val response = httpClient.post(urlString) {
                 contentType(ContentType.Application.Json)
+                headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
 
@@ -69,25 +80,34 @@ object NetworkManager {
         }
     }
 
-    suspend inline fun <reified T> patchRequest(urlString: String, stringBody: String): Result<T> {
+    suspend inline fun <reified T> patchRequest(
+        urlString: String,
+        headers: Map<String, String> = emptyMap(),
+        stringBody: String
+    ): Result<T> {
         return runCatching {
             val response = httpClient.patch(urlString) {
                 contentType(ContentType.Application.Json)
+                headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
 
             if (!response.status.isSuccess()) {
-                throw ResponseException(response, "HTTP ${response.status.value}")
+                throw ResponseException(response, "HTTP ${response.status.value}") // TODO: Is this interesting to keep? or should remove?
             }
 
             response.body<T>()
         }
     }
 
-    suspend inline fun <reified T> deleteRequest(urlString: String): Result<T> {
+    suspend inline fun <reified T> deleteRequest(
+        urlString: String,
+        headers: Map<String, String> = emptyMap()
+    ): Result<T> {
         return runCatching {
             val response = httpClient.delete(urlString) {
                 contentType(ContentType.Application.Json)
+                headers.forEach { (header, value) -> header(header, value) }
             }
 
             response.body<T>()
