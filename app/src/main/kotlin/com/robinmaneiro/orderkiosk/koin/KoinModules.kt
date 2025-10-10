@@ -4,6 +4,7 @@ import com.robinmaneiro.orderkiosk.account.LoginViewModel
 import com.robinmaneiro.orderkiosk.account.RegistrationViewModel
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepositoryImpl
+import com.robinmaneiro.orderkiosk.account.usecase.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.LoginUserUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
@@ -42,6 +43,7 @@ val viewModelModules = module {
 val useCaseModules = module {
     factoryOf(::RegisterAccountUseCase)
     factoryOf(::LoginUserUseCase)
+    factoryOf(::AccountDetailsUseCase)
 
     factoryOf(::GetMenuCategoriesUseCase)
     factoryOf(::GetProductsByCategoryUseCase)

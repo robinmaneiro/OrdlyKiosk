@@ -2,12 +2,12 @@ package com.robinmaneiro.orderkiosk.account.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AccountResponse(
-    @JsonProperty("id") val id: String,
+data class AccountDetailsResponse(
+    @JsonProperty("id") val userId: String,
     @JsonProperty("title") val title: String,
     @JsonProperty("firstName") val firstName: String,
     @JsonProperty("lastName") val lastName: String,
-    @JsonProperty("email") val email: String,
-    @JsonProperty("dateOfBirth") val dateObBirth: String?,
-    @JsonProperty("phone") val phone: String
+    @JsonProperty("email") val emailAddress: String,
+    @JsonProperty("dateOfBirth") val dateOfBirth: String?,
+    @JsonProperty("phone") val phoneNumber: String
 )
