@@ -1,6 +1,6 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
-import com.robinmaneiro.orderkiosk.account.model.AccountResponse
+import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.account.model.LoginResponse
 import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
@@ -14,7 +14,7 @@ class AccountRepositoryImpl : AccountRepository {
         return NetworkManager.postRequest<LoginResponse>("http://192.168.1.162:8080/auth/login", stringBody = payload)
     }
 
-    override suspend fun getAccountDetails(): Result<AccountResponse> {
-        return NetworkManager.getRequest("http://192.168.162.8080/auth/user")
+    override suspend fun getAccountDetails(): Result<AccountDetailsResponse> {
+        return NetworkManager.getRequest("http://192.168.1.162:8080/account/details")
     }
 }

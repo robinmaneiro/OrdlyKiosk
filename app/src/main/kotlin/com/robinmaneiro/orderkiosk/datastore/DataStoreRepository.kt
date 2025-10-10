@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -18,7 +19,15 @@ private val refreshTokenKey = stringPreferencesKey("refresh_token")
 //endregion
 
 //region Plain
+private val userId = stringPreferencesKey("user_id")
 private val loggedInStatus = booleanPreferencesKey("logged_in_status")
+private val firstName = stringPreferencesKey("first_name")
+private val lastName = stringPreferencesKey("last_name")
+private val emailAddress = stringPreferencesKey("email_address")
+private val phoneDialingCode = stringPreferencesKey("phone_dialing_code")
+private val phoneNumber = stringPreferencesKey("phone_number")
+private val phoneAlpha2CountryCode = stringPreferencesKey("phone_alpha_2_country_code")
+private val dateOfBirth = stringPreferencesKey("date_of_birth")
 //endregion
 
 interface DataStoreRepository {
@@ -27,6 +36,8 @@ interface DataStoreRepository {
 
     suspend fun saveTokenPair(accessToken: String, refreshToken: String)
     suspend fun getRefreshToken(): String
+
+    suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
 }
 
 class DataStoreRepositoryImpl(
@@ -59,6 +70,17 @@ class DataStoreRepositoryImpl(
     override suspend fun getRefreshToken(): String {
         val encryptedToken = getDataStore()?.get(refreshTokenKey) ?: return ""
         return EncryptionUtil.decrypt(encryptedToken)
+    }
+
+    override suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse) {
+        dataStore.edit {
+            it[userId] = accountDetails.userId
+            it[firstName] = accountDetails.firstName
+            it[lastName] = accountDetails.lastName
+            it[phoneNumber] = accountDetails.phoneNumber // TODO: This will in the future include a more complex object
+            it[emailAddress] = accountDetails.emailAddress
+            it[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
+        }
     }
 
     companion object {

@@ -9,9 +9,11 @@ import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.headers
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -42,6 +44,10 @@ object NetworkManager {
                     enable(SerializationFeature.INDENT_OUTPUT)
                 }
             }
+
+            defaultRequest {
+                contentType(ContentType.Application.Json)
+            }
         }
     }
 
@@ -52,7 +58,6 @@ object NetworkManager {
     ): Result<T> {
         return runCatching {
             val response = httpClient.get(urlString) {
-                contentType(ContentType.Application.Json)
                 headers.forEach { (name, value) -> header(name, value) }
             }
 
@@ -67,7 +72,6 @@ object NetworkManager {
     ): Result<T> {
         return runCatching {
             val response = httpClient.post(urlString) {
-                contentType(ContentType.Application.Json)
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
@@ -87,7 +91,6 @@ object NetworkManager {
     ): Result<T> {
         return runCatching {
             val response = httpClient.patch(urlString) {
-                contentType(ContentType.Application.Json)
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
@@ -106,7 +109,6 @@ object NetworkManager {
     ): Result<T> {
         return runCatching {
             val response = httpClient.delete(urlString) {
-                contentType(ContentType.Application.Json)
                 headers.forEach { (header, value) -> header(header, value) }
             }
 
