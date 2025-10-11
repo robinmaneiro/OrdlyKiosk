@@ -38,7 +38,7 @@ class LoginViewModel(
     }
 
     sealed interface Actions {
-        data object NavigateBack: Actions
+        data object NavigateBack : Actions
     }
 
     data class UiState(

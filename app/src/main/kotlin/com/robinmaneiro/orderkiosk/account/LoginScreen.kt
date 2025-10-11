@@ -34,7 +34,6 @@ import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.model.LoginPayload
-import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
@@ -67,7 +66,8 @@ fun AccountScreen(
         LoginScreenContent(
             it,
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
-            goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) }
+            goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) },
+            goToResetPassword = { navController.navigate(Screens.ResetPasswordScreen.route) }
         )
 
         if (uiState.hasError) {
@@ -82,6 +82,7 @@ fun LoginScreenContent(
     paddingValues: PaddingValues,
     loginUser: (String, String) -> Unit,
     goToRegistration: () -> Unit,
+    goToResetPassword: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -152,6 +153,14 @@ fun LoginScreenContent(
 
                 TextButton(
                     {
+                        goToResetPassword.invoke()
+                    }
+                ) {
+                    Text("Reset Password")
+                }
+
+                TextButton(
+                    {
                         goToRegistration.invoke()
                     }
                 ) {
@@ -165,5 +174,5 @@ fun LoginScreenContent(
 @PreviewPixelTablet
 @Composable
 private fun AccountScreenContentPreview() {
-    LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {})
+    LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {}, {})
 }

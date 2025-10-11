@@ -25,7 +25,7 @@ class LoginUserUseCase(
                         )
 
                         dataStore.saveAccountDetails(accountDetailsResponse)
-                }
+                    }
             }
     }
 }
