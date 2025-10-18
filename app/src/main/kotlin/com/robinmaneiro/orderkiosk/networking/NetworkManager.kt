@@ -13,18 +13,13 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.headers
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.headers
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.forEach
 
 object NetworkManager {
     lateinit var httpClient: HttpClient // TODO: Change this!

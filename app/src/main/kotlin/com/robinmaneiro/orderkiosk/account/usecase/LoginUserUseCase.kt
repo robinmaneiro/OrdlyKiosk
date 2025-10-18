@@ -19,13 +19,19 @@ class LoginUserUseCase(
             .onSuccess { loginResponse ->
                 accountDetailsUseCase.invoke()
                     .onSuccess { accountDetailsResponse ->
-                        dataStore.saveTokenPair(
+                        dataStore.saveAuthTokenPair(
                             accessToken = loginResponse.accessToken,
                             refreshToken = loginResponse.refreshToken
                         )
 
                         dataStore.saveAccountDetails(accountDetailsResponse)
                     }
+                    .onFailure {
+                        // TODO: handle account details failure
+                    }
+            }
+            .onFailure {
+                // TODO: handle login failure
             }
     }
 }

@@ -4,16 +4,29 @@ import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 
 class CreateGuestSessionUseCase(
-    val accountRepository: AccountRepository,
+    private val accountRepository: AccountRepository,
     private val dataStore: DataStoreRepository,
-    ) {
+    private val guestSessionDetailsUseCase: GuestSessionDetailsUseCase
+) {
     suspend operator fun invoke() {
         accountRepository.createGuestSession()
-            .onSuccess {guestSessionResponse ->
-//                dataStore.saveTokenPair( TODO: Create new methods in the datastore
-//                    accessToken = guestSessionResponse.accessToken,
-//                    refreshToken = guestSessionResponse.refreshToken
-//                )
-        }
+            .onSuccess { guestSessionResponse ->
+                guestSessionDetailsUseCase.invoke()
+                    .onSuccess{guestDetailsResponse ->
+                        dataStore.saveGuestSessionPair(
+                            accessToken = guestSessionResponse.accessToken,
+                            refreshToken = guestSessionResponse.refreshToken
+                        )
+
+                        dataStore
+                    }
+                    .onFailure {
+                        // TODO: handle on getting guest details use case
+                    }
+
+            }
+            .onFailure {
+                // TODO: handle create guest session failure
+            }
     }
 }
