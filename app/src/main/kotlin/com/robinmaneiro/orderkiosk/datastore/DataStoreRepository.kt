@@ -14,8 +14,11 @@ import kotlinx.coroutines.flow.firstOrNull
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
 //region Encrypted
-private val accessTokenKey = stringPreferencesKey("access_token")
-private val refreshTokenKey = stringPreferencesKey("refresh_token")
+private val authAccessTokenKey = stringPreferencesKey("auth_access_token")
+private val authRefreshTokenKey = stringPreferencesKey("auth_refresh_token")
+
+private val guestAccessTokenKey = stringPreferencesKey("guest_access_token")
+private val guestRefreshTokenKey = stringPreferencesKey("guest_refresh_token")
 //endregion
 
 //region Plain
@@ -31,11 +34,13 @@ private val dateOfBirth = stringPreferencesKey("date_of_birth")
 //endregion
 
 interface DataStoreRepository {
-    suspend fun saveAccessToken(accessToken: String)
-    suspend fun getAccessToken(): String
+    suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String)
+    suspend fun getAuthAccessToken(): String
+    suspend fun getAuthRefreshToken(): String
 
-    suspend fun saveTokenPair(accessToken: String, refreshToken: String)
-    suspend fun getRefreshToken(): String
+    suspend fun saveGuestSessionPair(accessToken: String, refreshToken: String)
+    suspend fun getGuestAccessToken(): String
+    suspend fun getGuestRefreshToken(): String
 
     suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
 }
@@ -46,30 +51,42 @@ class DataStoreRepositoryImpl(
     private val dataStore = context.dataStore
     private suspend fun getDataStore() = dataStore.data.firstOrNull()
 
-    override suspend fun saveAccessToken(accessToken: String) {
-        val encryptedToken = EncryptionUtil.encrypt(accessToken)
-        dataStore.edit {
-            it[accessTokenKey] = encryptedToken
-        }
-    }
-
-    override suspend fun getAccessToken(): String {
-        val encryptedToken = getDataStore()?.get(accessTokenKey) ?: return ""
+    override suspend fun getAuthAccessToken(): String {
+        val encryptedToken = getDataStore()?.get(authAccessTokenKey) ?: return ""
         return EncryptionUtil.decrypt(encryptedToken)
     }
 
-    override suspend fun saveTokenPair(accessToken: String, refreshToken: String) {
+    override suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String) {
         val encryptedAccessToken = EncryptionUtil.encrypt(accessToken)
         val encryptedRefreshToken = EncryptionUtil.encrypt(refreshToken)
         dataStore.edit {
-            it[accessTokenKey] = encryptedAccessToken
-            it[refreshTokenKey] = encryptedRefreshToken
+            it[authAccessTokenKey] = encryptedAccessToken
+            it[authRefreshTokenKey] = encryptedRefreshToken
         }
     }
 
-    override suspend fun getRefreshToken(): String {
-        val encryptedToken = getDataStore()?.get(refreshTokenKey) ?: return ""
+    override suspend fun getAuthRefreshToken(): String {
+        val encryptedToken = getDataStore()?.get(authRefreshTokenKey) ?: return ""
         return EncryptionUtil.decrypt(encryptedToken)
+    }
+
+    override suspend fun saveGuestSessionPair(accessToken: String, refreshToken: String) {
+        val encryptedAccessToken = EncryptionUtil.encrypt(accessToken)
+        val encryptedRefreshToken = EncryptionUtil.encrypt(refreshToken)
+        dataStore.edit {
+            it[guestAccessTokenKey] = encryptedAccessToken
+            it[guestAccessTokenKey] = encryptedRefreshToken
+        }
+    }
+
+    override suspend fun getGuestAccessToken(): String {
+        val encryptedAccessToken = getDataStore()?.get(guestAccessTokenKey) ?: return ""
+        return EncryptionUtil.decrypt(encryptedAccessToken)
+    }
+
+    override suspend fun getGuestRefreshToken(): String {
+        val encryptedRefreshToken = getDataStore()?.get(guestRefreshTokenKey) ?: return ""
+        return EncryptionUtil.decrypt(encryptedRefreshToken)
     }
 
     override suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse) {

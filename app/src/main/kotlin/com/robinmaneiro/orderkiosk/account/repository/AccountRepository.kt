@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
 import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
+import com.robinmaneiro.orderkiosk.account.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
 
@@ -14,4 +15,6 @@ interface AccountRepository {
     suspend fun refreshGuestSession(): Result<TokenPairResponse>
 
     suspend fun getAccountDetails(): Result<AccountDetailsResponse>
+
+    suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse>
 }

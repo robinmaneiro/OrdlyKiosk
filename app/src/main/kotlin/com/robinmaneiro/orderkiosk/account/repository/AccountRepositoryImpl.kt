@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
 import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
+import com.robinmaneiro.orderkiosk.account.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
@@ -24,5 +25,9 @@ class AccountRepositoryImpl : AccountRepository {
 
     override suspend fun getAccountDetails(): Result<AccountDetailsResponse> {
         return NetworkManager.getRequest("http://192.168.1.162:8080/account/details")
+    }
+
+    override suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse> {
+        return NetworkManager.getRequest("") // TODO: Provide URL string for this one
     }
 }
