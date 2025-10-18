@@ -1,7 +1,7 @@
 package com.robinmaneiro.orderkiosk.account.usecase
 
 import com.robinmaneiro.orderkiosk.account.model.LoginPayload
-import com.robinmaneiro.orderkiosk.account.model.LoginResponse
+import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
@@ -12,7 +12,7 @@ class LoginUserUseCase(
     private val accountDetailsUseCase: AccountDetailsUseCase
 ) {
     // TODO: What's a better approach for this? Move it to its own AuthUseCase with all of the integrated operations within? And just call other use cases from here?
-    suspend operator fun invoke(loginPayload: LoginPayload): Result<LoginResponse> {
+    suspend operator fun invoke(loginPayload: LoginPayload): Result<TokenPairResponse> {
         val payload = Mapper.asSerializedStringResult(loginPayload).getOrElse { exception -> return Result.failure(exception) }
 
         return accountRepository.login(payload)
