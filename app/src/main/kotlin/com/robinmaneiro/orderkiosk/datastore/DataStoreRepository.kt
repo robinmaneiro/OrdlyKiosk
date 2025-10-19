@@ -75,7 +75,7 @@ class DataStoreRepositoryImpl(
         val encryptedRefreshToken = EncryptionUtil.encrypt(refreshToken)
         dataStore.edit {
             it[guestAccessTokenKey] = encryptedAccessToken
-            it[guestAccessTokenKey] = encryptedRefreshToken
+            it[guestRefreshTokenKey] = encryptedRefreshToken
         }
     }
 
