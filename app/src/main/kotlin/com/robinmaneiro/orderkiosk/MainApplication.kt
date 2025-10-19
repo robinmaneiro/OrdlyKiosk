@@ -30,9 +30,11 @@ class MainApplication : Application() {
             ))
         }
         EncryptionUtil.initialize(this)
-        NetworkManager.initializeChucker(this)
 
         val dataStore: DataStoreRepository = GlobalContext.get().get()
+
+        NetworkManager.initializeChucker(this, dataStore)
+
         val createGuestSessionUseCase: CreateGuestSessionUseCase = GlobalContext.get().get()
         TokenManager.initialize(dataStore, createGuestSessionUseCase)
     }

@@ -11,14 +11,12 @@ class CreateGuestSessionUseCase(
     suspend operator fun invoke() {
         accountRepository.createGuestSession()
             .onSuccess { guestSessionResponse ->
+                dataStore.saveGuestSessionPair(
+                    accessToken = guestSessionResponse.accessToken,
+                    refreshToken = guestSessionResponse.refreshToken
+                ) // TODO: Remove if the next fails?
                 guestSessionDetailsUseCase.invoke()
                     .onSuccess{guestDetailsResponse ->
-                        dataStore.saveGuestSessionPair(
-                            accessToken = guestSessionResponse.accessToken,
-                            refreshToken = guestSessionResponse.refreshToken
-                        )
-
-                        dataStore
                     }
                     .onFailure {
                         // TODO: handle on getting guest details use case

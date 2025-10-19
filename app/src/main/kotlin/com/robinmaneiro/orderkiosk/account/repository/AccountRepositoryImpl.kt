@@ -28,6 +28,6 @@ class AccountRepositoryImpl : AccountRepository {
     }
 
     override suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse> {
-        return NetworkManager.getRequest("") // TODO: Provide URL string for this one
+        return NetworkManager.getRequest("http://192.168.1.162:8080/api/v1/guests/me")
     }
 }
