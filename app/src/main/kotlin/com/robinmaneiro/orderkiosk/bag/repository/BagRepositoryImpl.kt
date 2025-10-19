@@ -12,31 +12,31 @@ class BagRepositoryImpl : BagRepository {
     override val bag: StateFlow<BagResponse?> = _bag.asStateFlow()
 
     override suspend fun addToBag(payload: String): Result<BagResponse> {
-        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/basket", stringBody = payload)
+        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun getBagItems(): Result<BagResponse> {
-        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/basket")
+        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun updateBagItem(payload: String, bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId", stringBody = payload)
+        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagItemId", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun removeFromBag(bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/basket/$bagItemId")
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagItemId")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun removeAllBagItems(): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/basket/all")
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/all")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
