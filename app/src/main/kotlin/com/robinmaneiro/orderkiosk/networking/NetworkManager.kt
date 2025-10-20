@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
+import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.ResponseException
@@ -55,17 +56,46 @@ object NetworkManager {
         }
     }
 
+    private suspend fun refreshAuthToken(): String? {
+        // Implement the logic to refresh the auth token
+        val response = runCatching {
+            // Implement the API call to refresh the token
+        }
+
+//        return if (response.isSuccess) {
+//            // Save the new token in DataStore
+//            val newToken = response.getOrNull() // Extract the new token from response
+//            runBlocking { dataStore.setAuthAccessToken(newToken) }
+//            newToken
+//        } else {
+//            null
+//        }
+        return null
+    }
+
+    suspend fun <T> handleRequest(request: suspend () -> T): Result<T> {
+        return runCatching {
+            request()
+        }.recover { exception ->
+            if (exception is ResponseException && exception.response.status.value == 401) { // TODO: Need a way to get the int status here.
+                val newAccessToken = refreshAuthToken()
+                if (newAccessToken != null) {
+                    return runCatching { request() }
+                }
+            }
+            throw exception
+        }
+    }
+
     //region Network Requests
     suspend inline fun <reified T> getRequest(
         urlString: String,
         headers: Map<String, String> = emptyMap()
     ): Result<T> {
-        return runCatching {
-            val response = httpClient.get(urlString) {
+        return handleRequest {
+            httpClient.get(urlString) {
                 headers.forEach { (name, value) -> header(name, value) }
-            }
-
-            response.body<T>()
+            }.body()
         }
     }
 
@@ -74,7 +104,7 @@ object NetworkManager {
         headers: Map<String, String> = emptyMap(),
         stringBody: String
     ): Result<T> {
-        return runCatching {
+        return handleRequest {
             val response = httpClient.post(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
@@ -93,7 +123,7 @@ object NetworkManager {
         headers: Map<String, String> = emptyMap(),
         stringBody: String
     ): Result<T> {
-        return runCatching {
+        return handleRequest {
             val response = httpClient.patch(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
@@ -111,7 +141,7 @@ object NetworkManager {
         urlString: String,
         headers: Map<String, String> = emptyMap()
     ): Result<T> {
-        return runCatching {
+        return handleRequest {
             val response = httpClient.delete(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
             }
