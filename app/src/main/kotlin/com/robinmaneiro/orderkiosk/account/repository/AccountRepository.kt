@@ -10,6 +10,8 @@ interface AccountRepository {
 
     suspend fun login(payload: String): Result<TokenPairResponse>
 
+    suspend fun refreshToken(payload: String): Result<TokenPairResponse>
+
     suspend fun createGuestSession(): Result<TokenPairResponse>
 
     suspend fun refreshGuestSession(): Result<TokenPairResponse>

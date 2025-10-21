@@ -15,6 +15,10 @@ class AccountRepositoryImpl : AccountRepository {
         return NetworkManager.postRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/auth/login", stringBody = payload)
     }
 
+    override suspend fun refreshToken(payload: String): Result<TokenPairResponse> {
+        return NetworkManager.postRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/auth/refresh", stringBody = payload)
+    }
+
     override suspend fun createGuestSession(): Result<TokenPairResponse> {
         return NetworkManager.getRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/guests/create")
     }
