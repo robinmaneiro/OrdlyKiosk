@@ -4,6 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.robinmaneiro.orderkiosk.account.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
@@ -28,8 +29,10 @@ import kotlinx.coroutines.runBlocking
 
 object NetworkManager {
     lateinit var httpClient: HttpClient // TODO: Change this!
+    lateinit var refreshTokenUseCase: RefreshTokenUseCase
 
-    fun initializeChucker(context: Context, dataStore: DataStoreRepository) {
+    fun initializeChucker(context: Context, dataStore: DataStoreRepository, refreshTokenUseCase: RefreshTokenUseCase) {
+        this.refreshTokenUseCase = refreshTokenUseCase // TODO: Change for nullable or something
         val okhttpEngine = OkHttp.create {
             val chuckerInterceptor = ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).maxContentLength(length = 250000L).redactHeaders(emptySet())
                 .alwaysReadResponseBody(false)
@@ -69,10 +72,8 @@ object NetworkManager {
             }
         }.recover { exception ->
             if (exception is ResponseException && exception.response.status.value == HttpStatusCode.Unauthorized.value) {
-                val newAccessToken = ""
-                if (newAccessToken != null) {
-                    return runCatching { request().body() }
-                }
+                refreshTokenUseCase.invoke()
+                return runCatching { request().body() }
             }
 
             throw exception
