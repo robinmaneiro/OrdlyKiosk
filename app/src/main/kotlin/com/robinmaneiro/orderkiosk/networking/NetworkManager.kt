@@ -18,7 +18,9 @@ import io.ktor.client.request.header
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
@@ -56,33 +58,23 @@ object NetworkManager {
         }
     }
 
-    private suspend fun refreshAuthToken(): String? {
-        // Implement the logic to refresh the auth token
-        val response = runCatching {
-            // Implement the API call to refresh the token
-        }
-
-//        return if (response.isSuccess) {
-//            // Save the new token in DataStore
-//            val newToken = response.getOrNull() // Extract the new token from response
-//            runBlocking { dataStore.setAuthAccessToken(newToken) }
-//            newToken
-//        } else {
-//            null
-//        }
-        return null
-    }
-
-    suspend fun <T> handleRequest(request: suspend () -> T): Result<T> {
+    suspend inline fun <reified T> handleRequest(request: suspend () -> HttpResponse): Result<T> {
         return runCatching {
-            request()
+            val response = request()
+
+            when {
+                response.status.isSuccess() -> response.body<T>()
+                response.status.value == 401 -> throw ResponseException(response, "Unauthorized Access: ${response.status.value}")
+                else -> throw ResponseException(response, "HTTP: ${response.status.value}")
+            }
         }.recover { exception ->
-            if (exception is ResponseException && exception.response.status.value == 401) { // TODO: Need a way to get the int status here.
-                val newAccessToken = refreshAuthToken()
+            if (exception is ResponseException && exception.response.status.value == HttpStatusCode.Unauthorized.value) {
+                val newAccessToken = ""
                 if (newAccessToken != null) {
-                    return runCatching { request() }
+                    return runCatching { request().body() }
                 }
             }
+
             throw exception
         }
     }
@@ -95,7 +87,7 @@ object NetworkManager {
         return handleRequest {
             httpClient.get(urlString) {
                 headers.forEach { (name, value) -> header(name, value) }
-            }.body()
+            }
         }
     }
 
@@ -114,7 +106,7 @@ object NetworkManager {
                 throw ResponseException(response, "HTTP ${response.status.value}")
             }
 
-            response.body<T>()
+            response
         }
     }
 
@@ -133,7 +125,7 @@ object NetworkManager {
                 throw ResponseException(response, "HTTP ${response.status.value}") // TODO: Is this interesting to keep? or should remove?
             }
 
-            response.body<T>()
+            response
         }
     }
 
@@ -146,7 +138,7 @@ object NetworkManager {
                 headers.forEach { (header, value) -> header(header, value) }
             }
 
-            response.body<T>()
+            response
         }
     }
     //endregion
