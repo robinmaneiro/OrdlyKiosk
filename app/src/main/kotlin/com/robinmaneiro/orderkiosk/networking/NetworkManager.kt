@@ -27,11 +27,12 @@ import io.ktor.serialization.jackson.jackson
 import kotlinx.coroutines.runBlocking
 
 object NetworkManager {
-    lateinit var httpClient: HttpClient // TODO: Change this!
+    // TODO: Remove 'lateinit' variables
+    lateinit var httpClient: HttpClient
     lateinit var refreshGuestSessionUseCase: RefreshGuestSessionUseCase
 
     fun initializeChucker(context: Context, dataStore: DataStoreRepository, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
-        this.refreshGuestSessionUseCase = refreshGuestSessionUseCase // TODO: Change for nullable or something
+        this.refreshGuestSessionUseCase = refreshGuestSessionUseCase
         val okhttpEngine = OkHttp.create {
             val chuckerInterceptor = ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).maxContentLength(length = 250000L).redactHeaders(emptySet())
                 .alwaysReadResponseBody(false)
@@ -66,7 +67,7 @@ object NetworkManager {
 
             when {
                 response.status.isSuccess() -> response.body<T>()
-                response.status.value == 401 -> throw ResponseException(response, "Unauthorized Access: ${response.status.value}")
+                response.status.value == HttpStatusCode.Unauthorized.value -> throw ResponseException(response, "Unauthorized Access: ${response.status.value}")
                 else -> throw ResponseException(response, "HTTP: ${response.status.value}")
             }
         }.recover { exception ->
