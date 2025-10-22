@@ -1,7 +1,7 @@
-package com.robinmaneiro.orderkiosk.account
+package com.robinmaneiro.orderkiosk.account.resetpassword
 
 import androidx.lifecycle.ViewModel
-import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

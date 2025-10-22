@@ -1,8 +1,8 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
-import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
-import com.robinmaneiro.orderkiosk.account.model.GuestSessionDetailsResponse
-import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
+import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
+import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetailsResponse
+import com.robinmaneiro.orderkiosk.account.registration.model.RegistrationResponse
 import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
 

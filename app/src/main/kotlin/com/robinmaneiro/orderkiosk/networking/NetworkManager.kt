@@ -4,7 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.robinmaneiro.orderkiosk.account.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

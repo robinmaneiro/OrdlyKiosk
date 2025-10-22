@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.model
+package com.robinmaneiro.orderkiosk.account.guestsession.model
 
 class GuestSessionDetailsResponse(
     val guestBagId: String,

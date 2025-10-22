@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account
+package com.robinmaneiro.orderkiosk.account.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
-import com.robinmaneiro.orderkiosk.account.model.LoginPayload
+import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar

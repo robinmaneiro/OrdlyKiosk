@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.usecase
+package com.robinmaneiro.orderkiosk.account.guestsession.usecase
 
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository

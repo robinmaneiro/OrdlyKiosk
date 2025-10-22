@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.account.usecase
+package com.robinmaneiro.orderkiosk.account.login.usecase
 
-import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
+import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 
 class AccountDetailsUseCase(
