@@ -31,10 +31,13 @@ object NetworkManager {
     lateinit var httpClient: HttpClient
     lateinit var refreshGuestSessionUseCase: RefreshGuestSessionUseCase
 
-    fun initializeChucker(context: Context, dataStore: DataStoreRepository, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
+    fun initialize(context: Context, dataStore: DataStoreRepository, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
         this.refreshGuestSessionUseCase = refreshGuestSessionUseCase
         val okhttpEngine = OkHttp.create {
-            val chuckerInterceptor = ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).maxContentLength(length = 250000L).redactHeaders(emptySet())
+            val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+                .collector(ChuckerCollector(context))
+                .maxContentLength(length = 250000L)
+                .redactHeaders(emptySet())
                 .alwaysReadResponseBody(false)
                 .build()
 

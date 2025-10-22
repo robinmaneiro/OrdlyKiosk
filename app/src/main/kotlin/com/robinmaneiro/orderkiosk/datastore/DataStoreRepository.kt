@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
 import kotlinx.coroutines.flow.firstOrNull
@@ -31,18 +32,24 @@ private val phoneDialingCode = stringPreferencesKey("phone_dialing_code")
 private val phoneNumber = stringPreferencesKey("phone_number")
 private val phoneAlpha2CountryCode = stringPreferencesKey("phone_alpha_2_country_code")
 private val dateOfBirth = stringPreferencesKey("date_of_birth")
+private val bagId = stringPreferencesKey("bag_id")
+private val wishlistId = stringPreferencesKey("wishlist_id")
+private val guestBagId = stringPreferencesKey("guest_bag_id")
+private val guestWishlistId = stringPreferencesKey("guest_wishlist_id")
 //endregion
 
 interface DataStoreRepository {
     suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String)
     suspend fun getAuthAccessToken(): String
     suspend fun getAuthRefreshToken(): String
+    suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
 
     suspend fun saveGuestSessionPair(accessToken: String, refreshToken: String)
     suspend fun getGuestAccessToken(): String
     suspend fun getGuestRefreshToken(): String
+    suspend fun saveGuestSessionDetails(guestSessionDetailsResponse: GuestSessionDetailsResponse)
 
-    suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
+    suspend fun clearDataStore()
 }
 
 class DataStoreRepositoryImpl(
@@ -90,13 +97,28 @@ class DataStoreRepositoryImpl(
     }
 
     override suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse) {
+        dataStore.edit { preferences ->
+            preferences[userId] = accountDetails.userId
+            preferences[firstName] = accountDetails.firstName
+            preferences[lastName] = accountDetails.lastName
+            preferences[phoneNumber] = accountDetails.phoneNumber // TODO: This will in the future include a more complex object
+            preferences[emailAddress] = accountDetails.emailAddress
+            preferences[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
+            preferences[bagId] = accountDetails.bagId
+            preferences[wishlistId] = accountDetails.wishlistId
+        }
+    }
+
+    override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse) {
+        dataStore.edit { preferences ->
+            preferences[guestBagId] = guestDetails.guestBagId
+            preferences[guestWishlistId] = guestDetails.guestWishlistId
+        }
+    }
+
+    override suspend fun clearDataStore() {
         dataStore.edit {
-            it[userId] = accountDetails.userId
-            it[firstName] = accountDetails.firstName
-            it[lastName] = accountDetails.lastName
-            it[phoneNumber] = accountDetails.phoneNumber // TODO: This will in the future include a more complex object
-            it[emailAddress] = accountDetails.emailAddress
-            it[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
+            it.clear()
         }
     }
 
