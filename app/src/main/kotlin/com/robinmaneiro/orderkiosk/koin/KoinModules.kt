@@ -8,6 +8,7 @@ import com.robinmaneiro.orderkiosk.account.usecase.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.CreateGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.GuestSessionDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.account.usecase.RefreshGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
@@ -50,6 +51,7 @@ val useCaseModules = module {
     factoryOf(::AccountDetailsUseCase)
 
     factoryOf(::CreateGuestSessionUseCase)
+    factoryOf(::RefreshGuestSessionUseCase)
     factoryOf(::GuestSessionDetailsUseCase)
 
     factoryOf(::GetMenuCategoriesUseCase)

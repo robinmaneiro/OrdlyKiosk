@@ -2,8 +2,8 @@ package com.robinmaneiro.orderkiosk.account.repository
 
 import com.robinmaneiro.orderkiosk.account.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.account.model.GuestSessionDetailsResponse
-import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
+import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
 
 class AccountRepositoryImpl : AccountRepository {
@@ -23,8 +23,8 @@ class AccountRepositoryImpl : AccountRepository {
         return NetworkManager.getRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/guests/create")
     }
 
-    override suspend fun refreshGuestSession(): Result<TokenPairResponse> {
-        return NetworkManager.postRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/guests/refresh", stringBody = "") // TODO: Add body
+    override suspend fun refreshGuestSession(payload: String): Result<TokenPairResponse> {
+        return NetworkManager.postRequest<TokenPairResponse>("http://192.168.1.162:8080/api/v1/guests/refresh", stringBody = payload)
     }
 
     override suspend fun getAccountDetails(): Result<AccountDetailsResponse> {

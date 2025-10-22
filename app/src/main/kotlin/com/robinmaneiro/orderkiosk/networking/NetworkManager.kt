@@ -4,10 +4,9 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.robinmaneiro.orderkiosk.account.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.account.usecase.RefreshGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
-import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.ResponseException
@@ -29,10 +28,10 @@ import kotlinx.coroutines.runBlocking
 
 object NetworkManager {
     lateinit var httpClient: HttpClient // TODO: Change this!
-    lateinit var refreshTokenUseCase: RefreshTokenUseCase
+    lateinit var refreshGuestSessionUseCase: RefreshGuestSessionUseCase
 
-    fun initializeChucker(context: Context, dataStore: DataStoreRepository, refreshTokenUseCase: RefreshTokenUseCase) {
-        this.refreshTokenUseCase = refreshTokenUseCase // TODO: Change for nullable or something
+    fun initializeChucker(context: Context, dataStore: DataStoreRepository, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
+        this.refreshGuestSessionUseCase = refreshGuestSessionUseCase // TODO: Change for nullable or something
         val okhttpEngine = OkHttp.create {
             val chuckerInterceptor = ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).maxContentLength(length = 250000L).redactHeaders(emptySet())
                 .alwaysReadResponseBody(false)
@@ -54,7 +53,7 @@ object NetworkManager {
                 val authAccessToken = runBlocking { dataStore.getAuthAccessToken().takeUnless(String::isEmpty) }
                 val guestAccessToken = runBlocking { dataStore.getGuestAccessToken().takeUnless(String::isEmpty) }
 
-                (authAccessToken ?: guestAccessToken)?.let {token ->
+                (authAccessToken ?: guestAccessToken)?.let { token ->
                     header("Authorization", "Bearer $token")
                 }
             }
@@ -72,7 +71,7 @@ object NetworkManager {
             }
         }.recover { exception ->
             if (exception is ResponseException && exception.response.status.value == HttpStatusCode.Unauthorized.value) {
-                refreshTokenUseCase.invoke()
+                refreshGuestSessionUseCase.invoke()
                 return runCatching { request().body() }
             }
 
