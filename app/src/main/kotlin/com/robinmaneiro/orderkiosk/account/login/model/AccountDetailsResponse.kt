@@ -9,5 +9,7 @@ data class AccountDetailsResponse(
     @JsonProperty("lastName") val lastName: String,
     @JsonProperty("email") val emailAddress: String,
     @JsonProperty("dateOfBirth") val dateOfBirth: String?,
-    @JsonProperty("phone") val phoneNumber: String
+    @JsonProperty("phone") val phoneNumber: String,
+    @JsonProperty("bagId") val bagId: String,
+    @JsonProperty("wishlistId") val wishlistId: String
 )

@@ -35,7 +35,7 @@ class MainApplication : Application() {
         val dataStore: DataStoreRepository = GlobalContext.get().get()
         val refreshGuestSessionUseCase: RefreshGuestSessionUseCase = GlobalContext.get().get()
 
-        NetworkManager.initializeChucker(this, dataStore, refreshGuestSessionUseCase)
+        NetworkManager.initialize(this, dataStore, refreshGuestSessionUseCase)
 
         val createGuestSessionUseCase: CreateGuestSessionUseCase = GlobalContext.get().get()
         TokenManager.initialize(dataStore, createGuestSessionUseCase)

@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.account.guestsession.usecase
 
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
+import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class CreateGuestSessionUseCase(
     private val accountRepository: AccountRepository,
@@ -16,10 +17,12 @@ class CreateGuestSessionUseCase(
                     refreshToken = guestSessionResponse.refreshToken
                 ) // TODO: Remove if the next fails?
                 guestSessionDetailsUseCase.invoke()
-                    .onSuccess { guestDetailsResponse ->
+                    .onSuccess{guestSessionDetails ->
+                        dataStore.saveGuestSessionDetails(guestSessionDetails)
                     }
                     .onFailure {
-                        // TODO: handle on getting guest details use case
+                        errorLog(it) { "There has been an issue when attempting to retrieve guest session data" }
+                        dataStore.clearDataStore()
                     }
             }
             .onFailure {
