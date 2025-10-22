@@ -1,16 +1,16 @@
 package com.robinmaneiro.orderkiosk.koin
 
-import com.robinmaneiro.orderkiosk.account.LoginViewModel
-import com.robinmaneiro.orderkiosk.account.RegistrationViewModel
+import com.robinmaneiro.orderkiosk.account.login.LoginViewModel
+import com.robinmaneiro.orderkiosk.account.registration.RegistrationViewModel
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepositoryImpl
-import com.robinmaneiro.orderkiosk.account.usecase.AccountDetailsUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.CreateGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.GuestSessionDetailsUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.LoginUserUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.RefreshGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.RefreshTokenUseCase
-import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
+import com.robinmaneiro.orderkiosk.account.login.usecase.AccountDetailsUseCase
+import com.robinmaneiro.orderkiosk.account.guestsession.usecase.CreateGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.account.guestsession.usecase.GuestSessionDetailsUseCase
+import com.robinmaneiro.orderkiosk.account.login.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl

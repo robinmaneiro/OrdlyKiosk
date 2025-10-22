@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account
+package com.robinmaneiro.orderkiosk.account.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import org.koin.androidx.compose.koinViewModel

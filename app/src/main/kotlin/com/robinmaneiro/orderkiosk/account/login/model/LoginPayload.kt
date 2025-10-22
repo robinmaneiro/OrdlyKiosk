@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.model
+package com.robinmaneiro.orderkiosk.account.login.model
 
 data class LoginPayload(
     val email: String,

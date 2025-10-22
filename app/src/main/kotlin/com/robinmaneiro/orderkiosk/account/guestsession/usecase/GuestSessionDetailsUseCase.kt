@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.account.usecase
+package com.robinmaneiro.orderkiosk.account.guestsession.usecase
 
-import com.robinmaneiro.orderkiosk.account.model.GuestSessionDetailsResponse
+import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 
 class GuestSessionDetailsUseCase(

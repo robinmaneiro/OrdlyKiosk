@@ -1,9 +1,9 @@
-package com.robinmaneiro.orderkiosk.account
+package com.robinmaneiro.orderkiosk.account.registration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
-import com.robinmaneiro.orderkiosk.account.usecase.RegisterAccountUseCase
+import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

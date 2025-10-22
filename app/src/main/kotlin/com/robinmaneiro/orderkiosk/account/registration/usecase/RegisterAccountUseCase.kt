@@ -1,7 +1,7 @@
-package com.robinmaneiro.orderkiosk.account.usecase
+package com.robinmaneiro.orderkiosk.account.registration.usecase
 
-import com.robinmaneiro.orderkiosk.account.model.RegisterPayload
-import com.robinmaneiro.orderkiosk.account.model.RegistrationResponse
+import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.registration.model.RegistrationResponse
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
 

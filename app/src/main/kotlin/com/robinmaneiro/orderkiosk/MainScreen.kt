@@ -7,9 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.robinmaneiro.orderkiosk.account.AccountScreen
-import com.robinmaneiro.orderkiosk.account.RegistrationScreen
-import com.robinmaneiro.orderkiosk.account.ResetPasswordScreen
+import com.robinmaneiro.orderkiosk.account.login.AccountScreen
+import com.robinmaneiro.orderkiosk.account.registration.RegistrationScreen
+import com.robinmaneiro.orderkiosk.account.resetpassword.ResetPasswordScreen
 import com.robinmaneiro.orderkiosk.bag.BagScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
 import com.robinmaneiro.orderkiosk.menu.MenuScreen

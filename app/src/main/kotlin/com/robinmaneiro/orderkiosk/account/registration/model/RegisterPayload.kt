@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.model
+package com.robinmaneiro.orderkiosk.account.registration.model
 
 data class RegisterPayload(
     val title: String,

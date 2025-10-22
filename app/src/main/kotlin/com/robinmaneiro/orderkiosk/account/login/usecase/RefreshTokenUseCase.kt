@@ -1,6 +1,6 @@
-package com.robinmaneiro.orderkiosk.account.usecase
+package com.robinmaneiro.orderkiosk.account.login.usecase
 
-import com.robinmaneiro.orderkiosk.account.model.RefreshTokenPayload
+import com.robinmaneiro.orderkiosk.account.login.model.RefreshTokenPayload
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
