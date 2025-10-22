@@ -16,12 +16,11 @@ class CreateGuestSessionUseCase(
                     refreshToken = guestSessionResponse.refreshToken
                 ) // TODO: Remove if the next fails?
                 guestSessionDetailsUseCase.invoke()
-                    .onSuccess{guestDetailsResponse ->
+                    .onSuccess { guestDetailsResponse ->
                     }
                     .onFailure {
                         // TODO: handle on getting guest details use case
                     }
-
             }
             .onFailure {
                 // TODO: handle create guest session failure
