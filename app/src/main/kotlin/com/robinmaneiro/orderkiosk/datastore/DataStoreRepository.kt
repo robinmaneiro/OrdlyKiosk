@@ -32,8 +32,8 @@ private val phoneDialingCode = stringPreferencesKey("phone_dialing_code")
 private val phoneNumber = stringPreferencesKey("phone_number")
 private val phoneAlpha2CountryCode = stringPreferencesKey("phone_alpha_2_country_code")
 private val dateOfBirth = stringPreferencesKey("date_of_birth")
-private val bagId = stringPreferencesKey("bag_id")
-private val wishlistId = stringPreferencesKey("wishlist_id")
+private val authBagId = stringPreferencesKey("auth_bag_id")
+private val authWishlistId = stringPreferencesKey("auth_wishlist_id")
 private val guestBagId = stringPreferencesKey("guest_bag_id")
 private val guestWishlistId = stringPreferencesKey("guest_wishlist_id")
 //endregion
@@ -48,6 +48,12 @@ interface DataStoreRepository {
     suspend fun getGuestAccessToken(): String
     suspend fun getGuestRefreshToken(): String
     suspend fun saveGuestSessionDetails(guestSessionDetailsResponse: GuestSessionDetailsResponse)
+
+    suspend fun getAuthBagId(): String
+    suspend fun getAuthWishlistId(): String
+
+    suspend fun getGuestBagId(): String
+    suspend fun getGuestWishlistId(): String
 
     suspend fun clearDataStore()
 }
@@ -104,8 +110,8 @@ class DataStoreRepositoryImpl(
             preferences[phoneNumber] = accountDetails.phoneNumber // TODO: This will in the future include a more complex object
             preferences[emailAddress] = accountDetails.emailAddress
             preferences[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
-            preferences[bagId] = accountDetails.bagId
-            preferences[wishlistId] = accountDetails.wishlistId
+            preferences[authBagId] = accountDetails.bagId
+            preferences[authWishlistId] = accountDetails.wishlistId
         }
     }
 
@@ -114,6 +120,23 @@ class DataStoreRepositoryImpl(
             preferences[guestBagId] = guestDetails.guestBagId
             preferences[guestWishlistId] = guestDetails.guestWishlistId
         }
+    }
+
+    override suspend fun getAuthBagId(): String {
+        return getDataStore()?.get(authBagId) ?: return ""
+    }
+
+    override suspend fun getAuthWishlistId(): String {
+        return getDataStore()?.get(authWishlistId) ?: return ""
+    }
+
+    override suspend fun getGuestBagId(): String {
+        return getDataStore()?.get(guestBagId) ?: return ""
+    }
+
+
+    override suspend fun getGuestWishlistId(): String {
+        return getDataStore()?.get(guestWishlistId) ?: return ""
     }
 
     override suspend fun clearDataStore() {
