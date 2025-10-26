@@ -5,6 +5,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -29,10 +30,15 @@ import kotlinx.coroutines.runBlocking
 object NetworkManager {
     // TODO: Remove 'lateinit' variables
     lateinit var httpClient: HttpClient
+    lateinit var refreshTokenUseCase: RefreshTokenUseCase
     lateinit var refreshGuestSessionUseCase: RefreshGuestSessionUseCase
+    lateinit var dataStore: DataStoreRepository
 
-    fun initialize(context: Context, dataStore: DataStoreRepository, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
+    fun initialize(context: Context, dataStore: DataStoreRepository, refreshTokenUseCase: RefreshTokenUseCase, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
         this.refreshGuestSessionUseCase = refreshGuestSessionUseCase
+        this.refreshTokenUseCase = refreshTokenUseCase
+        this.dataStore = dataStore
+
         val okhttpEngine = OkHttp.create {
             val chuckerInterceptor = ChuckerInterceptor.Builder(context)
                 .collector(ChuckerCollector(context))
@@ -54,12 +60,11 @@ object NetworkManager {
             defaultRequest {
                 contentType(ContentType.Application.Json)
 
-                val authAccessToken = runBlocking { dataStore.getAuthAccessToken().takeUnless(String::isEmpty) }
-                val guestAccessToken = runBlocking { dataStore.getGuestAccessToken().takeUnless(String::isEmpty) }
-
-                (authAccessToken ?: guestAccessToken)?.let { token ->
-                    header("Authorization", "Bearer $token")
+                val token = runBlocking {
+                    if (dataStore.isUserLoggedIn()) dataStore.getAuthAccessToken() else dataStore.getGuestRefreshToken()
                 }
+
+                header("Authorization", "Bearer $token")
             }
         }
     }
@@ -75,8 +80,13 @@ object NetworkManager {
             }
         }.recover { exception ->
             if (exception is ResponseException && exception.response.status.value == HttpStatusCode.Unauthorized.value) {
-                refreshGuestSessionUseCase.invoke()
-                return runCatching { request().body() }
+                if (dataStore.isUserLoggedIn()) {
+                    refreshTokenUseCase.invoke()
+                } else {
+                    refreshGuestSessionUseCase.invoke()
+                }
+
+                return runCatching { request().body() } // Repeat the request that originally returned a 401.
             }
 
             throw exception
@@ -101,16 +111,10 @@ object NetworkManager {
         stringBody: String
     ): Result<T> {
         return handleRequest {
-            val response = httpClient.post(urlString) {
+            httpClient.post(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
-
-            if (!response.status.isSuccess()) {
-                throw ResponseException(response, "HTTP ${response.status.value}")
-            }
-
-            response
         }
     }
 
@@ -120,16 +124,10 @@ object NetworkManager {
         stringBody: String
     ): Result<T> {
         return handleRequest {
-            val response = httpClient.patch(urlString) {
+            httpClient.patch(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
                 setBody(stringBody)
             }
-
-            if (!response.status.isSuccess()) {
-                throw ResponseException(response, "HTTP ${response.status.value}") // TODO: Is this interesting to keep? or should remove?
-            }
-
-            response
         }
     }
 
@@ -138,11 +136,9 @@ object NetworkManager {
         headers: Map<String, String> = emptyMap()
     ): Result<T> {
         return handleRequest {
-            val response = httpClient.delete(urlString) {
+            httpClient.delete(urlString) {
                 headers.forEach { (header, value) -> header(header, value) }
             }
-
-            response
         }
     }
     //endregion
