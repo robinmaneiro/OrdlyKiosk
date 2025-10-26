@@ -6,6 +6,7 @@ import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategories
@@ -31,6 +32,7 @@ class MenuViewModel(
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
     private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
     private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
+    private val bagSelectorUseCase: BagSelectorUseCase,
     private val addToBagUseCase: AddToBagUseCase,
     private val getBagUseCase: GetBagUseCase,
     private val diningOptionString: String
@@ -66,7 +68,10 @@ class MenuViewModel(
                     return
                 }
 
-                getBagUseCase()
+                getBagUseCase.invoke(
+                    bagId = bagSelectorUseCase.invoke()
+                )
+
                 loadProducts(defaultCategoryId, menuCategories)
             }
             .onFailure {
@@ -138,7 +143,10 @@ class MenuViewModel(
                 product.productId,
                 1
             )
-            addToBagUseCase.invoke(addToBagPayload)
+            addToBagUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke(),
+                addToBagPayload = addToBagPayload
+            )
         }
     }
 

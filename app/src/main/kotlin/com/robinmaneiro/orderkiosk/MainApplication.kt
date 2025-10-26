@@ -10,7 +10,7 @@ import com.robinmaneiro.orderkiosk.koin.repositoryModules
 import com.robinmaneiro.orderkiosk.koin.useCaseModules
 import com.robinmaneiro.orderkiosk.koin.viewModelModules
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
-import com.robinmaneiro.orderkiosk.util.TokenManager
+import com.robinmaneiro.orderkiosk.util.SessionManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
@@ -42,6 +42,6 @@ class MainApplication : Application() {
         NetworkManager.initialize(this, dataStore, refreshTokenUseCase, refreshGuestSessionUseCase)
 
         val createGuestSessionUseCase: CreateGuestSessionUseCase = GlobalContext.get().get()
-        TokenManager.initialize(dataStore, createGuestSessionUseCase)
+        SessionManager.initialize(dataStore, createGuestSessionUseCase)
     }
 }

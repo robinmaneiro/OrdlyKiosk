@@ -6,10 +6,8 @@ import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 
 class GetBagUseCase(
     private val bagRepository: BagRepository,
-    private val dataStore: DataStoreRepository
 ) {
-    suspend operator fun invoke(): Result<BagResponse> {
-        val bagId = dataStore.getAuthBagId().takeIf(String::isNotEmpty) ?: dataStore.getGuestBagId()
-        return bagRepository.getBagItems()
+    suspend operator fun invoke(bagId: String): Result<BagResponse> {
+        return bagRepository.getBagItems(bagId)
     }
 }

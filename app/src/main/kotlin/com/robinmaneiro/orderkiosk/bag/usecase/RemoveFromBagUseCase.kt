@@ -6,7 +6,7 @@ import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 class RemoveFromBagUseCase(
     private val bagRepository: BagRepository
 ) {
-    suspend operator fun invoke(bagItemId: String): Result<BagResponse> {
-        return bagRepository.removeFromBag(bagItemId)
+    suspend operator fun invoke(bagId: String, bagItemId: String): Result<BagResponse> {
+        return bagRepository.removeFromBag(bagId, bagItemId)
     }
 }
