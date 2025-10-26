@@ -3,6 +3,7 @@ package com.robinmaneiro.orderkiosk
 import android.app.Application
 import com.robinmaneiro.orderkiosk.account.guestsession.usecase.CreateGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.datastore.EncryptionUtil
 import com.robinmaneiro.orderkiosk.koin.repositoryModules
@@ -24,18 +25,21 @@ class MainApplication : Application() {
 //        }
         startKoin {
             androidContext(this@MainApplication)
-            modules(listOf(
-                viewModelModules,
-                repositoryModules,
-                useCaseModules
-            ))
+            modules(
+                listOf(
+                    viewModelModules,
+                    repositoryModules,
+                    useCaseModules
+                )
+            )
         }
         EncryptionUtil.initialize(this)
 
         val dataStore: DataStoreRepository = GlobalContext.get().get()
+        val refreshTokenUseCase: RefreshTokenUseCase = GlobalContext.get().get()
         val refreshGuestSessionUseCase: RefreshGuestSessionUseCase = GlobalContext.get().get()
 
-        NetworkManager.initialize(this, dataStore, refreshGuestSessionUseCase)
+        NetworkManager.initialize(this, dataStore, refreshTokenUseCase, refreshGuestSessionUseCase)
 
         val createGuestSessionUseCase: CreateGuestSessionUseCase = GlobalContext.get().get()
         TokenManager.initialize(dataStore, createGuestSessionUseCase)
