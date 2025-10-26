@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface BagRepository {
     val bag: StateFlow<BagResponse?>
-    suspend fun getBagItems(): Result<BagResponse>
+    suspend fun getBagItems(bagId: String): Result<BagResponse>
 
-    suspend fun addToBag(payload: String): Result<BagResponse>
+    suspend fun addToBag(bagId: String, payload: String): Result<BagResponse>
 
-    suspend fun updateBagItem(payload: String, bagItemId: String): Result<BagResponse>
+    suspend fun updateBagItem(bagId: String, payload: String, bagItemId: String): Result<BagResponse>
 
-    suspend fun removeFromBag(bagItemId: String): Result<BagResponse>
+    suspend fun removeFromBag(bagId: String, bagItemId: String): Result<BagResponse>
 
-    suspend fun removeAllBagItems(): Result<BagResponse>
+    suspend fun removeAllBagItems(bagId: String): Result<BagResponse>
 }

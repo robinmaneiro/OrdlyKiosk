@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.bag.model.UpdateBagItemPayload
+import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BagViewModel(
+    private val bagSelectorUseCase: BagSelectorUseCase,
     private val getBagUseCase: GetBagUseCase,
     private val updateBagItemUseCase: UpdateBagItemUseCase,
     private val removeFromBagUseCase: RemoveFromBagUseCase,
@@ -26,9 +28,9 @@ class BagViewModel(
     init {
         showLoader()
         viewModelScope.launch {
-            getBagUseCase.invoke()
-                .onSuccess {
-                        response -> response.updateUiState()
+            getBagUseCase.invoke(bagId = bagSelectorUseCase.invoke())
+                .onSuccess { response ->
+                    response.updateUiState()
                 }
                 .onFailure {
                     hideLoader()
@@ -59,7 +61,10 @@ class BagViewModel(
                 bagItemId = bagItem.itemId,
                 quantity = newQuantity
             )
-            updateBagItemUseCase.invoke(updateBagItemPayload)
+            updateBagItemUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke(),
+                updateBagItemPayload = updateBagItemPayload
+            )
                 .onSuccess { response ->
                     response.updateUiState()
                 }
@@ -77,7 +82,10 @@ class BagViewModel(
                 bagItemId = bagItem.itemId,
                 quantity = newQuantity
             )
-            updateBagItemUseCase.invoke(updateBagItemPayload)
+            updateBagItemUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke(),
+                updateBagItemPayload = updateBagItemPayload
+            )
                 .onSuccess { response ->
                     response.updateUiState()
                 }
@@ -90,7 +98,10 @@ class BagViewModel(
     fun removeItem(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
-            removeFromBagUseCase.invoke(bagItem.itemId)
+            removeFromBagUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke(),
+                bagItemId = bagItem.itemId
+            )
                 .onSuccess { response ->
                     response.updateUiState()
                 }
@@ -104,7 +115,9 @@ class BagViewModel(
     fun removeAllItems() {
         showLoader()
         viewModelScope.launch {
-            removeAllBagItemsUseCase.invoke()
+            removeAllBagItemsUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke()
+            )
                 .onSuccess { bagResponse ->
                     bagResponse.updateUiState()
                 }

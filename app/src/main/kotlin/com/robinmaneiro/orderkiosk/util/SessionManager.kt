@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-object TokenManager {
+object SessionManager {
     fun initialize(
         dataStore: DataStoreRepository,
         guestSessionDetailsUseCase: CreateGuestSessionUseCase

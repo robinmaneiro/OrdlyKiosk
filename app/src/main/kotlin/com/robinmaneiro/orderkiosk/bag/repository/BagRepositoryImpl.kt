@@ -11,32 +11,31 @@ class BagRepositoryImpl : BagRepository {
     private val _bag: MutableStateFlow<BagResponse?> = MutableStateFlow(null)
     override val bag: StateFlow<BagResponse?> = _bag.asStateFlow()
 
-    override suspend fun addToBag(payload: String): Result<BagResponse> {
+    override suspend fun addToBag(bagId: String, payload: String): Result<BagResponse> {
         val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
-
-    override suspend fun getBagItems(): Result<BagResponse> {
-        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket")
+    override suspend fun getBagItems(bagId: String): Result<BagResponse> {
+        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagId")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
-    override suspend fun updateBagItem(payload: String, bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagItemId", stringBody = payload)
+    override suspend fun updateBagItem(bagId: String, payload: String, bagItemId: String): Result<BagResponse> {
+        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/$bagItemId", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
-    override suspend fun removeFromBag(bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagItemId")
+    override suspend fun removeFromBag(bagId: String, bagItemId: String): Result<BagResponse> {
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/$bagItemId")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
-    override suspend fun removeAllBagItems(): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/all")
+    override suspend fun removeAllBagItems(bagId: String): Result<BagResponse> {
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/all")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
