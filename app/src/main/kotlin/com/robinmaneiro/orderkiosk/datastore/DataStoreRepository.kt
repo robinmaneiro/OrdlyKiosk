@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
+import com.robinmaneiro.orderkiosk.util.extensions.orFalse
 import kotlinx.coroutines.flow.firstOrNull
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
@@ -24,7 +25,7 @@ private val guestRefreshTokenKey = stringPreferencesKey("guest_refresh_token")
 
 //region Plain
 private val userId = stringPreferencesKey("user_id")
-private val loggedInStatus = booleanPreferencesKey("logged_in_status")
+private val isUserLoggedIn = booleanPreferencesKey("is_user_logged_in")
 private val firstName = stringPreferencesKey("first_name")
 private val lastName = stringPreferencesKey("last_name")
 private val emailAddress = stringPreferencesKey("email_address")
@@ -47,7 +48,9 @@ interface DataStoreRepository {
     suspend fun saveGuestSessionPair(accessToken: String, refreshToken: String)
     suspend fun getGuestAccessToken(): String
     suspend fun getGuestRefreshToken(): String
-    suspend fun saveGuestSessionDetails(guestSessionDetailsResponse: GuestSessionDetailsResponse)
+    suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse)
+
+    suspend fun isUserLoggedIn(): Boolean
 
     suspend fun getAuthBagId(): String
     suspend fun getAuthWishlistId(): String
@@ -112,7 +115,13 @@ class DataStoreRepositoryImpl(
             preferences[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
             preferences[authBagId] = accountDetails.bagId
             preferences[authWishlistId] = accountDetails.wishlistId
+
+            preferences[isUserLoggedIn] = true
         }
+    }
+
+    override suspend fun isUserLoggedIn(): Boolean {
+        return getDataStore()?.get(isUserLoggedIn).orFalse()
     }
 
     override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse) {
@@ -123,20 +132,20 @@ class DataStoreRepositoryImpl(
     }
 
     override suspend fun getAuthBagId(): String {
-        return getDataStore()?.get(authBagId) ?: return ""
+        return getDataStore()?.get(authBagId).orEmpty()
     }
 
     override suspend fun getAuthWishlistId(): String {
-        return getDataStore()?.get(authWishlistId) ?: return ""
+        return getDataStore()?.get(authWishlistId).orEmpty()
     }
 
     override suspend fun getGuestBagId(): String {
-        return getDataStore()?.get(guestBagId) ?: return ""
+        return getDataStore()?.get(guestBagId).orEmpty()
     }
 
 
     override suspend fun getGuestWishlistId(): String {
-        return getDataStore()?.get(guestWishlistId) ?: return ""
+        return getDataStore()?.get(guestWishlistId).orEmpty()
     }
 
     override suspend fun clearDataStore() {
