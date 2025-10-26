@@ -13,7 +13,7 @@ class RefreshGuestSessionUseCase(
         val payload = Mapper.asSerializedStringResult(RefreshTokenPayload(dataStore.getGuestRefreshToken())).getOrElse { return } // TODO: Better approach for exception?
         accountRepository.refreshGuestSession(payload)
             .onSuccess { response ->
-                dataStore.saveAuthTokenPair(
+                dataStore.saveGuestSessionPair(
                     accessToken = response.accessToken,
                     refreshToken = response.refreshToken
                 )
