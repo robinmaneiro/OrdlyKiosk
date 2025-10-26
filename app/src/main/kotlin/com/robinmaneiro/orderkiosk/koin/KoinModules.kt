@@ -15,6 +15,7 @@ import com.robinmaneiro.orderkiosk.bag.BagViewModel
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepositoryImpl
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
@@ -58,6 +59,7 @@ val useCaseModules = module {
     factoryOf(::GetProductsByCategoryUseCase)
     factoryOf(::GetProductExtendedInfoUseCase)
 
+    factoryOf(::BagSelectorUseCase)
     factoryOf(::GetBagUseCase)
     factoryOf(::AddToBagUseCase)
     factoryOf(::UpdateBagItemUseCase)
