@@ -5,6 +5,7 @@ import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
+import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class LoginUserUseCase(
     private val accountRepository: AccountRepository,
