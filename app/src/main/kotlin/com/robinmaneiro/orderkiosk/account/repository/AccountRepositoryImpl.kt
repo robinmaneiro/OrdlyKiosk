@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.account.repository
 
-import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetailsResponse
-import com.robinmaneiro.orderkiosk.account.registration.model.RegistrationResponse
+import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
+import com.robinmaneiro.orderkiosk.account.registration.model.RegistrationResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
 
 class AccountRepositoryImpl : AccountRepository {

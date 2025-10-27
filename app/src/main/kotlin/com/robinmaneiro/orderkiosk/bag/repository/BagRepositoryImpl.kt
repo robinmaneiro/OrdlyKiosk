@@ -23,19 +23,19 @@ class BagRepositoryImpl : BagRepository {
     }
 
     override suspend fun updateBagItem(bagId: String, payload: String, bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/$bagItemId", stringBody = payload)
+        val response = NetworkManager.patchRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagId/$bagItemId", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun removeFromBag(bagId: String, bagItemId: String): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/$bagItemId")
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagId/$bagItemId")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
 
     override suspend fun removeAllBagItems(bagId: String): Result<BagResponse> {
-        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/${bagId}/all")
+        val response = NetworkManager.deleteRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagId/all")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
