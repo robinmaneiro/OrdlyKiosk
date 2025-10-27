@@ -17,7 +17,7 @@ class CreateGuestSessionUseCase(
                     refreshToken = guestSessionResponse.refreshToken
                 ) // TODO: Remove if the next fails?
                 guestSessionDetailsUseCase.invoke()
-                    .onSuccess{guestSessionDetails ->
+                    .onSuccess { guestSessionDetails ->
                         dataStore.saveGuestSessionDetails(guestSessionDetails)
                     }
                     .onFailure {
