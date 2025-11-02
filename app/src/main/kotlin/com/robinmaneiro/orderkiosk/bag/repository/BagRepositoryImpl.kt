@@ -12,7 +12,7 @@ class BagRepositoryImpl : BagRepository {
     override val bag: StateFlow<BagResponse?> = _bag.asStateFlow()
 
     override suspend fun addToBag(bagId: String, payload: String): Result<BagResponse> {
-        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket", stringBody = payload)
+        val response = NetworkManager.postRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$bagId", stringBody = payload)
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
