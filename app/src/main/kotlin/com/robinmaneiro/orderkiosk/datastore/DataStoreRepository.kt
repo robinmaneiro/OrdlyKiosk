@@ -58,6 +58,7 @@ interface DataStoreRepository {
     suspend fun getGuestBagId(): String
     suspend fun getGuestWishlistId(): String
 
+    suspend fun clearGuestSessionData()
     suspend fun clearDataStore()
 }
 
@@ -145,6 +146,15 @@ class DataStoreRepositoryImpl(
 
     override suspend fun getGuestWishlistId(): String {
         return getDataStore()?.get(guestWishlistId).orEmpty()
+    }
+
+    override suspend fun clearGuestSessionData() {
+        dataStore.edit { preferences ->
+            preferences[guestAccessTokenKey] = ""
+            preferences[guestRefreshTokenKey] = ""
+            preferences[guestBagId] = ""
+            preferences[guestWishlistId] = ""
+        }
     }
 
     override suspend fun clearDataStore() {
