@@ -10,7 +10,7 @@ class RefreshTokenUseCase(
     private val dataStore: DataStoreRepository
 ) {
     suspend operator fun invoke() {
-        val payload = Mapper.asSerializedStringResult(RefreshTokenPayload(dataStore.getGuestRefreshToken())).getOrElse { return } // TODO: Better approach for exception?
+        val payload = Mapper.asSerializedStringResult(RefreshTokenPayload(dataStore.getAuthRefreshToken())).getOrElse { return } // TODO: Better approach for exception?
         accountRepository.refreshToken(payload)
             .onSuccess { response ->
                 dataStore.saveAuthTokenPair(
