@@ -13,7 +13,7 @@ interface BagRepository {
 
     suspend fun removeFromBag(bagId: String, bagItemId: String): Result<BagResponse>
 
-    suspend fun migrateBag(sourceBagId: String, targetBagId: String): Result<BagResponse>
+    suspend fun mergeBags(sourceBagId: String, targetBagId: String): Result<BagResponse>
 
     suspend fun removeAllBagItems(bagId: String): Result<BagResponse>
 }
