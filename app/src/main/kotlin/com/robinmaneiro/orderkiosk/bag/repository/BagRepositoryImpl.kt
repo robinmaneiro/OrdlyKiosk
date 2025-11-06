@@ -34,8 +34,8 @@ class BagRepositoryImpl : BagRepository {
         return response
     }
 
-    override suspend fun migrateBag(sourceBagId: String, targetBagId: String): Result<BagResponse> {
-        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/migrate/$sourceBagId/$targetBagId")
+    override suspend fun mergeBags(sourceBagId: String, targetBagId: String): Result<BagResponse> {
+        val response = NetworkManager.getRequest<BagResponse>("http://192.168.1.162:8080/api/v1/basket/$sourceBagId/merge/$targetBagId")
         response.onSuccess { response -> _bag.update { response } }
         return response
     }
