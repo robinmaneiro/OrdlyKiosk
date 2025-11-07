@@ -143,6 +143,8 @@ class MenuViewModel(
                 product.productId,
                 1
             )
+
+            // TODO: Add some logic here so that if adding the same product calls update instead.
             addToBagUseCase.invoke(
                 bagId = bagSelectorUseCase.invoke(),
                 addToBagPayload = addToBagPayload
