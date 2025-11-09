@@ -3,6 +3,7 @@ package com.robinmaneiro.orderkiosk.networking
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
@@ -54,6 +55,7 @@ object NetworkManager {
             install(plugin = ContentNegotiation) {
                 jackson {
                     enable(SerializationFeature.INDENT_OUTPUT)
+                    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 }
             }
 
