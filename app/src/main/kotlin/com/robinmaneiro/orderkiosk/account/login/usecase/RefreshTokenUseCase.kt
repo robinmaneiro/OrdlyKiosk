@@ -4,6 +4,7 @@ import com.robinmaneiro.orderkiosk.account.login.model.RefreshTokenPayload
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
+import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class RefreshTokenUseCase(
     private val accountRepository: AccountRepository,
@@ -18,7 +19,8 @@ class RefreshTokenUseCase(
                     refreshToken = response.refreshToken
                 )
             }
-            .onFailure {
+            .onFailure { e ->
+                errorLog(e) { "Failed to refresh token" }
                 // TODO: Handle failure
             }
     }

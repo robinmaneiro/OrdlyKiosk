@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
@@ -16,6 +17,7 @@ import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -148,7 +150,9 @@ class MenuViewModel(
             addToBagUseCase.invoke(
                 bagId = bagSelectorUseCase.invoke(),
                 addToBagPayload = addToBagPayload
-            )
+            ).onFailure { exception ->
+                errorLog(exception) { "There was an issue adding product to the bag" }
+            }
         }
     }
 
