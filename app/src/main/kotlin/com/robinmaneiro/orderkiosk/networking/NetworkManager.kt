@@ -89,7 +89,7 @@ object NetworkManager {
                 return runCatching { request().body() } // Repeat the request that originally returned a 401.
             }
 
-            throw exception
+            return Result.failure(exception) // Return any other exception to be handled individually
         }
     }
 
