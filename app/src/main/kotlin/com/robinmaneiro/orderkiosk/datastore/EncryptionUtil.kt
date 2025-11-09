@@ -6,6 +6,7 @@ import com.google.crypto.tink.RegistryConfiguration
 import com.google.crypto.tink.aead.AeadKeyTemplates
 import com.google.crypto.tink.config.TinkConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
+import java.security.GeneralSecurityException
 import kotlin.io.encoding.Base64
 
 object EncryptionUtil {
@@ -25,14 +26,18 @@ object EncryptionUtil {
         aead = keysetHandle.getPrimitive(RegistryConfiguration.get(), Aead::class.java)
     }
 
-    fun encrypt(plainText: String): String {
+    fun encrypt(plainText: String): String = try {
         val cipherBytes = aead?.encrypt(plainText.toByteArray(), null) ?: return ""
-        return Base64.Default.encode(cipherBytes)
+        Base64.Default.encode(cipherBytes)
+    } catch (_: GeneralSecurityException) {
+        ""
     }
 
-    fun decrypt(encryptedText: String): String {
+    fun decrypt(encryptedText: String): String = try {
         val cipherBytes = Base64.Default.decode(encryptedText)
         val plainBytes = aead?.decrypt(cipherBytes, null) ?: return ""
-        return String(plainBytes)
+        String(plainBytes)
+    } catch (_: GeneralSecurityException) {
+        ""
     }
 }
