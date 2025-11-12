@@ -21,7 +21,6 @@ class RefreshTokenUseCase(
             }
             .onFailure { e ->
                 errorLog(e) { "Failed to refresh token" }
-                // TODO: Handle failure
             }
     }
 }

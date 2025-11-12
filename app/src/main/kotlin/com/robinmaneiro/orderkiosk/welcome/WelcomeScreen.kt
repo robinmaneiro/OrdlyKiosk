@@ -47,6 +47,8 @@ import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 import com.robinmaneiro.orderkiosk.util.extensions.showToast
 import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -64,13 +66,14 @@ fun WelcomeScreen(
 
     WelcomeScreenContent(
         modifier = modifier,
-        languageOptions = uiState.languageOptions,
+        languageOptions = uiState.languageOptions.toImmutableList(),
         onLanguageClick = { languageCode -> viewModel.updateLanguage(languageCode) },
         onEatInClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route) },
         onTakeAwayClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route) }
     )
 }
 
+@Suppress("NonSkippableComposable")
 @Composable
 fun HandleAction(action: WelcomeViewModel.Actions, context: Context) {
     when (action) {
@@ -91,7 +94,7 @@ fun HandleAction(action: WelcomeViewModel.Actions, context: Context) {
 
 @Composable
 fun WelcomeScreenContent(
-    languageOptions: List<LanguageData>,
+    languageOptions: ImmutableList<LanguageData>,
     onLanguageClick: (languageCode: String) -> Unit,
     onEatInClick: () -> Unit,
     onTakeAwayClick: () -> Unit,
@@ -138,7 +141,7 @@ fun WelcomeScreenContent(
 
 @Composable
 fun LanguageSection(
-    languageOptions: List<LanguageData>,
+    languageOptions: ImmutableList<LanguageData>,
     onOptionClick: (languageAlpha2Code: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -261,5 +264,5 @@ private fun WelcomeScreenPreview() {
             false
         )
     )
-    WelcomeScreenContent(languageOptions, onLanguageClick = {}, onEatInClick = {}, onTakeAwayClick = {})
+    WelcomeScreenContent(languageOptions.toImmutableList(), onLanguageClick = {}, onEatInClick = {}, onTakeAwayClick = {})
 }

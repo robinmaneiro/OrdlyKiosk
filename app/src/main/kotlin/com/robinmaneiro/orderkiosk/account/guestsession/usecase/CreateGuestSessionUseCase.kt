@@ -20,13 +20,13 @@ class CreateGuestSessionUseCase(
                     .onSuccess { guestSessionDetails ->
                         dataStore.saveGuestSessionDetails(guestSessionDetails)
                     }
-                    .onFailure {
-                        errorLog(it) { "There has been an issue when attempting to retrieve guest session data" }
+                    .onFailure { exception ->
+                        errorLog(exception) { "There has been an issue when attempting to retrieve guest session data" }
                         dataStore.clearDataStore()
                     }
             }
-            .onFailure {
-                // TODO: handle create guest session failure
+            .onFailure { exception ->
+                errorLog(exception) { "Something went wrong when creating a guest session" }
             }
     }
 }
