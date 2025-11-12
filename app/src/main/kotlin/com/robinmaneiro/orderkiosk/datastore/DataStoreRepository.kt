@@ -41,6 +41,7 @@ private val guestWishlistId = stringPreferencesKey("guest_wishlist_id")
 
 interface DataStoreRepository {
     suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String)
+    suspend fun removeAuthTokenPair()
     suspend fun getAuthAccessToken(): String
     suspend fun getAuthRefreshToken(): String
     suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
@@ -79,6 +80,13 @@ class DataStoreRepositoryImpl(
         dataStore.edit {
             it[authAccessTokenKey] = encryptedAccessToken
             it[authRefreshTokenKey] = encryptedRefreshToken
+        }
+    }
+
+    override suspend fun removeAuthTokenPair() {
+        dataStore.edit { preferences ->
+            preferences.remove(authAccessTokenKey)
+            preferences.remove(authRefreshTokenKey)
         }
     }
 
@@ -150,10 +158,10 @@ class DataStoreRepositoryImpl(
 
     override suspend fun clearGuestSessionData() {
         dataStore.edit { preferences ->
-            preferences[guestAccessTokenKey] = ""
-            preferences[guestRefreshTokenKey] = ""
-            preferences[guestBagId] = ""
-            preferences[guestWishlistId] = ""
+            preferences.remove(guestAccessTokenKey)
+            preferences.remove(guestRefreshTokenKey)
+            preferences.remove(guestBagId)
+            preferences.remove(guestWishlistId)
         }
     }
 

@@ -63,7 +63,7 @@ object NetworkManager {
                 contentType(ContentType.Application.Json)
 
                 val token = runBlocking {
-                    dataStore.getAuthAccessToken().ifEmpty { dataStore.getGuestAccessToken() } // TODO: Make this an UserCase like 'GetAuthTokenSelectorUSeCase' - also for Refresh?
+                    dataStore.getAuthAccessToken().ifEmpty { dataStore.getGuestAccessToken() } // User is not considered logged-in until the 'users/me' call is done, check token instead.
                 }
 
                 header("Authorization", "Bearer $token")

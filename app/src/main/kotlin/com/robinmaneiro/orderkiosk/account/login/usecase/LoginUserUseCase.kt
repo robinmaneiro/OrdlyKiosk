@@ -8,6 +8,7 @@ import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
+import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class LoginUserUseCase(
     private val accountRepository: AccountRepository,
@@ -16,14 +17,13 @@ class LoginUserUseCase(
     private val accountDetailsUseCase: AccountDetailsUseCase,
     private val getBagUseCase: GetBagUseCase,
     private val mergeBagsUseCase: MergeBagsUseCase
-    ) {
-    // TODO: What's a better approach for this? Move it to its own AuthUseCase with all of the integrated operations within? And just call other use cases from here?
+) {
     suspend operator fun invoke(loginPayload: LoginPayload): Result<TokenPairResponse> {
         val payload = Mapper.asSerializedStringResult(loginPayload).getOrElse { exception -> return Result.failure(exception) }
 
         return accountRepository.login(payload)
             .onSuccess { loginResponse ->
-                dataStore.saveAuthTokenPair(
+                dataStore.saveAuthTokenPair( // Save auth tokens first, so they can be used on the next call to retrieve user details.
                     accessToken = loginResponse.accessToken,
                     refreshToken = loginResponse.refreshToken
                 )
@@ -39,12 +39,13 @@ class LoginUserUseCase(
 
                         dataStore.clearGuestSessionData()
                     }
-                    .onFailure {
-                        // TODO: handle account details failure (removing auth tokens too)
+                    .onFailure { exception ->
+                        dataStore.removeAuthTokenPair()
+                        errorLog(exception) { "Failed to retrieve user details" }
                     }
             }
-            .onFailure {
-                // TODO: handle login failure
+            .onFailure { exception ->
+                errorLog(exception) { "Failed to authenticate user" }
             }
     }
 }

@@ -10,12 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderHistoryScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val orderHistoryViewModel = koinViewModel<OrderHistoryViewModel>()
+
     Scaffold(
         modifier = modifier,
         topBar = {
