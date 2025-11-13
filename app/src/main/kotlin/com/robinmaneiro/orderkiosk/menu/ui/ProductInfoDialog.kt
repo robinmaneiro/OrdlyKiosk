@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
@@ -40,7 +41,7 @@ import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 fun ProductOverlay(
     product: MenuItemExpanded,
     onDismiss: () -> Unit,
-    onAddToBasket: (MenuItemExpanded) -> Unit,
+    onUiEvent: (MenuViewModel.UiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BackHandler(enabled = true) { onDismiss() }
@@ -93,7 +94,7 @@ fun ProductOverlay(
 
                 SectionButtons(
                     onDismiss = onDismiss,
-                    onAddToBasket = { onAddToBasket.invoke(product) }
+                    onAddToBasket = { onUiEvent.invoke(MenuViewModel.UiEvent.AddToBasket(product.productId)) }
                 )
             }
         }
