@@ -107,14 +107,14 @@ class MenuViewModel(
         )
     }
 
-    fun updateItemsOnCategorySelected(categoryId: String) {
+    private fun updateItemsOnCategorySelected(categoryId: String) {
         viewModelScope.launch {
             getMenuItemsByCategoryUserCase(categoryId)
                 .onSuccess { updatedItemsResponse ->
                     _uiState.update {
                         it.copy(
                             menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                            menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items
+                            menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items // TODO: Remove triple items
                         )
                     }
 
@@ -126,7 +126,7 @@ class MenuViewModel(
         }
     }
 
-    fun onProductClicked(productId: String) {
+    private fun onProductClick(productId: String) {
         viewModelScope.launch {
             getProductExtendedInfoUseCase(productId)
                 .onSuccess { expandedItemInfo ->
@@ -138,10 +138,10 @@ class MenuViewModel(
         }
     }
 
-    fun addToBasket(product: MenuItemExpanded) {
+    private fun addToBasket(productId: String) {
         viewModelScope.launch {
             val addToBagPayload = AddToBagPayload(
-                product.productId,
+                productId,
                 1
             )
 
@@ -155,7 +155,7 @@ class MenuViewModel(
         }
     }
 
-    fun toggleDiningOption() {
+    private fun toggleDiningOption() {
         val updatedDiningOption = when (uiState.value.diningOption) {
             DiningOption.TAKE_AWAY -> DiningOption.EAT_IN
             DiningOption.EAT_IN -> DiningOption.TAKE_AWAY
@@ -166,6 +166,22 @@ class MenuViewModel(
                 diningOption = updatedDiningOption
             )
         }
+    }
+
+    fun onHandleEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            UiEvent.ToggleDiningOption -> toggleDiningOption()
+            is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
+            is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
+            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId)
+        }
+    }
+
+    sealed interface UiEvent {
+        data object ToggleDiningOption: UiEvent
+        data class AddToBasket(val productId: String): UiEvent
+        data class OnProductClick(val productId: String): UiEvent
+        data class OnCategoryClick(val categoryId: String): UiEvent
     }
 
     sealed interface Actions {

@@ -89,8 +89,8 @@ fun MenuScreen(
 
     MenuScreenContent(
         navController = navController,
-        viewModel = viewModel, // TODO: Follow pattern to encapsulate functions in the view model
         uiState = uiState,
+        onUiEvent = viewModel::onHandleEvent,
         onBagClick = { navController.navigate(Screens.BagScreen.route) },
         modifier = modifier,
         lazyGridState = lazyGridState
@@ -100,8 +100,8 @@ fun MenuScreen(
         ProductOverlay(
             product = it,
             onDismiss = { shownProduct = null },
-            onAddToBasket = { product ->
-                viewModel.addToBasket(product) // TODO: Just send up the product id
+            onUiEvent = { uiEvent ->
+                viewModel.onHandleEvent(uiEvent)
                 shownProduct = null
             }
         )
@@ -115,9 +115,9 @@ fun MenuScreen(
 @Composable
 fun MenuScreenContent(
     navController: NavController,
-    viewModel: MenuViewModel,
     uiState: MenuViewModel.UiState,
     lazyGridState: LazyGridState,
+    onUiEvent: (MenuViewModel.UiEvent) -> Unit,
     onBagClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -125,15 +125,15 @@ fun MenuScreenContent(
         FixedContent(
             uiState = uiState,
             lazyGridState = lazyGridState,
-            onProductClick = viewModel::onProductClicked,
-            onCategoryClick = viewModel::updateItemsOnCategorySelected
+            onProductClick = { productId -> onUiEvent(MenuViewModel.UiEvent.OnProductClick(productId)) },
+            onCategoryClick = { categoryId -> onUiEvent(MenuViewModel.UiEvent.OnCategoryClick(categoryId)) }
         )
 
         AnimatedContent(
             uiState = uiState,
-            viewModel = viewModel,
             lazyGridState = lazyGridState,
             navController = navController,
+            onToggleDiningOption = { onUiEvent(MenuViewModel.UiEvent.ToggleDiningOption) },
             onBagClick = onBagClick
         )
     }
@@ -176,14 +176,15 @@ private fun FixedContent(
 @Composable
 private fun BoxScope.AnimatedContent(
     uiState: MenuViewModel.UiState,
-    viewModel: MenuViewModel,
+//    viewModel: MenuViewModel,
     lazyGridState: LazyGridState,
     navController: NavController,
+    onToggleDiningOption: () -> Unit,
     onBagClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
-    SlideFromBottom(visible = uiState.bagResponse?.itemCount != 0) { // TODO: Change for extension function here
+    SlideFromBottom(visible = uiState.bagResponse?.itemCount != 0) {
         uiState.bagResponse ?: return@SlideFromBottom
         Box(
             Modifier
@@ -233,9 +234,7 @@ private fun BoxScope.AnimatedContent(
         navController = navController,
         uiState = uiState,
         visible = show,
-        toggleDiningOption = {
-            viewModel.toggleDiningOption()
-        }
+        toggleDiningOption = onToggleDiningOption
     )
 }
 
@@ -293,8 +292,8 @@ private fun RoundedSquareNavigateArrow(
 private fun DashboardScreenPreview() {
     MenuScreenContent(
         navController = rememberNavController(),
-        viewModel = koinViewModel<MenuViewModel>(),
         uiState = MenuViewModel.UiState(),
+        onUiEvent = {},
         onBagClick = {},
         lazyGridState = rememberLazyGridState()
     )
