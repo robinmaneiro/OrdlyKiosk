@@ -7,11 +7,11 @@ import com.robinmaneiro.orderkiosk.networking.NetworkManager
 
 class MenuRepositoryImpl : MenuRepository {
     override suspend fun getProductsByCategory(categoryId: String): Result<MenuResponse> {
-        return NetworkManager.getRequest<MenuResponse>("http://192.168.1.162:8080/api/v1/menu/categories/$categoryId") // TODO: Hardcoded string
+        return NetworkManager.getRequest<MenuResponse>("http://192.168.1.162:8080/api/v1/menu/categories/$categoryId")
     }
 
     override suspend fun getProductExtendedInfo(productId: String): Result<MenuItemExpanded> {
-        return NetworkManager.getRequest<MenuItemExpanded>("http://192.168.1.162:8080/api/v1/menu/items/$productId") // TODO: Hardcoded string
+        return NetworkManager.getRequest<MenuItemExpanded>("http://192.168.1.162:8080/api/v1/menu/items/$productId")
     }
 
     override suspend fun getAllCategories(): Result<MenuCategories> {
