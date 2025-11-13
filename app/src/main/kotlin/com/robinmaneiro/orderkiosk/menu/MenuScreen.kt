@@ -125,7 +125,7 @@ fun MenuScreenContent(
         FixedContent(
             uiState = uiState,
             lazyGridState = lazyGridState,
-            onProductClicked = viewModel::onProductClicked,
+            onProductClick = viewModel::onProductClicked,
             onCategoryClick = viewModel::updateItemsOnCategorySelected
         )
 
@@ -143,7 +143,7 @@ fun MenuScreenContent(
 private fun FixedContent(
     uiState: MenuViewModel.UiState,
     lazyGridState: LazyGridState,
-    onProductClicked: (productId: String) -> Unit,
+    onProductClick: (productId: String) -> Unit,
     onCategoryClick: (categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -166,7 +166,7 @@ private fun FixedContent(
 
         MenuItemsSection(
             menuProducts = uiState.menuProducts,
-            onProductClick = onProductClicked,
+            onProductClick = onProductClick,
             lazyGridState = lazyGridState,
             modifier = Modifier.width(900.dp)
         )

@@ -1,6 +1,5 @@
 package com.robinmaneiro.orderkiosk.menu
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
