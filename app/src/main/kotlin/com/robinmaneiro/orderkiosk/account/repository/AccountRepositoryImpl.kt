@@ -34,4 +34,16 @@ class AccountRepositoryImpl : AccountRepository {
     override suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse> {
         return NetworkManager.getRequest("http://192.168.1.162:8080/api/v1/guests/me")
     }
+
+    override suspend fun updatePhoneNumber(payload: String): Result<AccountDetailsResponse> {
+        return NetworkManager.patchRequest("http://192.168.1.162:8080/api/v1/guests/me/phone", stringBody = payload)
+    }
+
+    override suspend fun updateDateOfBirth(payload: String): Result<AccountDetailsResponse> {
+        return NetworkManager.patchRequest("http://192.168.1.162:8080/api/v1/guests/me/dateOfBirth", stringBody = payload)
+    }
+
+    override suspend fun updateEmailAddress(payload: String): Result<AccountDetailsResponse> {
+        return NetworkManager.patchRequest("http://192.168.1.162:8080/api/v1/guests/me/email", stringBody = payload)
+    }
 }
