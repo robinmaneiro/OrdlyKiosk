@@ -11,7 +11,9 @@ import com.robinmaneiro.orderkiosk.account.guestsession.model.GuestSessionDetail
 import com.robinmaneiro.orderkiosk.account.login.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
 import com.robinmaneiro.orderkiosk.util.extensions.orFalse
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
@@ -52,6 +54,7 @@ interface DataStoreRepository {
     suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse)
 
     suspend fun isUserLoggedIn(): Boolean
+    fun loggedInStatus(): Flow<Boolean>
 
     suspend fun getAuthBagId(): String
     suspend fun getAuthWishlistId(): String
@@ -131,6 +134,10 @@ class DataStoreRepositoryImpl(
 
     override suspend fun isUserLoggedIn(): Boolean {
         return getDataStore()?.get(isUserLoggedIn).orFalse()
+    }
+
+    override fun loggedInStatus(): Flow<Boolean> {
+        return dataStore.data.map { it[isUserLoggedIn].orFalse() }
     }
 
     override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse) {

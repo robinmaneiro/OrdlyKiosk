@@ -35,8 +35,8 @@ import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 @Composable
 fun MenuOptionsPane(
-    navController: NavController,
-    uiState: MenuViewModel.UiState,
+    navigateToDestination: (String) -> Unit,
+    uiState: MenuViewModel.UiState, // TODO: Remove runtime parameter
     visible: Boolean,
     toggleDiningOption: () -> Unit,
     modifier: Modifier = Modifier
@@ -65,11 +65,21 @@ fun MenuOptionsPane(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
-                listOf(
-                    Triple("Sign In", { navController.navigate(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
-                    Triple("Order History", { navController.navigate(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-                    Triple("Coupons", { navController.navigate(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-                ).forEach {
+                val optionPaneList = if (uiState.isLoggedIn) {
+                    listOf(
+                        Triple("Account Detais", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination 
+                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
+                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
+                    )
+                } else {
+                    listOf(
+                        Triple("Sign In", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
+                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
+                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
+                    )
+                }
+
+                optionPaneList.forEach {
                     OptionsPaneItem(it.first, it.second, it.third)
                 }
             }

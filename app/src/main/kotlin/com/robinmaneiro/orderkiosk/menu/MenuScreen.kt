@@ -231,10 +231,10 @@ private fun BoxScope.AnimatedContent(
     )
 
     MenuOptionsPane(
-        navController = navController,
         uiState = uiState,
         visible = show,
-        toggleDiningOption = onToggleDiningOption
+        toggleDiningOption = onToggleDiningOption,
+        navigateToDestination = navController::navigate
     )
 }
 

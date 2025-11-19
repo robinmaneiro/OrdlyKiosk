@@ -8,6 +8,7 @@ import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.AddToBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
+import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategories
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
@@ -29,6 +30,7 @@ import kotlinx.coroutines.launch
 
 @Suppress("LongParameterList")
 class MenuViewModel(
+    private val dataStore: DataStoreRepository,
     private val bagRepository: BagRepository,
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
     private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
@@ -39,9 +41,10 @@ class MenuViewModel(
     private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-    val uiState = combine(_uiState, bagRepository.bag) { state, bag ->
+    val uiState = combine(_uiState, bagRepository.bag, dataStore.loggedInStatus()) { state, bag, isLoggedIn ->
         state.copy(
-            bagResponse = bag
+            bagResponse = bag,
+            isLoggedIn = isLoggedIn
         )
     }.stateIn(
         scope = viewModelScope,
@@ -195,6 +198,7 @@ class MenuViewModel(
         val menuProducts: List<MenuProduct> = emptyList(),
         val bagResponse: BagResponse? = null,
         val diningOption: DiningOption = DiningOption.TAKE_AWAY,
-        val hasError: Boolean = false
+        val hasError: Boolean = false,
+        val isLoggedIn: Boolean = false
     )
 }
