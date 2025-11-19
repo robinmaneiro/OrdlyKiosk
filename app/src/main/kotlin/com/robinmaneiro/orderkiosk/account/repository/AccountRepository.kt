@@ -16,7 +16,13 @@ interface AccountRepository {
 
     suspend fun refreshGuestSession(payload: String): Result<TokenPairResponse>
 
+    suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse>
+
     suspend fun getAccountDetails(): Result<AccountDetailsResponse>
 
-    suspend fun getGuestSessionDetails(): Result<GuestSessionDetailsResponse>
+    suspend fun updatePhoneNumber(payload: String): Result<AccountDetailsResponse>
+
+    suspend fun updateDateOfBirth(payload: String): Result<AccountDetailsResponse>
+
+    suspend fun updateEmailAddress(payload: String): Result<AccountDetailsResponse>
 }
