@@ -7,6 +7,10 @@ import com.robinmaneiro.orderkiosk.account.login.LoginViewModel
 import com.robinmaneiro.orderkiosk.account.login.usecase.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.login.usecase.LoginUserUseCase
 import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.account.personaldetails.MyAccountViewModel
+import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateDateOfBirthUseCase
+import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateEmailAddressUseCase
+import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdatePhoneNumberUseCase
 import com.robinmaneiro.orderkiosk.account.registration.RegistrationViewModel
 import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
@@ -42,6 +46,7 @@ val viewModelModules = module {
     viewModelOf(::BagViewModel)
     viewModelOf(::RegistrationViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::MyAccountViewModel)
     viewModelOf(::CouponsViewModel)
     viewModelOf(::OrderHistoryViewModel)
 }
@@ -59,6 +64,10 @@ val useCaseModules = module {
     factoryOf(::GetMenuCategoriesUseCase)
     factoryOf(::GetProductsByCategoryUseCase)
     factoryOf(::GetProductExtendedInfoUseCase)
+
+    factoryOf(::UpdateDateOfBirthUseCase)
+    factoryOf(::UpdateEmailAddressUseCase)
+    factoryOf(::UpdatePhoneNumberUseCase)
 
     factoryOf(::BagSelectorUseCase)
     factoryOf(::GetBagUseCase)

@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
@@ -67,7 +66,7 @@ fun MenuOptionsPane(
                 // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
                 val optionPaneList = if (uiState.isLoggedIn) {
                     listOf(
-                        Triple("Account Detais", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination 
+                        Triple("Account Detais", { navigateToDestination.invoke(Screens.MyAccountScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination
                         Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
                         Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
                     )
