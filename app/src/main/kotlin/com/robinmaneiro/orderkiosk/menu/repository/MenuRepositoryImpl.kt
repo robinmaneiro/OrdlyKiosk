@@ -4,17 +4,18 @@ import com.robinmaneiro.orderkiosk.menu.model.MenuCategories
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.model.MenuResponse
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
+import com.robinmaneiro.orderkiosk.util.SERVER_BASE_URL
 
 class MenuRepositoryImpl : MenuRepository {
     override suspend fun getProductsByCategory(categoryId: String): Result<MenuResponse> {
-        return NetworkManager.getRequest<MenuResponse>("http://192.168.1.162:8080/api/v1/menu/categories/$categoryId")
+        return NetworkManager.getRequest<MenuResponse>("$SERVER_BASE_URL/api/v1/menu/categories/$categoryId")
     }
 
     override suspend fun getProductExtendedInfo(productId: String): Result<MenuItemExpanded> {
-        return NetworkManager.getRequest<MenuItemExpanded>("http://192.168.1.162:8080/api/v1/menu/items/$productId")
+        return NetworkManager.getRequest<MenuItemExpanded>("$SERVER_BASE_URL/api/v1/menu/items/$productId")
     }
 
     override suspend fun getAllCategories(): Result<MenuCategories> {
-        return NetworkManager.getRequest<MenuCategories>("http://192.168.1.162:8080/api/v1/menu/categories")
+        return NetworkManager.getRequest<MenuCategories>("$SERVER_BASE_URL/api/v1/menu/categories")
     }
 }
