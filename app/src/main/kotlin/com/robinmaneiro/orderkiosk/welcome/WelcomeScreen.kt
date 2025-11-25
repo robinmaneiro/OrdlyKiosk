@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
@@ -53,7 +53,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WelcomeScreen(
-    navHostController: NavHostController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -68,8 +68,8 @@ fun WelcomeScreen(
         modifier = modifier,
         languageOptions = uiState.languageOptions.toImmutableList(),
         onLanguageClick = { languageCode -> viewModel.updateLanguage(languageCode) },
-        onEatInClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route) },
-        onTakeAwayClick = { navHostController.navigate(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route) }
+        onEatInClick = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route)) },
+        onTakeAwayClick = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route)) }
     )
 }
 

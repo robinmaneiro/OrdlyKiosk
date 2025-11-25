@@ -8,13 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderHistoryScreen(
-    navController: NavController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val orderHistoryViewModel = koinViewModel<OrderHistoryViewModel>()
@@ -23,7 +23,7 @@ fun OrderHistoryScreen(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Order History", onBack = {
-                navController.navigateUp()
+                mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) {

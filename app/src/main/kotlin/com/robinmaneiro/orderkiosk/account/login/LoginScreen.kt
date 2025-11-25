@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
@@ -41,7 +42,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AccountScreen(
-    navController: NavController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<LoginViewModel>()
@@ -50,7 +51,7 @@ fun AccountScreen(
     LaunchedEffect(viewModel) {
         viewModel.actions.collect { action ->
             when (action) {
-                is LoginViewModel.Actions.NavigateBack -> navController.popBackStack()
+                is LoginViewModel.Actions.NavigateBack -> mainUiEvent.invoke(MainUiEvent.NavigateUp)
             }
         }
     }
@@ -59,19 +60,19 @@ fun AccountScreen(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Account", onBack = {
-                navController.navigateUp()
+                mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) {
         LoginScreenContent(
             it,
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
-            goToRegistration = { navController.navigate(Screens.RegistrationScreen.route) },
-            goToResetPassword = { navController.navigate(Screens.ResetPasswordScreen.route) }
+            goToRegistration = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.RegistrationScreen.route)) },
+            goToResetPassword = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
         )
 
         if (uiState.hasError) {
-            ErrorDialog { navController.popBackStack() }
+            ErrorDialog { mainUiEvent.invoke(MainUiEvent.NavigateUp) }
             return@Scaffold
         }
     }
@@ -152,17 +153,13 @@ fun LoginScreenContent(
                 )
 
                 TextButton(
-                    {
-                        goToResetPassword.invoke()
-                    }
+                    onClick = goToResetPassword
                 ) {
                     Text("Reset Password")
                 }
 
                 TextButton(
-                    {
-                        goToRegistration.invoke()
-                    }
+                    onClick = goToRegistration
                 ) {
                     Text("Register")
                 }
