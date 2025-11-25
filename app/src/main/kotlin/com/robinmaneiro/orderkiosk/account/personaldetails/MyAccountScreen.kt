@@ -12,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MyAccountScreen(
-    navController: NavController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<MyAccountViewModel>()
@@ -28,7 +29,7 @@ fun MyAccountScreen(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "My Account", onBack = {
-                navController.navigateUp()
+                mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) {

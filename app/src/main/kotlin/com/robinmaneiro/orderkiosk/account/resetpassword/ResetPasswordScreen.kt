@@ -9,18 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
 @Composable
 fun ResetPasswordScreen(
-    navController: NavHostController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Reset Password", onBack = {
-                navController.navigateUp()
+                mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) {

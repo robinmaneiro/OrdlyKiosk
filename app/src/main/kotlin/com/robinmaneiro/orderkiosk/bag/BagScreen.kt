@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
@@ -38,7 +38,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BagScreen(
-    navController: NavController,
+    mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<BagViewModel>()
@@ -50,7 +50,7 @@ fun BagScreen(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Bag", onBack = {
-                navController.navigateUp()
+                mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) {

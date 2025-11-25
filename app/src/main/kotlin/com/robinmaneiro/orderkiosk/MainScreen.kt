@@ -17,13 +17,21 @@ import com.robinmaneiro.orderkiosk.menu.MenuScreen
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryScreen
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
 
+@Suppress("NonSkippableComposable")
 @Composable
 fun MainScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    fun onHandleEvent(mainUiEvent: MainUiEvent) {
+        when (mainUiEvent) {
+            MainUiEvent.NavigateUp -> navHostController.navigateUp()
+            is MainUiEvent.NavigateToDestination -> navHostController.navigate(mainUiEvent.destinationId)
+        }
+    }
+
     NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
-        composable(Screens.WelcomeScreen.route) { WelcomeScreen(modifier = Modifier, navHostController = navHostController) }
+        composable(Screens.WelcomeScreen.route) { WelcomeScreen(::onHandleEvent) }
         composable(
             route = Screens.MenuScreen().route,
             arguments = listOf(
@@ -38,13 +46,13 @@ fun MainScreen(
                 navController = navHostController
             )
         }
-        composable(route = Screens.BagScreen.route) { BagScreen(navController = navHostController) }
-        composable(route = Screens.RegistrationScreen.route) { RegistrationScreen(navController = navHostController) }
-        composable(route = Screens.ResetPasswordScreen.route) { ResetPasswordScreen(navController = navHostController) }
-        composable(route = Screens.LoginScreen.route) { AccountScreen(navController = navHostController) }
-        composable(route = Screens.MyAccountScreen.route) { MyAccountScreen(navController = navHostController) }
-        composable(route = Screens.CouponsScreen.route) { CouponsScreen(navController = navHostController) }
-        composable(route = Screens.OrderHistoryScreen.route) { OrderHistoryScreen(navController = navHostController) }
+        composable(route = Screens.BagScreen.route) { BagScreen(::onHandleEvent) }
+        composable(route = Screens.RegistrationScreen.route) { RegistrationScreen(::onHandleEvent) }
+        composable(route = Screens.ResetPasswordScreen.route) { ResetPasswordScreen(::onHandleEvent) }
+        composable(route = Screens.LoginScreen.route) { AccountScreen(::onHandleEvent) }
+        composable(route = Screens.MyAccountScreen.route) { MyAccountScreen(::onHandleEvent) }
+        composable(route = Screens.CouponsScreen.route) { CouponsScreen(::onHandleEvent) }
+        composable(route = Screens.OrderHistoryScreen.route) { OrderHistoryScreen(::onHandleEvent) }
 
 //        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
 //        navAnimatedComposable(Screens.LoginScreen.route) { LoginScreen(navController = navHostController) }
@@ -58,4 +66,9 @@ fun MainScreen(
 //            PasswordRecoveryScreen(emailAddress = emailAddress)
 //        }
     }
+}
+
+sealed interface MainUiEvent {
+    data object NavigateUp : MainUiEvent
+    data class NavigateToDestination(val destinationId: String) : MainUiEvent
 }
