@@ -2,7 +2,7 @@ package com.robinmaneiro.orderkiosk.account.personaldetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.robinmaneiro.orderkiosk.account.login.usecase.AccountDetailsUseCase
+import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateDateOfBirthUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateEmailAddressUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdatePhoneNumberUseCase
@@ -25,7 +25,7 @@ class MyAccountViewModel(
         _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             accountDetailsUseCase.invoke()
-                .onSuccess {accountDetails ->
+                .onSuccess { accountDetails ->
                     _uiState.update {
                         it.copy(
                             firstName = accountDetails.firstName,

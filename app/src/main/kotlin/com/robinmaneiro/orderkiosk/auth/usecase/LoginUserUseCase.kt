@@ -1,8 +1,9 @@
-package com.robinmaneiro.orderkiosk.account.login.usecase
+package com.robinmaneiro.orderkiosk.auth.usecase
 
+import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
-import com.robinmaneiro.orderkiosk.account.model.TokenPairResponse
-import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
+import com.robinmaneiro.orderkiosk.auth.model.TokenPairResponse
+import com.robinmaneiro.orderkiosk.auth.repository.AuthRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
@@ -11,7 +12,7 @@ import com.robinmaneiro.orderkiosk.util.Mapper
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class LoginUserUseCase(
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val bagRepository: BagRepository,
     private val dataStore: DataStoreRepository,
     private val accountDetailsUseCase: AccountDetailsUseCase,
@@ -21,7 +22,7 @@ class LoginUserUseCase(
     suspend operator fun invoke(loginPayload: LoginPayload): Result<TokenPairResponse> {
         val payload = Mapper.asSerializedStringResult(loginPayload).getOrElse { exception -> return Result.failure(exception) }
 
-        return accountRepository.login(payload)
+        return authRepository.login(payload)
             .onSuccess { loginResponse ->
                 dataStore.saveAuthTokenPair( // Save auth tokens first, so they can be used on the next call to retrieve user details.
                     accessToken = loginResponse.accessToken,

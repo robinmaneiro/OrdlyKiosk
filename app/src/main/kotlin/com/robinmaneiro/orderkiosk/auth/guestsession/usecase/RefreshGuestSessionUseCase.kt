@@ -1,13 +1,13 @@
-package com.robinmaneiro.orderkiosk.account.guestsession.usecase
+package com.robinmaneiro.orderkiosk.auth.guestsession.usecase
 
-import com.robinmaneiro.orderkiosk.account.login.model.RefreshTokenPayload
-import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
+import com.robinmaneiro.orderkiosk.auth.model.RefreshTokenPayload
+import com.robinmaneiro.orderkiosk.auth.repository.AuthRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class RefreshGuestSessionUseCase(
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val dataStore: DataStoreRepository
 ) {
     suspend operator fun invoke() {
@@ -15,7 +15,7 @@ class RefreshGuestSessionUseCase(
             errorLog(exception) { "Failed to serialize guest refresh token" }
             return
         }
-        accountRepository.refreshGuestSession(payload)
+        authRepository.refreshGuestSession(payload)
             .onSuccess { response ->
                 dataStore.saveGuestSessionPair(
                     accessToken = response.accessToken,

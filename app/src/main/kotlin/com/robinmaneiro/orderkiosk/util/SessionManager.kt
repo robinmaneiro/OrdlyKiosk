@@ -1,6 +1,6 @@
 package com.robinmaneiro.orderkiosk.util
 
-import com.robinmaneiro.orderkiosk.account.guestsession.usecase.CreateGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.CreateGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

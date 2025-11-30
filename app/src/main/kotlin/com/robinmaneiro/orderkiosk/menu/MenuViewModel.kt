@@ -181,10 +181,10 @@ class MenuViewModel(
     }
 
     sealed interface UiEvent {
-        data object ToggleDiningOption: UiEvent
-        data class AddToBasket(val productId: String): UiEvent
-        data class OnProductClick(val productId: String): UiEvent
-        data class OnCategoryClick(val categoryId: String): UiEvent
+        data object ToggleDiningOption : UiEvent
+        data class AddToBasket(val productId: String) : UiEvent
+        data class OnProductClick(val productId: String) : UiEvent
+        data class OnCategoryClick(val categoryId: String) : UiEvent
     }
 
     sealed interface Actions {

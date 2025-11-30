@@ -5,8 +5,8 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
