@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk
 
 import android.app.Application
-import com.robinmaneiro.orderkiosk.account.guestsession.usecase.CreateGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.account.guestsession.usecase.RefreshGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.account.login.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.CreateGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.datastore.EncryptionUtil
 import com.robinmaneiro.orderkiosk.koin.repositoryModules

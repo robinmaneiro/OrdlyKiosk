@@ -1,16 +1,16 @@
-package com.robinmaneiro.orderkiosk.account.guestsession.usecase
+package com.robinmaneiro.orderkiosk.auth.guestsession.usecase
 
-import com.robinmaneiro.orderkiosk.account.repository.AccountRepository
+import com.robinmaneiro.orderkiosk.auth.repository.AuthRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class CreateGuestSessionUseCase(
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val dataStore: DataStoreRepository,
     private val guestSessionDetailsUseCase: GuestSessionDetailsUseCase
 ) {
     suspend operator fun invoke() {
-        accountRepository.createGuestSession()
+        authRepository.createGuestSession()
             .onSuccess { guestSessionResponse ->
                 dataStore.saveGuestSessionPair(
                     accessToken = guestSessionResponse.accessToken,

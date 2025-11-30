@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.login.model
+package com.robinmaneiro.orderkiosk.auth.model
 
 data class RefreshTokenPayload(
     val refreshToken: String

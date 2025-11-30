@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.account.login.model
+package com.robinmaneiro.orderkiosk.account.accountdetails.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
