@@ -12,6 +12,7 @@ import com.robinmaneiro.orderkiosk.account.personaldetails.MyAccountScreen
 import com.robinmaneiro.orderkiosk.account.registration.RegistrationScreen
 import com.robinmaneiro.orderkiosk.account.resetpassword.ResetPasswordScreen
 import com.robinmaneiro.orderkiosk.bag.BagScreen
+import com.robinmaneiro.orderkiosk.checkout.CheckoutScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
 import com.robinmaneiro.orderkiosk.menu.MenuScreen
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryScreen
@@ -47,6 +48,7 @@ fun MainScreen(
             )
         }
         composable(route = Screens.BagScreen.route) { BagScreen(::onHandleEvent) }
+        composable(route = Screens.CheckoutScreen.route) { CheckoutScreen(::onHandleEvent) }
         composable(route = Screens.RegistrationScreen.route) { RegistrationScreen(::onHandleEvent) }
         composable(route = Screens.ResetPasswordScreen.route) { ResetPasswordScreen(::onHandleEvent) }
         composable(route = Screens.LoginScreen.route) { AccountScreen(::onHandleEvent) }

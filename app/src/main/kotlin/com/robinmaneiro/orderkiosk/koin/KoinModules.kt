@@ -27,6 +27,7 @@ import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
+import com.robinmaneiro.orderkiosk.checkout.CheckoutViewModel
 import com.robinmaneiro.orderkiosk.coupons.CouponsViewModel
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl
@@ -46,6 +47,7 @@ val viewModelModules = module {
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::MenuViewModel)
     viewModelOf(::BagViewModel)
+    viewModelOf(::CheckoutViewModel)
     viewModelOf(::RegistrationViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::MyAccountViewModel)
