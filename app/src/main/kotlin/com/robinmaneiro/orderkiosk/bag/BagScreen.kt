@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk.bag
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
@@ -127,7 +129,10 @@ fun BagScreen(
                         onClick = {}
                     ) {
                         Text(
-                            "Order Now"
+                            modifier = Modifier.clickable {
+                                mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.CheckoutScreen.route))
+                            },
+                            text = "Order Now"
                         )
                     }
 

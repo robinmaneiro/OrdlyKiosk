@@ -30,6 +30,10 @@ sealed interface Screens {
         override val route: String = "BagScreen"
     }
 
+    data object CheckoutScreen : Screens {
+        override val route: String = "CheckoutScreen"
+    }
+
     data object RegistrationScreen : Screens {
         override val route: String = "RegistrationScreen"
     }
