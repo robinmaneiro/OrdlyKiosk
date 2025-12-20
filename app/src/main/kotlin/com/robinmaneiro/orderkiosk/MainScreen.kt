@@ -16,6 +16,7 @@ import com.robinmaneiro.orderkiosk.checkout.CheckoutScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
 import com.robinmaneiro.orderkiosk.menu.MenuScreen
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryScreen
+import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryScreen
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
 
 @Suppress("NonSkippableComposable")
@@ -49,6 +50,7 @@ fun MainScreen(
         }
         composable(route = Screens.BagScreen.route) { BagScreen(::onHandleEvent) }
         composable(route = Screens.CheckoutScreen.route) { CheckoutScreen(::onHandleEvent) }
+        composable(route = Screens.OrderSummaryScreen.route) { OrderSummaryScreen(::onHandleEvent) }
         composable(route = Screens.RegistrationScreen.route) { RegistrationScreen(::onHandleEvent) }
         composable(route = Screens.ResetPasswordScreen.route) { ResetPasswordScreen(::onHandleEvent) }
         composable(route = Screens.LoginScreen.route) { AccountScreen(::onHandleEvent) }
