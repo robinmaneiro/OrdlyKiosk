@@ -38,6 +38,7 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
+import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryViewModel
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
@@ -48,6 +49,7 @@ val viewModelModules = module {
     viewModelOf(::MenuViewModel)
     viewModelOf(::BagViewModel)
     viewModelOf(::CheckoutViewModel)
+    viewModelOf(::OrderSummaryViewModel)
     viewModelOf(::RegistrationViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::MyAccountViewModel)

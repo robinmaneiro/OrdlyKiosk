@@ -1,4 +1,4 @@
-package com.robinmaneiro.orderkiosk.checkout
+package com.robinmaneiro.orderkiosk.ordersummary
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,30 +10,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.robinmaneiro.orderkiosk.MainUiEvent
-import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
 @Composable
-fun CheckoutScreen(
+fun OrderSummaryScreen(
     mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "Checkout", onBack = {
+            SimpleTopBar(title = "Order Summary", onBack = {
                 mainUiEvent.invoke(MainUiEvent.NavigateUp)
             })
         }
     ) { padding ->
-        CheckoutContent(padding)
+        OrderSummaryContent(padding)
     }
 }
 
 @Composable
-private fun CheckoutContent(padding: PaddingValues) {
+private fun OrderSummaryContent(padding: PaddingValues) {
     Column(
         modifier = Modifier
             .padding(padding)
@@ -42,13 +40,7 @@ private fun CheckoutContent(padding: PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "This is CHECKOUT SCREEN!!!!"
+            text = "This is ORDER SUMMARY SCREEN!!!!"
         )
     }
-}
-
-@PreviewPixelTablet
-@Composable
-fun CheckoutContentPreview() {
-    CheckoutContent(PaddingValues())
 }
