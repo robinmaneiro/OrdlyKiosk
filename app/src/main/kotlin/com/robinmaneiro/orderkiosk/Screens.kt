@@ -12,6 +12,10 @@ sealed interface Screens {
 
     fun String.asPlaceholder() = "{$this}"
 
+    data object OffersScreen : Screens {
+        override val route: String = "OffersScreen"
+    }
+
     data object WelcomeScreen : Screens {
         override val route: String = "WelcomeScreen"
     }

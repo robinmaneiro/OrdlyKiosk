@@ -15,6 +15,7 @@ import com.robinmaneiro.orderkiosk.bag.BagScreen
 import com.robinmaneiro.orderkiosk.checkout.CheckoutScreen
 import com.robinmaneiro.orderkiosk.coupons.CouponsScreen
 import com.robinmaneiro.orderkiosk.menu.MenuScreen
+import com.robinmaneiro.orderkiosk.offers.OffersScreen
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryScreen
 import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryScreen
 import com.robinmaneiro.orderkiosk.welcome.WelcomeScreen
@@ -32,7 +33,8 @@ fun MainScreen(
         }
     }
 
-    NavHost(navController = navHostController, startDestination = Screens.WelcomeScreen.route, modifier = modifier) {
+    NavHost(navController = navHostController, startDestination = Screens.OffersScreen.route, modifier = modifier) {
+        composable(Screens.OffersScreen.route) { OffersScreen(::onHandleEvent) }
         composable(Screens.WelcomeScreen.route) { WelcomeScreen(::onHandleEvent) }
         composable(
             route = Screens.MenuScreen().route,
@@ -57,7 +59,6 @@ fun MainScreen(
         composable(route = Screens.MyAccountScreen.route) { MyAccountScreen(::onHandleEvent) }
         composable(route = Screens.CouponsScreen.route) { CouponsScreen(::onHandleEvent) }
         composable(route = Screens.OrderHistoryScreen.route) { OrderHistoryScreen(::onHandleEvent) }
-
 //        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
 //        navAnimatedComposable(Screens.LoginScreen.route) { LoginScreen(navController = navHostController) }
 //        navAnimatedComposable(Screens.RegistrationScreen.route) { RegistrationScreen() }
