@@ -24,7 +24,7 @@ class WelcomeViewModel : ViewModel() {
                 languageOptions = listOf(
                     LanguageData(
                         R.drawable.flag_gb,
-                        languageAlpha2Code = "en",
+                        "en",
                         "English",
                         true
                     ),
