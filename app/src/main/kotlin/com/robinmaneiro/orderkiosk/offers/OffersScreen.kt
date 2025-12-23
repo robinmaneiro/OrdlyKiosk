@@ -77,22 +77,22 @@ private fun OffersContent(
                         Brush.verticalGradient
                             (
                             0f to Color.Transparent,
-                            0.2f to SandyBrown40.copy(alpha = 0.4f),
-                            0.5f to SandyBrown40.copy(alpha = 0.6f),
-                            1f to SandyBrown40.copy(0.8f),
+                            0.2f to Iceberg.copy(alpha = 0.4f),
+                            0.5f to Iceberg.copy(alpha = 0.6f),
+                            1f to Iceberg.copy(0.8f),
                         )
                     )
                     .height(160.dp)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .background(SandyBrown40)
+                    .background(Iceberg)
                     .padding(top = 24.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     "TOUCH TO START",
-                    style = MaterialTheme.typography.labelLarge.copy(color = Color.White, fontSize = 64.sp),
+                    style = MaterialTheme.typography.labelLarge.copy(color = Color.Black, fontSize = 64.sp),
                 )
             }
         }
