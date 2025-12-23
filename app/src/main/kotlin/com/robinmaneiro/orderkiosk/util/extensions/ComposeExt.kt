@@ -40,8 +40,7 @@ fun Modifier.fadingEdge(
         0.95f to Iceberg,
         1.0f to Color.Transparent,
     )
-) = this
-    .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+) = graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
     .drawWithContent {
         drawContent()
         drawRect(brush = brush, blendMode = BlendMode.DstIn)
