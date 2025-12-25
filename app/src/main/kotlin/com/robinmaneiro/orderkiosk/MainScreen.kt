@@ -1,5 +1,8 @@
 package com.robinmaneiro.orderkiosk
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -35,7 +38,18 @@ fun MainScreen(
 
     NavHost(navController = navHostController, startDestination = Screens.OffersScreen.route, modifier = modifier) {
         composable(Screens.OffersScreen.route) { OffersScreen(::onHandleEvent) }
-        composable(Screens.WelcomeScreen.route) { WelcomeScreen(::onHandleEvent) }
+        composable(
+            Screens.WelcomeScreen.route,
+            enterTransition = {
+                // Slide in from the right and fade in
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                ) + fadeIn(animationSpec = tween(700))
+            },
+        ) {
+            WelcomeScreen(::onHandleEvent)
+        }
         composable(
             route = Screens.MenuScreen().route,
             arguments = listOf(
