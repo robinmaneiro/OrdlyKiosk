@@ -61,7 +61,7 @@ fun MainScreen(
             MenuScreen(
                 modifier = Modifier,
                 serviceType = serviceType,
-                navController = navHostController
+                mainUiEvent = ::onHandleEvent
             )
         }
         composable(route = Screens.BagScreen.route) { BagScreen(::onHandleEvent) }
@@ -73,17 +73,6 @@ fun MainScreen(
         composable(route = Screens.MyAccountScreen.route) { MyAccountScreen(::onHandleEvent) }
         composable(route = Screens.CouponsScreen.route) { CouponsScreen(::onHandleEvent) }
         composable(route = Screens.OrderHistoryScreen.route) { OrderHistoryScreen(::onHandleEvent) }
-//        navAnimatedComposable(Screens.TestingScreen.route) { TestingScreen() }
-//        navAnimatedComposable(Screens.LoginScreen.route) { LoginScreen(navController = navHostController) }
-//        navAnimatedComposable(Screens.RegistrationScreen.route) { RegistrationScreen() }
-//        navAnimatedComposable(Screens.PasswordRecoveryScreen.route, listOf(
-//            navArgument("email_address") {
-//                type = NavType.StringType
-//            }
-//        )) {
-//            val emailAddress = it.arguments?.getString("email_address").orEmpty()
-//            PasswordRecoveryScreen(emailAddress = emailAddress)
-//        }
     }
 }
 

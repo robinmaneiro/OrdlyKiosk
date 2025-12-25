@@ -28,10 +28,11 @@ import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MenuItemsSection(
-    menuProducts: List<MenuProduct>,
+    menuProducts: ImmutableList<MenuProduct>,
     lazyGridState: LazyGridState,
     onProductClick: (productId: String) -> Unit,
     modifier: Modifier = Modifier

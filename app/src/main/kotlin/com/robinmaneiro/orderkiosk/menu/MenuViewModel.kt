@@ -18,6 +18,9 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,8 +94,8 @@ class MenuViewModel(
 
                 _uiState.update {
                     it.copy(
-                        menuCategories = menuCategories,
-                        menuProducts = menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items, // TODO: Undo 'tripled' data
+                        menuCategories = menuCategories.toImmutableList(),
+                        menuProducts = (menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items).toImmutableList(), // TODO: Undo 'tripled' data
                         diningOption = diningOption,
                         isLoading = false
                     )
@@ -116,8 +119,8 @@ class MenuViewModel(
                 .onSuccess { updatedItemsResponse ->
                     _uiState.update {
                         it.copy(
-                            menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) },
-                            menuProducts = updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items // TODO: Remove triple items
+                            menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) }.toImmutableList(),
+                            menuProducts = (updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items).toImmutableList() // TODO: Remove triple items
                         )
                     }
 
@@ -194,8 +197,8 @@ class MenuViewModel(
 
     data class UiState(
         val isLoading: Boolean = false,
-        val menuCategories: List<MenuCategory> = emptyList(),
-        val menuProducts: List<MenuProduct> = emptyList(),
+        val menuCategories: ImmutableList<MenuCategory> = persistentListOf(),
+        val menuProducts: ImmutableList<MenuProduct> = persistentListOf(),
         val bagResponse: BagResponse? = null,
         val diningOption: DiningOption = DiningOption.TAKE_AWAY,
         val hasError: Boolean = false,
