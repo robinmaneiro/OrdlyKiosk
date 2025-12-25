@@ -91,6 +91,14 @@ fun MenuOptionsPane(
             }
 
             OptionsPaneItem(
+                "Start again",
+                {
+                    // Start Again
+                },
+                null
+            )
+
+            OptionsPaneItem(
                 diningOption.uiText,
                 {
                     shouldShowDiningOptionDialog = true
