@@ -10,46 +10,48 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
-import io.ktor.sse.SPACE
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OffersScreen(
     mainUiEvent: (MainUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OffersContent(mainUiEvent, modifier)
+    val viewModel = koinViewModel<OffersViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    OffersContent(mainUiEvent, modifier, uiState.clickHereText)
 }
 
 @Composable
 private fun OffersContent(
     mainUiEvent: (MainUiEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    clickHereText: String
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.DarkGray)
             .clickable {
@@ -91,7 +93,7 @@ private fun OffersContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    "TOUCH TO START",
+                    text = clickHereText,
                     style = MaterialTheme.typography.labelLarge.copy(color = Color.Black, fontSize = 64.sp),
                 )
             }
@@ -103,6 +105,7 @@ private fun OffersContent(
 @Composable
 private fun OffersContentPreview() {
     OffersContent(
-        mainUiEvent = {}
+        mainUiEvent = {},
+        clickHereText = "TOUCH TO START"
     )
 }
