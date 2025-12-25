@@ -29,10 +29,11 @@ fun MainScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    fun onHandleEvent(mainUiEvent: MainUiEvent) {
-        when (mainUiEvent) {
-            MainUiEvent.NavigateUp -> navHostController.navigateUp()
-            is MainUiEvent.NavigateToDestination -> navHostController.navigate(mainUiEvent.destinationId)
+    fun onHandleEvent(navigationEvent: NavigationEvent) {
+        when (navigationEvent) {
+            NavigationEvent.NavigateUp -> navHostController.navigateUp()
+            is NavigationEvent.NavigateToDestination -> navHostController.navigate(navigationEvent.destinationId)
+            is NavigationEvent.PopBackStackTo -> navHostController.popBackStack(navigationEvent.destinationId, navigationEvent.isInclusive)
         }
     }
 
@@ -61,7 +62,7 @@ fun MainScreen(
             MenuScreen(
                 modifier = Modifier,
                 serviceType = serviceType,
-                mainUiEvent = ::onHandleEvent
+                navigationEvent = ::onHandleEvent
             )
         }
         composable(route = Screens.BagScreen.route) { BagScreen(::onHandleEvent) }
@@ -76,7 +77,8 @@ fun MainScreen(
     }
 }
 
-sealed interface MainUiEvent {
-    data object NavigateUp : MainUiEvent
-    data class NavigateToDestination(val destinationId: String) : MainUiEvent
+sealed interface NavigationEvent {
+    data object NavigateUp : NavigationEvent
+    data class NavigateToDestination(val destinationId: String) : NavigationEvent
+    data class PopBackStackTo(val destinationId: String, val isInclusive: Boolean = false) : NavigationEvent
 }

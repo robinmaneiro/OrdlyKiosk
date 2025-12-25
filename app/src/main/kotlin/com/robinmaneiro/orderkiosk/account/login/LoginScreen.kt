@@ -30,7 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
@@ -41,7 +41,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AccountScreen(
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<LoginViewModel>()
@@ -50,7 +50,7 @@ fun AccountScreen(
     LaunchedEffect(viewModel) {
         viewModel.actions.collect { action ->
             when (action) {
-                is LoginViewModel.Actions.NavigateBack -> mainUiEvent.invoke(MainUiEvent.NavigateUp)
+                is LoginViewModel.Actions.NavigateBack -> mainUiEvent.invoke(NavigationEvent.NavigateUp)
             }
         }
     }
@@ -59,19 +59,19 @@ fun AccountScreen(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Account", onBack = {
-                mainUiEvent.invoke(MainUiEvent.NavigateUp)
+                mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
     ) {
         LoginScreenContent(
             it,
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
-            goToRegistration = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.RegistrationScreen.route)) },
-            goToResetPassword = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
+            goToRegistration = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.RegistrationScreen.route)) },
+            goToResetPassword = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
         )
 
         if (uiState.hasError) {
-            ErrorDialog { mainUiEvent.invoke(MainUiEvent.NavigateUp) }
+            ErrorDialog { mainUiEvent.invoke(NavigationEvent.NavigateUp) }
             return@Scaffold
         }
     }

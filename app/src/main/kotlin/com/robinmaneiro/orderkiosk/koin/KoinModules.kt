@@ -40,6 +40,7 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.offers.OffersViewModel
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryViewModel
+import com.robinmaneiro.orderkiosk.usecase.StartAgainUseCase
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
@@ -84,6 +85,7 @@ val useCaseModules = module {
     factoryOf(::MergeBagsUseCase)
     factoryOf(::RemoveFromBagUseCase)
     factoryOf(::RemoveAllBagItemsUseCase)
+    factoryOf(::StartAgainUseCase)
 }
 
 val repositoryModules = module {

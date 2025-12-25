@@ -24,9 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
+import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
@@ -35,13 +36,14 @@ import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 @Composable
 fun MenuOptionsPane(
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     diningOption: DiningOption,
     visible: Boolean,
-    toggleDiningOption: () -> Unit,
+    onUiEvent: (MenuViewModel.UiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var shouldShowDiningOptionDialog by remember { mutableStateOf(false) }
+    var shouldShowStartAgainDialog by remember { mutableStateOf(false) }
 
     SlideFromSide(
         visible = visible,
@@ -80,8 +82,8 @@ fun MenuOptionsPane(
 //                }
 
                 val optionPaneList = listOf(
-                    Triple("Order History", { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
-                    Triple("Coupons", { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
+                    Triple("Order History", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
+                    Triple("Coupons", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
                 )
 
 
@@ -93,7 +95,7 @@ fun MenuOptionsPane(
             OptionsPaneItem(
                 "Start again",
                 {
-                    // Start Again
+                    shouldShowStartAgainDialog = true
                 },
                 null
             )
@@ -109,7 +111,7 @@ fun MenuOptionsPane(
     }
     if (shouldShowDiningOptionDialog) {
         val primaryButtonAction = {
-            toggleDiningOption.invoke()
+            onUiEvent.invoke(MenuViewModel.UiEvent.ToggleDiningOption)
             shouldShowDiningOptionDialog = false
         }
         val secondaryButtonAction = {
@@ -119,6 +121,24 @@ fun MenuOptionsPane(
             title = "Warning",
             body = "Are you sure you want to change the dining option?",
             primaryButtonLabelToAct = "Change" to primaryButtonAction,
+            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction
+        )
+    }
+
+    if (shouldShowStartAgainDialog) {
+        val primaryButtonAction = {
+            onUiEvent.invoke(MenuViewModel.UiEvent.StartAgain)
+            shouldShowStartAgainDialog = false
+        }
+
+        val secondaryButtonAction = {
+            shouldShowStartAgainDialog = false
+        }
+
+        CustomDialog(
+            title = "Warning",
+            body = "Are you sure you want to start again?",
+            primaryButtonLabelToAct = "Start again" to primaryButtonAction,
             secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction
         )
     }
