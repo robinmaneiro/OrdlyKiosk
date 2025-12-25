@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
@@ -68,7 +68,7 @@ private const val SCROLL_PIXELS_NUMBER = 300F
 @Composable
 fun MenuScreen(
     serviceType: String?,
-    mainUiEvent: (MainUiEvent) -> Unit,
+    navigationEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<MenuViewModel> {
@@ -83,12 +83,13 @@ fun MenuScreen(
             when (action) {
                 is MenuViewModel.Actions.OpenProductInfo -> shownProduct = action.product
                 is MenuViewModel.Actions.ResetLazyGridState -> lazyGridState.scrollToItem(0)
+                is MenuViewModel.Actions.NavigateBackToStart -> navigationEvent.invoke(NavigationEvent.PopBackStackTo(Screens.OffersScreen.route))
             }
         }
     }
 
     if (uiState.hasError) {
-        ErrorDialog { mainUiEvent.invoke(MainUiEvent.NavigateUp) }
+        ErrorDialog { navigationEvent.invoke(NavigationEvent.NavigateUp) }
         return
     }
 
@@ -96,7 +97,7 @@ fun MenuScreen(
 
     MenuScreenContent(
         onUiEvent = viewModel::onHandleEvent,
-        mainUiEvent = mainUiEvent,
+        mainUiEvent = navigationEvent,
         modifier = modifier,
         lazyGridState = lazyGridState,
         menuCategories = uiState.menuCategories,
@@ -128,7 +129,7 @@ fun MenuScreenContent(
     diningOption: DiningOption,
     bagResponse: BagResponse?,
     lazyGridState: LazyGridState,
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     onUiEvent: (MenuViewModel.UiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -145,8 +146,8 @@ fun MenuScreenContent(
             bagResponse = bagResponse,
             lazyGridState = lazyGridState,
             mainUiEvent = mainUiEvent,
+            onUiEvent = onUiEvent,
             diningOption = diningOption,
-            onToggleDiningOption = { onUiEvent(MenuViewModel.UiEvent.ToggleDiningOption) },
         )
     }
 }
@@ -191,8 +192,8 @@ private fun BoxScope.AnimatedContent(
     bagResponse: BagResponse?,
     lazyGridState: LazyGridState,
     diningOption: DiningOption,
-    mainUiEvent: (MainUiEvent) -> Unit,
-    onToggleDiningOption: () -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
+    onUiEvent: (MenuViewModel.UiEvent) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -207,7 +208,7 @@ private fun BoxScope.AnimatedContent(
                 bagResponse.itemCount,
                 modifier = Modifier
                     .align(Alignment.Center),
-                onClick = { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.BagScreen.route)) }
+                onClick = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.BagScreen.route)) }
             )
         }
     }
@@ -245,7 +246,7 @@ private fun BoxScope.AnimatedContent(
     MenuOptionsPane(
         visible = show,
         diningOption = diningOption,
-        toggleDiningOption = onToggleDiningOption,
+        onUiEvent = onUiEvent,
         mainUiEvent = mainUiEvent
     )
 }

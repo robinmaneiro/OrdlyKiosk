@@ -17,6 +17,7 @@ import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.usecase.StartAgainUseCase
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -41,6 +42,7 @@ class MenuViewModel(
     private val bagSelectorUseCase: BagSelectorUseCase,
     private val addToBagUseCase: AddToBagUseCase,
     private val getBagUseCase: GetBagUseCase,
+    private val startAgainUseCase: StartAgainUseCase,
     private val diningOptionString: String
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -174,9 +176,17 @@ class MenuViewModel(
         }
     }
 
+    private fun startAgain() {
+        viewModelScope.launch {
+            startAgainUseCase.invoke()
+            _actions.trySend(Actions.NavigateBackToStart)
+        }
+    }
+
     fun onHandleEvent(uiEvent: UiEvent) {
         when (uiEvent) {
             UiEvent.ToggleDiningOption -> toggleDiningOption()
+            UiEvent.StartAgain -> startAgain()
             is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
             is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
             is UiEvent.AddToBasket -> addToBasket(uiEvent.productId)
@@ -185,6 +195,7 @@ class MenuViewModel(
 
     sealed interface UiEvent {
         data object ToggleDiningOption : UiEvent
+        data object StartAgain : UiEvent
         data class AddToBasket(val productId: String) : UiEvent
         data class OnProductClick(val productId: String) : UiEvent
         data class OnCategoryClick(val categoryId: String) : UiEvent
@@ -193,6 +204,7 @@ class MenuViewModel(
     sealed interface Actions {
         data class OpenProductInfo(val product: MenuItemExpanded) : Actions
         data object ResetLazyGridState : Actions
+        data object NavigateBackToStart : Actions
     }
 
     data class UiState(

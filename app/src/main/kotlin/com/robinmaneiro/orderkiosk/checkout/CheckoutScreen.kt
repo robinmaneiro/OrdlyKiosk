@@ -11,21 +11,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
 @Composable
 fun CheckoutScreen(
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Checkout", onBack = {
-                mainUiEvent.invoke(MainUiEvent.NavigateUp)
+                mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
     ) { padding ->
@@ -36,7 +36,7 @@ fun CheckoutScreen(
 @Composable
 private fun CheckoutContent(
     padding: PaddingValues,
-    mainUiEvent: (MainUiEvent) -> Unit
+    mainUiEvent: (NavigationEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -46,7 +46,7 @@ private fun CheckoutContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = {
-            mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.OrderSummaryScreen.route))
+            mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.OrderSummaryScreen.route))
         }) {
             Text(
                 text = "Pay Now"

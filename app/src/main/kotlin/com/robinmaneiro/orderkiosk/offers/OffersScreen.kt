@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import com.robinmaneiro.orderkiosk.MainUiEvent
+import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OffersScreen(
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<OffersViewModel>()
@@ -46,7 +46,7 @@ fun OffersScreen(
 
 @Composable
 private fun OffersContent(
-    mainUiEvent: (MainUiEvent) -> Unit,
+    mainUiEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier,
     clickHereText: String
 ) {
@@ -55,7 +55,7 @@ private fun OffersContent(
             .fillMaxSize()
             .background(Color.DarkGray)
             .clickable {
-                mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.WelcomeScreen.route))
+                mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.WelcomeScreen.route))
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
