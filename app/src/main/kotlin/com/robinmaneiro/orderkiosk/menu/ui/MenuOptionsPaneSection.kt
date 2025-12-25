@@ -24,9 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.robinmaneiro.orderkiosk.MainUiEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
-import com.robinmaneiro.orderkiosk.menu.MenuViewModel
+import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
@@ -34,8 +35,8 @@ import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 @Composable
 fun MenuOptionsPane(
-    navigateToDestination: (String) -> Unit,
-    uiState: MenuViewModel.UiState, // TODO: Remove runtime parameter
+    mainUiEvent: (MainUiEvent) -> Unit,
+    diningOption: DiningOption,
     visible: Boolean,
     toggleDiningOption: () -> Unit,
     modifier: Modifier = Modifier
@@ -63,20 +64,26 @@ fun MenuOptionsPane(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // TODO: Show different content for the menu depending if the user is a GUEST or LOGGED-IN user
-                val optionPaneList = if (uiState.isLoggedIn) {
-                    listOf(
-                        Triple("Account Detais", { navigateToDestination.invoke(Screens.MyAccountScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination
-                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-                    )
-                } else {
-                    listOf(
-                        Triple("Sign In", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
-                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-                    )
-                }
+                // TODO: Re-think these options depending if user is able to log in.
+//                val optionPaneList = if (uiState.isLoggedIn) {
+//                    listOf(
+//                        Triple("Account Detais", { navigateToDestination.invoke(Screens.MyAccountScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination
+//                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
+//                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
+//                    )
+//                } else {
+//                    listOf(
+//                        Triple("Sign In", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
+//                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
+//                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
+//                    )
+//                }
+
+                val optionPaneList = listOf(
+                    Triple("Order History", { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
+                    Triple("Coupons", { mainUiEvent.invoke(MainUiEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
+                )
+
 
                 optionPaneList.forEach {
                     OptionsPaneItem(it.first, it.second, it.third)
@@ -84,7 +91,7 @@ fun MenuOptionsPane(
             }
 
             OptionsPaneItem(
-                uiState.diningOption.uiText,
+                diningOption.uiText,
                 {
                     shouldShowDiningOptionDialog = true
                 },

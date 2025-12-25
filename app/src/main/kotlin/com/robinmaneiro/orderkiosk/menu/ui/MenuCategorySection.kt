@@ -28,10 +28,11 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MenuCategorySection(
-    menuCategories: List<MenuCategory>,
+    menuCategories: ImmutableList<MenuCategory>,
     onCategoryClick: (categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
