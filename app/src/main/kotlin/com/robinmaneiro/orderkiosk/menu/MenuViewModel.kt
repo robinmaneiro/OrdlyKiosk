@@ -34,8 +34,8 @@ import kotlinx.coroutines.launch
 
 @Suppress("LongParameterList")
 class MenuViewModel(
-    private val dataStore: DataStoreRepository,
-    private val bagRepository: BagRepository,
+    dataStore: DataStoreRepository,
+    bagRepository: BagRepository,
     private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
     private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
     private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
