@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,7 +41,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BagScreen(
-    mainUiEvent: (NavigationEvent) -> Unit,
+    navigationEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<BagViewModel>()
@@ -48,11 +49,19 @@ fun BagScreen(
     var itemToRemove by remember { mutableStateOf<BagItem?>(null) }
     var showClearBagDialog by remember { mutableStateOf(false) }
 
+    LaunchedEffect(viewModel) {
+        viewModel.actions.collect { action ->
+            when (action) {
+                is BagViewModel.Actions.NavigateBack -> navigationEvent.invoke(NavigationEvent.NavigateUp)
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             SimpleTopBar(title = "Bag", onBack = {
-                mainUiEvent.invoke(NavigationEvent.NavigateUp)
+                navigationEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
     ) {
@@ -70,13 +79,13 @@ fun BagScreen(
                     BagItemRow(
                         bagItem = bagItemData,
                         onPlusClick = {
-                            viewModel.increaseQuantity(bagItemData)
+                            viewModel.onHandleEvent(BagViewModel.UiEvent.IncreaseQuantity(bagItemData))
                         },
                         onMinusClick = {
                             if (bagItemData.quantity == 1) {
                                 itemToRemove = bagItemData
                             } else {
-                                viewModel.decreaseQuantity(bagItemData)
+                                viewModel.onHandleEvent(BagViewModel.UiEvent.DecreaseQuantity(bagItemData))
                             }
                         }
                     )
@@ -130,7 +139,7 @@ fun BagScreen(
                     ) {
                         Text(
                             modifier = Modifier.clickable {
-                                mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CheckoutScreen.route))
+                                navigationEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CheckoutScreen.route))
                             },
                             text = "Order Now"
                         )
@@ -152,7 +161,7 @@ fun BagScreen(
 
     itemToRemove?.let { bagItem ->
         val primaryButtonAction = {
-            viewModel.removeItem(bagItem)
+            viewModel.onHandleEvent(BagViewModel.UiEvent.RemoveItem(bagItem))
             itemToRemove = null
         }
         val secondaryButtonAction = {
@@ -168,7 +177,7 @@ fun BagScreen(
 
     if (showClearBagDialog) {
         val primaryButtonAction = {
-            viewModel.removeAllItems()
+            viewModel.onHandleEvent(BagViewModel.UiEvent.RemoveAllItems)
             showClearBagDialog = false
         }
         val secondaryButtonAction = {

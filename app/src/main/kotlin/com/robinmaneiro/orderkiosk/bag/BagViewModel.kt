@@ -10,8 +10,10 @@ import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,9 @@ class BagViewModel(
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _actions = Channel<Actions>(Channel.BUFFERED)
+    val actions = _actions.receiveAsFlow()
+
     init {
         showLoader()
         viewModelScope.launch {
@@ -35,6 +40,15 @@ class BagViewModel(
                 .onFailure {
                     hideLoader()
                 }
+        }
+    }
+
+    fun onHandleEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            UiEvent.RemoveAllItems -> removeAllItems()
+            is UiEvent.IncreaseQuantity -> increaseQuantity(uiEvent.bagItem)
+            is UiEvent.DecreaseQuantity -> decreaseQuantity(uiEvent.bagItem)
+            is UiEvent.RemoveItem -> removeItem(uiEvent.bagItem)
         }
     }
 
@@ -53,7 +67,7 @@ class BagViewModel(
         }
     }
 
-    fun increaseQuantity(bagItem: BagItem) {
+    private fun increaseQuantity(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.inc()
@@ -74,7 +88,7 @@ class BagViewModel(
         }
     }
 
-    fun decreaseQuantity(bagItem: BagItem) {
+    private fun decreaseQuantity(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
             val newQuantity = bagItem.quantity.dec()
@@ -95,7 +109,7 @@ class BagViewModel(
         }
     }
 
-    fun removeItem(bagItem: BagItem) {
+    private fun removeItem(bagItem: BagItem) {
         showLoader()
         viewModelScope.launch {
             removeFromBagUseCase.invoke(
@@ -112,20 +126,32 @@ class BagViewModel(
         }
     }
 
-    fun removeAllItems() {
+    private fun removeAllItems() {
         showLoader()
         viewModelScope.launch {
             removeAllBagItemsUseCase.invoke(
                 bagId = bagSelectorUseCase.invoke()
             )
                 .onSuccess { bagResponse ->
-                    bagResponse.updateUiState()
+                    hideLoader()
+                    _actions.trySend(Actions.NavigateBack)
                 }
                 .onFailure {
                     hideLoader()
                     // TODO: Handle error
                 }
         }
+    }
+
+    sealed interface UiEvent {
+        data object RemoveAllItems : UiEvent
+        data class RemoveItem(val bagItem: BagItem) : UiEvent
+        data class IncreaseQuantity(val bagItem: BagItem) : UiEvent
+        data class DecreaseQuantity(val bagItem: BagItem) : UiEvent
+    }
+
+    sealed interface Actions {
+        data object NavigateBack : Actions
     }
 
     data class UiState(

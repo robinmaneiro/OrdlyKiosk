@@ -67,6 +67,16 @@ class MenuViewModel(
         }
     }
 
+    fun onHandleEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            UiEvent.ToggleDiningOption -> toggleDiningOption()
+            UiEvent.StartAgain -> startAgain()
+            is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
+            is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
+            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId)
+        }
+    }
+
     private suspend fun loadCategories() {
         getMenuCategoriesUseCase()
             .onSuccess { menuCategories ->
@@ -180,16 +190,6 @@ class MenuViewModel(
         viewModelScope.launch {
             startAgainUseCase.invoke()
             _actions.trySend(Actions.NavigateBackToStart)
-        }
-    }
-
-    fun onHandleEvent(uiEvent: UiEvent) {
-        when (uiEvent) {
-            UiEvent.ToggleDiningOption -> toggleDiningOption()
-            UiEvent.StartAgain -> startAgain()
-            is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
-            is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
-            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId)
         }
     }
 
