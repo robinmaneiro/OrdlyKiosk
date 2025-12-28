@@ -59,7 +59,6 @@ private fun OffersContent(
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -76,8 +75,7 @@ private fun OffersContent(
             Row(
                 modifier = Modifier
                     .fadingEdge(
-                        Brush.verticalGradient
-                            (
+                        Brush.verticalGradient(
                             0f to Color.Transparent,
                             0.2f to Iceberg.copy(alpha = 0.4f),
                             0.5f to Iceberg.copy(alpha = 0.6f),
