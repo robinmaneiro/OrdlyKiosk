@@ -86,7 +86,6 @@ fun MenuOptionsPane(
                     Triple("Coupons", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
                 )
 
-
                 optionPaneList.forEach {
                     OptionsPaneItem(it.first, it.second, it.third)
                 }

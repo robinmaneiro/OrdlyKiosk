@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class OffersViewModel: ViewModel() {
+class OffersViewModel : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
     private val clickHereList = listOf(
