@@ -18,20 +18,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderSummaryScreen(
     mainUiEvent: (NavigationEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val viewModel = koinViewModel<OrderSummaryViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(OrderSummaryViewModel.UiState())
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -40,12 +50,20 @@ fun OrderSummaryScreen(
             })
         }
     ) { padding ->
-        OrderSummaryContent(padding)
+        val bagResponse = uiState.bagResponse ?: return@Scaffold
+
+        OrderSummaryContent(
+            padding = padding,
+            products = bagResponse.items
+        )
     }
 }
 
 @Composable
-private fun OrderSummaryContent(padding: PaddingValues) {
+private fun OrderSummaryContent(
+    padding: PaddingValues,
+    products: ImmutableList<BagItem>
+) {
     Column(
         modifier = Modifier
             .padding(padding)
@@ -55,7 +73,9 @@ private fun OrderSummaryContent(padding: PaddingValues) {
     ) {
         SectionOrderDetails()
         Spacer(Modifier.height(10.dp))
-        SectionItems()
+        SectionItems(
+            products = products
+        )
         Spacer(Modifier.height(10.dp))
         SectionOrderProgress()
         Spacer(Modifier.height(10.dp))
@@ -65,7 +85,7 @@ private fun OrderSummaryContent(padding: PaddingValues) {
 
 @Composable
 private fun SectionOrderDetails(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row {
         Text(
@@ -81,31 +101,15 @@ private fun SectionOrderDetails(
 
 @Composable
 private fun SectionItems(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    products: ImmutableList<BagItem>
 ) {
-    val xd = listOf(
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-        "Example of a product",
-
-    )
     LazyColumn(
-        Modifier.height(200.dp)
+        modifier = modifier.height(200.dp)
     ) {
         // Just get them from the bag flow
-        items(xd) {
-            Text(it)
+        items(products) {
+            Text(it.title)
         }
     }
 }
@@ -149,5 +153,5 @@ private fun SectionRoulette() {
 @PreviewPixelTablet
 @Composable
 private fun OrderSummaryContentPreview() {
-    OrderSummaryContent(PaddingValues())
+    OrderSummaryContent(PaddingValues(), persistentListOf())
 }
