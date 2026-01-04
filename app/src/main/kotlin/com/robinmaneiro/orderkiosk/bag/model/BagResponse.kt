@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.robinmaneiro.orderkiosk.util.extensions.getDoublePrice
 import com.robinmaneiro.orderkiosk.util.extensions.getFormattedPrice
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentSet
 
 data class BagResponse(
     @JsonProperty("totalCost") private val _totalCost: PriceData,
