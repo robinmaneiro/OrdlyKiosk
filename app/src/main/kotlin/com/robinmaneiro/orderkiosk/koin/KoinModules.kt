@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.koin
 
+import com.robinmaneiro.orderkiosk.MainActivityViewModel
 import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.login.LoginViewModel
 import com.robinmaneiro.orderkiosk.account.personaldetails.MyAccountViewModel
@@ -47,6 +48,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelModules = module {
+    viewModelOf(::MainActivityViewModel)
     viewModelOf(::OffersViewModel)
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::MenuViewModel)
