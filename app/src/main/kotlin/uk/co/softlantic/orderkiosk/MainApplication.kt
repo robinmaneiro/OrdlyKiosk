@@ -1,6 +1,10 @@
 package uk.co.softlantic.orderkiosk
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.startKoin
+import timber.log.Timber
 import uk.co.softlantic.orderkiosk.auth.guestsession.usecase.CreateGuestSessionUseCase
 import uk.co.softlantic.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
 import uk.co.softlantic.orderkiosk.auth.usecase.RefreshTokenUseCase
@@ -11,10 +15,6 @@ import uk.co.softlantic.orderkiosk.koin.useCaseModules
 import uk.co.softlantic.orderkiosk.koin.viewModelModules
 import uk.co.softlantic.orderkiosk.networking.NetworkManager
 import uk.co.softlantic.orderkiosk.util.SessionManager
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.GlobalContext
-import org.koin.core.context.startKoin
-import timber.log.Timber
 
 class MainApplication : Application() {
 

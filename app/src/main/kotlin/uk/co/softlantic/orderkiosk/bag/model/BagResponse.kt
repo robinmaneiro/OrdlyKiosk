@@ -1,9 +1,9 @@
 package uk.co.softlantic.orderkiosk.bag.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.collections.immutable.toPersistentList
 import uk.co.softlantic.orderkiosk.util.extensions.getDoublePrice
 import uk.co.softlantic.orderkiosk.util.extensions.getFormattedPrice
-import kotlinx.collections.immutable.toPersistentList
 
 data class BagResponse(
     @JsonProperty("totalCost") private val _totalCost: PriceData,

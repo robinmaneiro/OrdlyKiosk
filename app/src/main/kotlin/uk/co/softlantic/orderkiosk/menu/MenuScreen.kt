@@ -36,6 +36,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 import uk.co.softlantic.orderkiosk.NavigationEvent
 import uk.co.softlantic.orderkiosk.Screens
 import uk.co.softlantic.orderkiosk.bag.model.BagResponse
@@ -57,11 +62,6 @@ import uk.co.softlantic.orderkiosk.ui.SlideFromBottom
 import uk.co.softlantic.orderkiosk.ui.SlideFromSide
 import uk.co.softlantic.orderkiosk.ui.theme.Aquamarine40
 import uk.co.softlantic.orderkiosk.ui.theme.Iceberg
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 

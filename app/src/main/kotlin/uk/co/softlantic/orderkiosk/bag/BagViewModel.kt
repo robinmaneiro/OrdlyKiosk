@@ -4,6 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import uk.co.softlantic.orderkiosk.bag.model.BagItem
 import uk.co.softlantic.orderkiosk.bag.model.BagResponse
 import uk.co.softlantic.orderkiosk.bag.model.UpdateBagItemPayload
@@ -12,12 +18,6 @@ import uk.co.softlantic.orderkiosk.bag.usecase.GetBagUseCase
 import uk.co.softlantic.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
 import uk.co.softlantic.orderkiosk.bag.usecase.RemoveFromBagUseCase
 import uk.co.softlantic.orderkiosk.bag.usecase.UpdateBagItemUseCase
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class BagViewModel(
     private val bagSelectorUseCase: BagSelectorUseCase,

@@ -1,10 +1,10 @@
 package uk.co.softlantic.orderkiosk.util
 
-import uk.co.softlantic.orderkiosk.auth.guestsession.usecase.CreateGuestSessionUseCase
-import uk.co.softlantic.orderkiosk.datastore.DataStoreRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uk.co.softlantic.orderkiosk.auth.guestsession.usecase.CreateGuestSessionUseCase
+import uk.co.softlantic.orderkiosk.datastore.DataStoreRepository
 
 object SessionManager {
     fun initialize(

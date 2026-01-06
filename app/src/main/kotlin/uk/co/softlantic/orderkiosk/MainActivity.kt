@@ -16,9 +16,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import org.koin.androidx.compose.koinViewModel
 import uk.co.softlantic.orderkiosk.networking.ConnectivityObserver
 import uk.co.softlantic.orderkiosk.ui.theme.OrderKioskTheme
-import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

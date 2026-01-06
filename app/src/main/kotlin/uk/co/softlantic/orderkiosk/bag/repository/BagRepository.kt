@@ -1,7 +1,7 @@
 package uk.co.softlantic.orderkiosk.bag.repository
 
-import uk.co.softlantic.orderkiosk.bag.model.BagResponse
 import kotlinx.coroutines.flow.StateFlow
+import uk.co.softlantic.orderkiosk.bag.model.BagResponse
 
 interface BagRepository {
     val bag: StateFlow<BagResponse?>

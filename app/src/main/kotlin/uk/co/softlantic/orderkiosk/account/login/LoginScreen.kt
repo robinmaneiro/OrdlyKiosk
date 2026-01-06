@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
 import uk.co.softlantic.orderkiosk.NavigationEvent
 import uk.co.softlantic.orderkiosk.R
 import uk.co.softlantic.orderkiosk.Screens
@@ -37,7 +38,6 @@ import uk.co.softlantic.orderkiosk.account.login.model.LoginPayload
 import uk.co.softlantic.orderkiosk.ui.ErrorDialog
 import uk.co.softlantic.orderkiosk.ui.PreviewPixelTablet
 import uk.co.softlantic.orderkiosk.ui.SimpleTopBar
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AccountScreen(

@@ -25,13 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import org.koin.androidx.compose.koinViewModel
 import uk.co.softlantic.orderkiosk.NavigationEvent
 import uk.co.softlantic.orderkiosk.bag.model.BagItem
 import uk.co.softlantic.orderkiosk.ui.PreviewPixelTablet
 import uk.co.softlantic.orderkiosk.ui.SimpleTopBar
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderSummaryScreen(

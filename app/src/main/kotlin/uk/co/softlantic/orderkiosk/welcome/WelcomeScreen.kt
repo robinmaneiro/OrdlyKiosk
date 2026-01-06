@@ -36,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
+import org.koin.androidx.compose.koinViewModel
 import uk.co.softlantic.orderkiosk.NavigationEvent
 import uk.co.softlantic.orderkiosk.R
 import uk.co.softlantic.orderkiosk.Screens
@@ -47,9 +50,6 @@ import uk.co.softlantic.orderkiosk.ui.theme.Iceberg
 import uk.co.softlantic.orderkiosk.util.extensions.noRippleClickable
 import uk.co.softlantic.orderkiosk.util.extensions.showToast
 import uk.co.softlantic.orderkiosk.welcome.model.LanguageData
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WelcomeScreen(

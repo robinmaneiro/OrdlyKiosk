@@ -1,5 +1,9 @@
 package uk.co.softlantic.orderkiosk.koin
 
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 import uk.co.softlantic.orderkiosk.BaseViewModel
 import uk.co.softlantic.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import uk.co.softlantic.orderkiosk.account.login.LoginViewModel
@@ -44,10 +48,6 @@ import uk.co.softlantic.orderkiosk.orderhistory.OrderHistoryViewModel
 import uk.co.softlantic.orderkiosk.ordersummary.OrderSummaryViewModel
 import uk.co.softlantic.orderkiosk.usecase.StartAgainUseCase
 import uk.co.softlantic.orderkiosk.welcome.WelcomeViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
 
 val viewModelModules = module {
     viewModelOf(::BaseViewModel)
@@ -93,7 +93,7 @@ val useCaseModules = module {
 }
 
 val repositoryModules = module {
-    single{ ConnectivityObserver(androidContext()) }
+    single { ConnectivityObserver(androidContext()) }
     single<AuthRepository> { AuthRepositoryImpl() }
     single<AccountRepository> { AccountRepositoryImpl() }
     single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }

@@ -25,10 +25,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import kotlinx.collections.immutable.ImmutableList
 import uk.co.softlantic.orderkiosk.R
 import uk.co.softlantic.orderkiosk.menu.model.MenuProduct
 import uk.co.softlantic.orderkiosk.util.extensions.fadingEdge
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MenuItemsSection(

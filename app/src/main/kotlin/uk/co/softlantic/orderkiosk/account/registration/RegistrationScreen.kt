@@ -19,11 +19,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.koin.androidx.compose.koinViewModel
 import uk.co.softlantic.orderkiosk.NavigationEvent
 import uk.co.softlantic.orderkiosk.account.registration.model.RegisterPayload
 import uk.co.softlantic.orderkiosk.ui.PreviewPixelTablet
 import uk.co.softlantic.orderkiosk.ui.SimpleTopBar
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegistrationScreen(

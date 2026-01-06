@@ -1,13 +1,13 @@
 package uk.co.softlantic.orderkiosk.welcome
 
 import androidx.lifecycle.ViewModel
-import uk.co.softlantic.orderkiosk.R
-import uk.co.softlantic.orderkiosk.welcome.model.LanguageData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import uk.co.softlantic.orderkiosk.R
+import uk.co.softlantic.orderkiosk.welcome.model.LanguageData
 import kotlin.collections.listOf
 
 class WelcomeViewModel : ViewModel() {

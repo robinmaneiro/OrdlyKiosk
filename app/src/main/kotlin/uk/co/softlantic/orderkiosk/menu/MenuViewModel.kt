@@ -2,6 +2,18 @@ package uk.co.softlantic.orderkiosk.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import uk.co.softlantic.orderkiosk.bag.model.AddToBagPayload
 import uk.co.softlantic.orderkiosk.bag.model.BagResponse
 import uk.co.softlantic.orderkiosk.bag.repository.BagRepository
@@ -19,18 +31,6 @@ import uk.co.softlantic.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import uk.co.softlantic.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import uk.co.softlantic.orderkiosk.usecase.StartAgainUseCase
 import uk.co.softlantic.orderkiosk.util.extensions.errorLog
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 @Suppress("LongParameterList")
 class MenuViewModel(
