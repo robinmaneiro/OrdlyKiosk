@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OffersScreen(
@@ -79,7 +79,7 @@ private fun OffersContent(
                             0f to Color.Transparent,
                             0.2f to Iceberg.copy(alpha = 0.4f),
                             0.5f to Iceberg.copy(alpha = 0.6f),
-                            1f to Iceberg.copy(0.8f),
+                            1f to Iceberg.copy(alpha = 0.8f),
                         )
                     )
                     .height(160.dp)

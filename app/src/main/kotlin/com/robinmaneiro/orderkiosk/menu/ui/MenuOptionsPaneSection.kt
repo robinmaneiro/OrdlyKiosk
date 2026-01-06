@@ -66,21 +66,6 @@ fun MenuOptionsPane(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // TODO: Re-think these options depending if user is able to log in.
-//                val optionPaneList = if (uiState.isLoggedIn) {
-//                    listOf(
-//                        Triple("Account Detais", { navigateToDestination.invoke(Screens.MyAccountScreen.route) }, R.drawable.icn_rounded_user), // TODO: Change for different destination
-//                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-//                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-//                    )
-//                } else {
-//                    listOf(
-//                        Triple("Sign In", { navigateToDestination.invoke(Screens.LoginScreen.route) }, R.drawable.icn_rounded_user),
-//                        Triple("Order History", { navigateToDestination.invoke(Screens.OrderHistoryScreen.route) }, R.drawable.icn_burger),
-//                        Triple("Coupons", { navigateToDestination.invoke(Screens.CouponsScreen.route) }, R.drawable.icn_ticket),
-//                    )
-//                }
-
                 val optionPaneList = listOf(
                     Triple("Order History", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
                     Triple("Coupons", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)

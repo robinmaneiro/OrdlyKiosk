@@ -691,7 +691,7 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: ''
-    ignoreAnnotated: ['Preview']
+    ignoreAnnotated: ['Preview', 'PreviewPixelTablet']
   UnusedPrivateProperty:
     active: true
     allowedNames: '_|event|ignored|expected|serialVersionUID'
