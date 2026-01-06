@@ -1,12 +1,12 @@
 package com.robinmaneiro.orderkiosk.bag.repository
 
-import com.robinmaneiro.orderkiosk.bag.model.BagResponse
-import com.robinmaneiro.orderkiosk.networking.NetworkManager
-import com.robinmaneiro.orderkiosk.util.SERVER_BASE_URL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import com.robinmaneiro.orderkiosk.bag.model.BagResponse
+import com.robinmaneiro.orderkiosk.networking.NetworkManager
+import com.robinmaneiro.orderkiosk.util.SERVER_BASE_URL
 
 class BagRepositoryImpl : BagRepository {
     private val _bag: MutableStateFlow<BagResponse?> = MutableStateFlow(null)

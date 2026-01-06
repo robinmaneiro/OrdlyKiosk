@@ -35,18 +35,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
+import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
-import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
-import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
+import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 
 @Composable
 fun BagScreen(
@@ -80,7 +80,7 @@ fun BagScreen(
             ItemsSection(
                 bagItems = uiState.bagItems,
                 onHandleUiEvent = viewModel::onHandleEvent,
-                onRemoveTapped = {itemToRemove = it}
+                onRemoveTapped = { itemToRemove = it }
             )
 
             TopShadow()
@@ -136,7 +136,7 @@ fun BagScreen(
 fun ColumnScope.ItemsSection(
     modifier: Modifier = Modifier,
     bagItems: ImmutableList<BagItem>,
-    onHandleUiEvent: (BagViewModel.UiEvent)-> Unit,
+    onHandleUiEvent: (BagViewModel.UiEvent) -> Unit,
     onRemoveTapped: (BagItem) -> Unit
 ) {
     LazyColumn(
@@ -175,17 +175,18 @@ fun ColumnScope.ItemsSection(
 
 @Composable
 fun TopShadow(alpha: Float = 0.1f, height: Dp = 8.dp) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .height(height)
-        .background(
-            brush = Brush.verticalGradient(
-                colors = listOf(
-                    Color.Transparent,
-                    Color.Black.copy(alpha = alpha),
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color.Transparent,
+                        Color.Black.copy(alpha = alpha),
+                    )
                 )
             )
-        )
     )
 }
 
@@ -230,7 +231,6 @@ fun BottomSection(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Button(
                 modifier = Modifier.size(150.dp, 50.dp),
                 colors = buttonColors(
@@ -265,7 +265,7 @@ fun BottomSection(
 @Composable
 fun BottomSectionPreview() {
     BottomSection(
-        modifier =  Modifier.height(100.dp),
+        modifier = Modifier.height(100.dp),
         showClearBagDialog = {},
         navigationEvent = {},
         itemCount = 12,

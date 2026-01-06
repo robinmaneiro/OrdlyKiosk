@@ -1,5 +1,9 @@
 package com.robinmaneiro.orderkiosk.koin
 
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 import com.robinmaneiro.orderkiosk.BaseViewModel
 import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.login.LoginViewModel
@@ -44,10 +48,6 @@ import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryViewModel
 import com.robinmaneiro.orderkiosk.usecase.StartAgainUseCase
 import com.robinmaneiro.orderkiosk.welcome.WelcomeViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
 
 val viewModelModules = module {
     viewModelOf(::BaseViewModel)
@@ -93,7 +93,7 @@ val useCaseModules = module {
 }
 
 val repositoryModules = module {
-    single{ ConnectivityObserver(androidContext()) }
+    single { ConnectivityObserver(androidContext()) }
     single<AuthRepository> { AuthRepositoryImpl() }
     single<AccountRepository> { AccountRepositoryImpl() }
     single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }

@@ -37,7 +37,9 @@ class ConnectivityObserver(context: Context) {
             val caps = connectivityManager.getNetworkCapabilities(network)
             if (caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) == true) {
                 Status.Available
-            } else Status.Lost
+            } else {
+                Status.Lost
+            }
         } ?: Status.Lost
         trySend(initialStatus)
 
