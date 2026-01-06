@@ -2,6 +2,8 @@ package uk.co.softlantic.orderkiosk.bag
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import uk.co.softlantic.orderkiosk.bag.model.BagItem
 import uk.co.softlantic.orderkiosk.bag.model.BagResponse
 import uk.co.softlantic.orderkiosk.bag.model.UpdateBagItemPayload
@@ -155,7 +157,7 @@ class BagViewModel(
     }
 
     data class UiState(
-        val bagItems: List<BagItem> = emptyList(),
+        val bagItems: ImmutableList<BagItem> = persistentListOf(),
         val itemCount: Int = 0,
         val formattedTotalCost: String = "",
         val isLoading: Boolean = false
