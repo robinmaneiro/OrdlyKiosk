@@ -1,0 +1,29 @@
+package uk.co.softlantic.orderkiosk.ordersummary
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import uk.co.softlantic.orderkiosk.bag.model.BagResponse
+import uk.co.softlantic.orderkiosk.bag.repository.BagRepository
+
+class OrderSummaryViewModel(
+    bagRepository: BagRepository
+) : ViewModel() {
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState = combine(_uiState, bagRepository.bag) { state, bag ->
+        state.copy(
+            bagResponse = bag
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = UiState()
+    )
+
+    data class UiState(
+        val bagResponse: BagResponse? = null,
+    )
+}

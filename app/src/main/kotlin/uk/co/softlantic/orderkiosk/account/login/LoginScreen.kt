@@ -1,0 +1,174 @@
+package uk.co.softlantic.orderkiosk.account.login
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import uk.co.softlantic.orderkiosk.NavigationEvent
+import uk.co.softlantic.orderkiosk.R
+import uk.co.softlantic.orderkiosk.Screens
+import uk.co.softlantic.orderkiosk.account.login.model.LoginPayload
+import uk.co.softlantic.orderkiosk.ui.ErrorDialog
+import uk.co.softlantic.orderkiosk.ui.PreviewPixelTablet
+import uk.co.softlantic.orderkiosk.ui.SimpleTopBar
+import org.koin.androidx.compose.koinViewModel
+
+@Composable
+fun AccountScreen(
+    mainUiEvent: (NavigationEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val viewModel = koinViewModel<LoginViewModel>()
+    val uiState: LoginViewModel.UiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.actions.collect { action ->
+            when (action) {
+                is LoginViewModel.Actions.NavigateBack -> mainUiEvent.invoke(NavigationEvent.NavigateUp)
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            SimpleTopBar(title = "Account", onBack = {
+                mainUiEvent.invoke(NavigationEvent.NavigateUp)
+            })
+        }
+    ) {
+        LoginScreenContent(
+            it,
+            loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
+            goToRegistration = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.RegistrationScreen.route)) },
+            goToResetPassword = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
+        )
+
+        if (uiState.hasError) {
+            ErrorDialog { mainUiEvent.invoke(NavigationEvent.NavigateUp) }
+            return@Scaffold
+        }
+    }
+}
+
+@Composable
+fun LoginScreenContent(
+    paddingValues: PaddingValues,
+    loginUser: (String, String) -> Unit,
+    goToRegistration: () -> Unit,
+    goToResetPassword: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier
+            .padding(paddingValues)
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painterResource(R.drawable.background_test),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .blur(10.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .size(600.dp, 500.dp)
+                .background(Color.White.copy(alpha = 0.8F)),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                var userName by remember { mutableStateOf("") }
+                var password by remember { mutableStateOf("") }
+
+                Text(
+                    text = "LOGIN"
+                )
+
+                Spacer(
+                    Modifier.height(20.dp)
+                )
+
+                TextField(
+                    value = userName,
+                    onValueChange = { userName = it }
+                )
+
+                Spacer(
+                    Modifier.height(20.dp)
+                )
+
+                TextField(
+                    value = password,
+                    onValueChange = { password = it }
+                )
+
+                Spacer(
+                    Modifier.height(20.dp)
+                )
+
+                Button(
+                    {
+                        loginUser.invoke(userName, password)
+                    }
+                ) {
+                    Text("Login")
+                }
+
+                Spacer(
+                    Modifier.height(40.dp)
+                )
+
+                TextButton(
+                    onClick = goToResetPassword
+                ) {
+                    Text("Reset Password")
+                }
+
+                TextButton(
+                    onClick = goToRegistration
+                ) {
+                    Text("Register")
+                }
+            }
+        }
+    }
+}
+
+@PreviewPixelTablet
+@Composable
+private fun AccountScreenContentPreview() {
+    LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {}, {})
+}

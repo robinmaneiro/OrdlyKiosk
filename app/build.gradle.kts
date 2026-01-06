@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.robinmaneiro.orderkiosk"
+    namespace = "uk.co.softlantic.orderkiosk"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.robinmaneiro.orderkiosk"
+        applicationId = "uk.co.softlantic.orderkiosk"
         minSdk = 25
         targetSdk = 36
         versionCode = 1
