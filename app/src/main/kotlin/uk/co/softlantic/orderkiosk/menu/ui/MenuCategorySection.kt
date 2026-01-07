@@ -3,8 +3,11 @@ package uk.co.softlantic.orderkiosk.menu.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,20 +39,28 @@ fun MenuCategorySection(
     onCategoryClick: (categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier
-            .fadingEdge(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(
-            top = 16.dp,
-            bottom = 16.dp
-        ),
+    Column(
+        modifier = modifier.padding(top = 16.dp)
     ) {
-        items(menuCategories) {
-            MenuCard(
-                category = it,
-                onCategoryClick = onCategoryClick
-            )
+        PromoCategoryCard({})
+
+        Spacer(Modifier.height(10.dp))
+
+        LazyColumn(
+            modifier = modifier
+                .fadingEdge(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(
+                top = 16.dp,
+                bottom = 16.dp
+            ),
+        ) {
+            items(menuCategories) {
+                MenuCard(
+                    category = it,
+                    onCategoryClick = onCategoryClick
+                )
+            }
         }
     }
 }
