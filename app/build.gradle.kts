@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
+    implementation(libs.zxing)
     //endregion
 
     //region Dependency injection
