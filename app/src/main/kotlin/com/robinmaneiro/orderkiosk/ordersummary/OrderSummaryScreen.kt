@@ -31,6 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
+import com.robinmaneiro.orderkiosk.ui.QRCodeDisplay
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
 @Composable
@@ -72,9 +73,9 @@ private fun OrderSummaryContent(
     ) {
         SectionOrderDetails()
         Spacer(Modifier.height(10.dp))
-        SectionItems(
-            products = products
-        )
+//        SectionItems(
+//            products = products TODO: Remove?
+//        )
         Spacer(Modifier.height(10.dp))
         SectionOrderProgress()
         Spacer(Modifier.height(10.dp))
@@ -86,14 +87,33 @@ private fun OrderSummaryContent(
 private fun SectionOrderDetails(
     modifier: Modifier = Modifier,
 ) {
-    Row {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
         Text(
-            "YOUR ORDER:",
+            text = "Thank you for your payment",
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp)
+
         )
+
+        Spacer(
+            modifier = Modifier.height(10.dp)
+        )
+
         Text(
-            "80801",
-            style = MaterialTheme.typography.labelLarge.copy(fontSize = 48.sp)
+            text = "Your Order Number is :",
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 32.sp)
+        )
+
+        Spacer(
+            modifier = Modifier.height(10.dp)
+        )
+
+        Text(
+            "1391", // TODO: Follow a pattern where the first pair of digits is the station number, the second pair sequential order assignation.
+            style = MaterialTheme.typography.labelLarge.copy(fontSize = 120.sp)
         )
     }
 }
@@ -125,11 +145,7 @@ private fun SectionOrderProgress(
         text = "Get Progress of your order "
     )
 
-    Box(
-        modifier = Modifier
-            .size(200.dp)
-            .background(Color.Blue)
-    )
+    QRCodeDisplay("https://www.reddit.com", Modifier.size(200.dp))
 }
 
 @Composable
