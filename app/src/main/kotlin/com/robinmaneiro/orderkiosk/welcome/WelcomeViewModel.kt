@@ -51,12 +51,24 @@ class WelcomeViewModel : ViewModel() {
         }
     }
 
-    fun updateLanguage(languageCode: String) {
+    fun onHandleEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            is UiEvent.OnLanguageSelected -> updateLanguage(uiEvent.languageCode)
+        }
+    }
+
+    private fun updateLanguage(languageCode: String) {
+        // TODO: Probably can change a variable in the datastore and listen to a flow that will try to retrieve an updated json for this
+        //  specific language when that happens.
         _uiState.update {
             it.copy(
                 languageOptions = uiState.value.languageOptions.map { languageData -> languageData.copy(isSelected = languageData.languageAlpha2Code == languageCode) }
             )
         }
+    }
+
+    sealed interface UiEvent {
+        data class OnLanguageSelected(val languageCode: String) : UiEvent
     }
 
     data class UiState(

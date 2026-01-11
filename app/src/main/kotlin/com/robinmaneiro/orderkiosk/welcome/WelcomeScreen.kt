@@ -67,7 +67,7 @@ fun WelcomeScreen(
     WelcomeScreenContent(
         modifier = modifier,
         languageOptions = uiState.languageOptions.toImmutableList(),
-        onLanguageClick = { languageCode -> viewModel.updateLanguage(languageCode) },
+        onLanguageClick = { languageCode -> viewModel.onHandleEvent(WelcomeViewModel.UiEvent.OnLanguageSelected(languageCode)) },
         onEatInClick = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.MenuScreen(DiningOption.EAT_IN.toString()).route)) },
         onTakeAwayClick = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.MenuScreen(DiningOption.TAKE_AWAY.toString()).route)) }
     )
