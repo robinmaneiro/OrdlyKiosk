@@ -87,6 +87,7 @@ dependencies {
 
     //region Debug
     debugImplementation(libs.chucker.debug)
+    releaseImplementation(libs.chucker.release)
     implementation(libs.timber)
     //endregion
 

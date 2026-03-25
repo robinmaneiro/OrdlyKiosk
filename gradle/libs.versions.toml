@@ -79,6 +79,7 @@ tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = 
 
 #region Debug
 chucker-debug = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
+chucker-release = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 #endregion
 
