@@ -25,7 +25,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -34,8 +33,6 @@ import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 
 @Composable
 fun ProductOverlay(
@@ -49,7 +46,7 @@ fun ProductOverlay(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.40f)) // TODO: Move to an independent color?
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.40f))
             .clickable { onDismiss() },
         contentAlignment = Alignment.Center
     ) {
@@ -114,8 +111,8 @@ private fun SectionButtons(
             onClick = onDismiss
         ) {
             Text(
-                text = "Close",
-                color = SandyBrown40,
+                text = stringResource(R.string.btn_close),
+                color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -123,8 +120,8 @@ private fun SectionButtons(
         Button(
             modifier = Modifier.size(150.dp, 50.dp),
             colors = buttonColors(
-                containerColor = Aquamarine40,
-                contentColor = Color.White
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             shape = RoundedCornerShape(5.dp),
             onClick = { onAddToBasket.invoke() }

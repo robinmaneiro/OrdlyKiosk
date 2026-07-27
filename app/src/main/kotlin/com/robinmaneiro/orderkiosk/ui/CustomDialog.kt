@@ -26,12 +26,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 
 @Composable
 fun CustomDialog(
@@ -47,7 +44,7 @@ fun CustomDialog(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.40f)) // TODO: Move to an independent color?
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.40f))
             .clickable { onDismiss?.invoke() },
         contentAlignment = Alignment.Center
     ) {
@@ -102,7 +99,7 @@ private fun SectionButtons(
             ) {
                 Text(
                     text = label,
-                    color = SandyBrown40,
+                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -113,8 +110,8 @@ private fun SectionButtons(
         Button(
             modifier = Modifier.size(150.dp, 50.dp),
             colors = buttonColors(
-                containerColor = Aquamarine40,
-                contentColor = Color.White
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             shape = RoundedCornerShape(5.dp),
             onClick = { onPrimaryButtonClick.invoke() }
