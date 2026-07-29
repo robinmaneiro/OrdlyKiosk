@@ -36,6 +36,7 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
+import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
@@ -63,6 +64,11 @@ fun AccountScreen(
             })
         }
     ) {
+        if (uiState.isLoading) {
+            KiLoadingSpinner(Modifier.padding(it))
+            return@Scaffold
+        }
+
         LoginScreenContent(
             it,
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },

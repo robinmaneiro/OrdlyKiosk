@@ -23,6 +23,7 @@ class LoginViewModel(
 
     fun loginUser(payload: LoginPayload) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
             loginUserUseCase.invoke(payload)
                 .onSuccess {
                     _actions.trySend(Actions.NavigateBack)
@@ -30,6 +31,7 @@ class LoginViewModel(
                 .onFailure {
                     _uiState.update {
                         it.copy(
+                            isLoading = false,
                             hasError = true // TODO: action is better?
                         )
                     }
@@ -42,6 +44,7 @@ class LoginViewModel(
     }
 
     data class UiState(
+        val isLoading: Boolean = false,
         val hasError: Boolean = false
     )
 }
