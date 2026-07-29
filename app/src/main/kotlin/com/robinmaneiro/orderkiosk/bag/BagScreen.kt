@@ -35,8 +35,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
+import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.bag.ui.BagItemRow
@@ -69,7 +71,7 @@ fun BagScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "Bag", onBack = {
+            SimpleTopBar(title = stringResource(R.string.screen_title_bag), onBack = {
                 navigationEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
@@ -104,10 +106,10 @@ fun BagScreen(
             itemToRemove = null
         }
         CustomDialog(
-            title = "Are you sure? ",
-            body = "Do you really want to remove this item from the bag?",
-            primaryButtonLabelToAct = "Remove item" to primaryButtonAction,
-            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction,
+            title = stringResource(R.string.dialog_remove_item_title),
+            body = stringResource(R.string.dialog_remove_item_body),
+            primaryButtonLabelToAct = stringResource(R.string.btn_remove_item) to primaryButtonAction,
+            secondaryButtonLabelToAct = stringResource(R.string.btn_cancel) to secondaryButtonAction,
         )
     }
 
@@ -120,10 +122,10 @@ fun BagScreen(
             showClearBagDialog = false
         }
         CustomDialog(
-            title = "Are you sure?",
-            body = "This action will remove ALL items from the bag",
-            primaryButtonLabelToAct = "Clear Basket" to primaryButtonAction,
-            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction,
+            title = stringResource(R.string.dialog_remove_item_title),
+            body = stringResource(R.string.dialog_clear_bag_body),
+            primaryButtonLabelToAct = stringResource(R.string.btn_clear_basket) to primaryButtonAction,
+            secondaryButtonLabelToAct = stringResource(R.string.btn_cancel) to secondaryButtonAction,
         )
     }
 
@@ -204,7 +206,7 @@ fun BottomSection(
             .padding(end = 20.dp, start = 20.dp, top = 10.dp)
     ) {
         Text(
-            text = "$itemCount Items",
+            text = stringResource(R.string.bag_item_count, itemCount),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.align(Alignment.CenterStart)
         )
@@ -216,7 +218,7 @@ fun BottomSection(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Total"
+                text = stringResource(R.string.bag_total)
             )
 
             Text(
@@ -241,7 +243,7 @@ fun BottomSection(
                 onClick = { navigationEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CheckoutScreen.route)) }
             ) {
                 Text(
-                    text = "Order Now",
+                    text = stringResource(R.string.btn_order_now),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -252,7 +254,7 @@ fun BottomSection(
                 }
             ) {
                 Text(
-                    text = "Cancel Order",
+                    text = stringResource(R.string.btn_cancel_order),
                     color = SandyBrown40,
                     style = MaterialTheme.typography.titleMedium
                 )

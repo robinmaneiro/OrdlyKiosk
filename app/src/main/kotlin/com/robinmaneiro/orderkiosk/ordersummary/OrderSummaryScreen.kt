@@ -27,8 +27,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.QRCodeDisplay
@@ -45,7 +47,7 @@ fun OrderSummaryScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "Order Summary", onBack = {
+            SimpleTopBar(title = stringResource(R.string.screen_title_order_summary), onBack = {
                 mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
@@ -93,7 +95,7 @@ private fun SectionOrderDetails(
     ) {
 
         Text(
-            text = "Thank you for your payment",
+            text = stringResource(R.string.order_summary_thank_you),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp)
 
         )
@@ -103,7 +105,7 @@ private fun SectionOrderDetails(
         )
 
         Text(
-            text = "Your Order Number is :",
+            text = stringResource(R.string.order_summary_order_number),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 32.sp)
         )
 
@@ -142,7 +144,7 @@ private fun SectionOrderProgress(
     // improve UX editing sorting of options based on language selections
 
     Text(
-        text = "Get Progress of your order "
+        text = stringResource(R.string.order_summary_get_progress)
     )
 
     QRCodeDisplay("https://www.reddit.com", Modifier.size(200.dp))
@@ -153,7 +155,7 @@ private fun SectionRoulette() {
     // Direct to spin the roulette
     Text(
         style = MaterialTheme.typography.bodyMedium,
-        text = "Spin the roulette for a chance to get a free meal!"
+        text = stringResource(R.string.order_summary_roulette)
     )
 
     Box(

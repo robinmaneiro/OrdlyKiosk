@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
@@ -59,7 +60,7 @@ fun AccountScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "Account", onBack = {
+            SimpleTopBar(title = stringResource(R.string.screen_title_account), onBack = {
                 mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
@@ -120,7 +121,7 @@ fun LoginScreenContent(
                 var password by remember { mutableStateOf("") }
 
                 Text(
-                    text = "LOGIN"
+                    text = stringResource(R.string.login_heading)
                 )
 
                 Spacer(
@@ -150,7 +151,7 @@ fun LoginScreenContent(
                         loginUser.invoke(userName, password)
                     }
                 ) {
-                    Text("Login")
+                    Text(stringResource(R.string.btn_login))
                 }
 
                 Spacer(
@@ -160,13 +161,13 @@ fun LoginScreenContent(
                 TextButton(
                     onClick = goToResetPassword
                 ) {
-                    Text("Reset Password")
+                    Text(stringResource(R.string.btn_reset_password))
                 }
 
                 TextButton(
                     onClick = goToRegistration
                 ) {
-                    Text("Register")
+                    Text(stringResource(R.string.btn_register))
                 }
             }
         }

@@ -13,10 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 
 @Composable
@@ -34,9 +36,13 @@ fun RotatingArrow(
         animationSpec = tween(durationMillis)
     )
 
+    val expandedDesc = stringResource(R.string.cd_expanded)
+    val collapsedDesc = stringResource(R.string.cd_collapsed)
+    val contentDesc = if (rotated) expandedDesc else collapsedDesc
+
     Icon(
         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, // TODO: Replace icon with excessive padding
-        contentDescription = if (rotated) "Expanded" else "Collapsed",
+        contentDescription = contentDesc,
         modifier = modifier
             .size(60.dp)
             .rotate(rotation)
@@ -44,7 +50,7 @@ fun RotatingArrow(
                 rotated = !rotated
                 onToggle?.invoke()
             }
-            .semantics { contentDescription = if (rotated) "Expanded" else "Collapsed" }
+            .semantics { contentDescription = contentDesc }
     )
 }
 

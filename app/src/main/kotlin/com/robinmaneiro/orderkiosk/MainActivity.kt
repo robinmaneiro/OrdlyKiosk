@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.networking.ConnectivityObserver
 import com.robinmaneiro.orderkiosk.ui.theme.OrderKioskTheme
@@ -38,13 +39,13 @@ class MainActivity : ComponentActivity() {
                 if (status == ConnectivityObserver.Status.Lost) {
                     AlertDialog( // TODO: Style dialog and secure option - e.g. Code or NFC tag?.
                         onDismissRequest = { /* Prevent dismiss if critical */ },
-                        title = { Text("No Connection") },
-                        text = { Text("Please advise a member of the staff.") },
+                        title = { Text(stringResource(R.string.no_connection_title)) },
+                        text = { Text(stringResource(R.string.no_connection_body)) },
                         confirmButton = {
                             Button(onClick = {
                                 startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
                             }) {
-                                Text("Open Network Settings")
+                                Text(stringResource(R.string.btn_open_network_settings))
                             }
                         }
                     )

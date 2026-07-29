@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.robinmaneiro.orderkiosk.NavigationEvent
@@ -67,8 +68,8 @@ fun MenuOptionsPane(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 val optionPaneList = listOf(
-                    Triple("Order History", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
-                    Triple("Coupons", { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
+                    Triple(stringResource(R.string.screen_title_order_history), { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.OrderHistoryScreen.route)) }, R.drawable.icn_burger),
+                    Triple(stringResource(R.string.screen_title_coupons), { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CouponsScreen.route)) }, R.drawable.icn_ticket)
                 )
 
                 optionPaneList.forEach {
@@ -77,7 +78,7 @@ fun MenuOptionsPane(
             }
 
             OptionsPaneItem(
-                "Start again",
+                stringResource(R.string.menu_option_start_again),
                 {
                     shouldShowStartAgainDialog = true
                 },
@@ -102,10 +103,10 @@ fun MenuOptionsPane(
             shouldShowDiningOptionDialog = false
         }
         CustomDialog(
-            title = "Warning",
-            body = "Are you sure you want to change the dining option?",
-            primaryButtonLabelToAct = "Change" to primaryButtonAction,
-            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction
+            title = stringResource(R.string.dialog_warning_title),
+            body = stringResource(R.string.dialog_change_dining_body),
+            primaryButtonLabelToAct = stringResource(R.string.btn_change) to primaryButtonAction,
+            secondaryButtonLabelToAct = stringResource(R.string.btn_cancel) to secondaryButtonAction
         )
     }
 
@@ -120,10 +121,10 @@ fun MenuOptionsPane(
         }
 
         CustomDialog(
-            title = "Warning",
-            body = "Are you sure you want to start again?",
-            primaryButtonLabelToAct = "Start again" to primaryButtonAction,
-            secondaryButtonLabelToAct = "Cancel" to secondaryButtonAction
+            title = stringResource(R.string.dialog_warning_title),
+            body = stringResource(R.string.dialog_start_again_body),
+            primaryButtonLabelToAct = stringResource(R.string.menu_option_start_again) to primaryButtonAction,
+            secondaryButtonLabelToAct = stringResource(R.string.btn_cancel) to secondaryButtonAction
         )
     }
 }
@@ -148,7 +149,7 @@ fun OptionsPaneItem(
         icnRes?.let {
             Icon(
                 painter = painterResource(icnRes),
-                contentDescription = "Vector icon",
+                contentDescription = stringResource(R.string.cd_bag_icon),
                 tint = Aquamarine40,
                 modifier = Modifier.size(50.dp)
             )

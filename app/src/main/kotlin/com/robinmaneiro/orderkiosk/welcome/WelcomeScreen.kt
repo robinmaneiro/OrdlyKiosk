@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -112,7 +113,7 @@ fun WelcomeScreenContent(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Where you want to enjoy your meal?",
+                text = stringResource(R.string.welcome_dining_question),
                 fontSize = 64.sp,
                 color = DarkGrey,
                 textAlign = TextAlign.Center,
@@ -191,11 +192,11 @@ fun LegalSection(
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Text(
-            text = "Terms of Service",
+            text = stringResource(R.string.terms_of_service),
             style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
         )
         Text(
-            text = "Nutritional Values & Allergens",
+            text = stringResource(R.string.nutritional_values_allergens),
             style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
         )
     }

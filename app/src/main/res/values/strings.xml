@@ -1,3 +1,80 @@
 <resources>
     <string name="app_name">Order Kiosk</string>
+
+    <!-- Screen Titles -->
+    <string name="screen_title_account">Account</string>
+    <string name="screen_title_my_account">My Account</string>
+    <string name="screen_title_register">Register New Account</string>
+    <string name="screen_title_reset_password">Reset Password</string>
+    <string name="screen_title_bag">Bag</string>
+    <string name="screen_title_checkout">Checkout</string>
+    <string name="screen_title_coupons">Coupons</string>
+    <string name="screen_title_order_history">Order History</string>
+    <string name="screen_title_order_summary">Order Summary</string>
+
+    <!-- Common Actions -->
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_change">Change</string>
+
+    <!-- Login / Registration -->
+    <string name="login_heading">LOGIN</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_register">Register</string>
+
+    <!-- Bag Screen -->
+    <string name="bag_item_count">%1$d Items</string>
+    <string name="bag_total">Total</string>
+    <string name="btn_order_now">Order Now</string>
+    <string name="btn_cancel_order">Cancel Order</string>
+    <string name="dialog_remove_item_title">Are you sure?</string>
+    <string name="dialog_remove_item_body">Do you really want to remove this item from the bag?</string>
+    <string name="btn_remove_item">Remove item</string>
+    <string name="dialog_clear_bag_body">This action will remove ALL items from the bag</string>
+    <string name="btn_clear_basket">Clear Basket</string>
+
+    <!-- Checkout -->
+    <string name="btn_pay_now">Pay Now</string>
+
+    <!-- Menu Options Pane -->
+    <string name="menu_open">Open</string>
+    <string name="menu_option_start_again">Start again</string>
+    <string name="dialog_warning_title">Warning</string>
+    <string name="dialog_change_dining_body">Are you sure you want to change the dining option?</string>
+    <string name="dialog_start_again_body">Are you sure you want to start again?</string>
+
+    <!-- Product Info Dialog -->
+    <string name="btn_add_to_basket">Add to basket</string>
+
+    <!-- Promotions -->
+    <string name="promotions_label">Promotions</string>
+
+    <!-- Error Dialog -->
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_body">Something went wrong - please, try again</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_back">Back</string>
+    <string name="cd_delete">Delete</string>
+    <string name="cd_bag_icon">Bag</string>
+    <string name="cd_expanded">Expanded</string>
+    <string name="cd_collapsed">Collapsed</string>
+    <string name="cd_qr_code">QR Code for %1$s</string>
+
+    <!-- No Connection Dialog -->
+    <string name="no_connection_title">No Connection</string>
+    <string name="no_connection_body">Please advise a member of the staff.</string>
+    <string name="btn_open_network_settings">Open Network Settings</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_dining_question">Where you want to enjoy your meal?</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="nutritional_values_allergens">Nutritional Values &amp; Allergens</string>
+
+    <!-- Order Summary Screen -->
+    <string name="order_summary_thank_you">Thank you for your payment</string>
+    <string name="order_summary_order_number">Your Order Number is :</string>
+    <string name="order_summary_get_progress">Get Progress of your order</string>
+    <string name="order_summary_roulette">Spin the roulette for a chance to get a free meal!</string>
 </resources>

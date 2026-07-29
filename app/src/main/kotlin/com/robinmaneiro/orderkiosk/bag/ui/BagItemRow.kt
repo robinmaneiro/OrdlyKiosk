@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,7 +99,7 @@ fun BagItemRow(
                 painter = painterResource(
                     if (bagItem.quantity == 1) R.drawable.icn_bin else R.drawable.icn_filled_circle_minus
                 ),
-                contentDescription = "Delete",
+                contentDescription = stringResource(R.string.cd_delete),
                 tint = Aquamarine40,
                 modifier = Modifier
                     .size(48.dp)
@@ -116,7 +117,7 @@ fun BagItemRow(
 
             Icon(
                 painter = painterResource(R.drawable.icn_filled_circle_plus),
-                contentDescription = "Delete",
+                contentDescription = stringResource(R.string.cd_delete),
                 tint = Aquamarine40,
                 modifier = Modifier
                     .size(48.dp)

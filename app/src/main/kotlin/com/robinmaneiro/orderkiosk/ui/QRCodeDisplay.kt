@@ -5,8 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.robinmaneiro.orderkiosk.R
 
 @Composable
 fun QRCodeDisplay(url: String, modifier: Modifier = Modifier) {
@@ -23,7 +25,7 @@ fun QRCodeDisplay(url: String, modifier: Modifier = Modifier) {
     qrCodeBitmap?.let { bitmap ->
         Image(
             bitmap = bitmap.asImageBitmap(),
-            contentDescription = "QR Code for $url",
+            contentDescription = stringResource(R.string.cd_qr_code, url),
             modifier = modifier
         )
     }

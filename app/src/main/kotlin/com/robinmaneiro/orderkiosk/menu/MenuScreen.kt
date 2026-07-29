@@ -35,8 +35,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.robinmaneiro.orderkiosk.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -229,7 +231,7 @@ private fun BoxScope.AnimatedContent(
         }
 
         Text(
-            text = if (show) "Close" else "Open"
+            text = if (show) stringResource(R.string.btn_close) else stringResource(R.string.menu_open)
         )
     }
 

@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -127,7 +128,7 @@ private fun SectionButtons(
             onClick = { onAddToBasket.invoke() }
         ) {
             Text(
-                text = "Add to basket",
+                text = stringResource(R.string.btn_add_to_basket),
                 style = MaterialTheme.typography.titleMedium
             )
         }

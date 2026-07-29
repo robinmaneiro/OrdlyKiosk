@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
 @Composable
@@ -19,7 +21,7 @@ fun ResetPasswordScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "Reset Password", onBack = {
+            SimpleTopBar(title = stringResource(R.string.screen_title_reset_password), onBack = {
                 mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }

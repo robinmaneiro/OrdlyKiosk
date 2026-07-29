@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.ui.res.stringResource
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
@@ -27,7 +29,7 @@ fun MyAccountScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SimpleTopBar(title = "My Account", onBack = {
+            SimpleTopBar(title = stringResource(R.string.screen_title_my_account), onBack = {
                 mainUiEvent.invoke(NavigationEvent.NavigateUp)
             })
         }
