@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.account.login
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
 import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.util.InputValidator
 
 class LoginViewModel(
     private val loginUserUseCase: LoginUserUseCase
@@ -22,6 +24,14 @@ class LoginViewModel(
     val actions = _actions.receiveAsFlow()
 
     fun loginUser(payload: LoginPayload) {
+        val emailError = InputValidator.validateEmail(payload.username)
+        val passwordError = InputValidator.validatePassword(payload.password)
+
+        if (emailError != null || passwordError != null) {
+            _uiState.update { it.copy(emailError = emailError, passwordError = passwordError) }
+            return
+        }
+
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             loginUserUseCase.invoke(payload)
@@ -39,12 +49,17 @@ class LoginViewModel(
         }
     }
 
+    fun clearEmailError() = _uiState.update { it.copy(emailError = null) }
+    fun clearPasswordError() = _uiState.update { it.copy(passwordError = null) }
+
     sealed interface Actions {
         data object NavigateBack : Actions
     }
 
     data class UiState(
         val isLoading: Boolean = false,
-        val hasError: Boolean = false
+        val hasError: Boolean = false,
+        @StringRes val emailError: Int? = null,
+        @StringRes val passwordError: Int? = null
     )
 }

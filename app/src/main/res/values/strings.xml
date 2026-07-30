@@ -72,6 +72,11 @@
     <string name="terms_of_service">Terms of Service</string>
     <string name="nutritional_values_allergens">Nutritional Values &amp; Allergens</string>
 
+    <!-- Input Validation Errors -->
+    <string name="error_field_required">This field is required</string>
+    <string name="error_email_invalid">Please enter a valid email address</string>
+    <string name="error_password_too_short">Password must be at least 8 characters</string>
+
     <!-- Order Summary Screen -->
     <string name="order_summary_thank_you">Thank you for your payment</string>
     <string name="order_summary_order_number">Your Order Number is :</string>

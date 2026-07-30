@@ -71,8 +71,12 @@ fun AccountScreen(
         }
 
         LoginScreenContent(
-            it,
+            paddingValues = it,
+            emailError = uiState.emailError,
+            passwordError = uiState.passwordError,
             loginUser = { email, pass -> viewModel.loginUser(LoginPayload(email, pass)) },
+            onEmailChanged = { viewModel.clearEmailError() },
+            onPasswordChanged = { viewModel.clearPasswordError() },
             goToRegistration = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.RegistrationScreen.route)) },
             goToResetPassword = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
         )
@@ -90,6 +94,10 @@ fun LoginScreenContent(
     loginUser: (String, String) -> Unit,
     goToRegistration: () -> Unit,
     goToResetPassword: () -> Unit,
+    emailError: Int? = null,
+    passwordError: Int? = null,
+    onEmailChanged: () -> Unit = {},
+    onPasswordChanged: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -130,7 +138,12 @@ fun LoginScreenContent(
 
                 TextField(
                     value = userName,
-                    onValueChange = { userName = it }
+                    onValueChange = {
+                        userName = it
+                        onEmailChanged()
+                    },
+                    isError = emailError != null,
+                    supportingText = emailError?.let { { Text(stringResource(it)) } }
                 )
 
                 Spacer(
@@ -139,7 +152,12 @@ fun LoginScreenContent(
 
                 TextField(
                     value = password,
-                    onValueChange = { password = it }
+                    onValueChange = {
+                        password = it
+                        onPasswordChanged()
+                    },
+                    isError = passwordError != null,
+                    supportingText = passwordError?.let { { Text(stringResource(it)) } }
                 )
 
                 Spacer(
@@ -177,5 +195,5 @@ fun LoginScreenContent(
 @PreviewPixelTablet
 @Composable
 private fun AccountScreenContentPreview() {
-    LoginScreenContent(PaddingValues(20.dp), loginUser = { user, name -> }, {}, {})
+    LoginScreenContent(PaddingValues(20.dp), loginUser = { _, _ -> }, {}, {})
 }

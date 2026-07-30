@@ -18,8 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
@@ -33,6 +34,7 @@ fun RegistrationScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<RegistrationViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier,
@@ -44,6 +46,14 @@ fun RegistrationScreen(
     ) {
         RegistrationScreenContent(
             paddingValues = it,
+            firstNameError = uiState.firstNameError,
+            lastNameError = uiState.lastNameError,
+            emailError = uiState.emailError,
+            passwordError = uiState.passwordError,
+            onFirstNameChanged = { viewModel.clearFirstNameError() },
+            onLastNameChanged = { viewModel.clearLastNameError() },
+            onEmailChanged = { viewModel.clearEmailError() },
+            onPasswordChanged = { viewModel.clearPasswordError() },
             onRegisterClick = viewModel::registerAccount
         )
     }
@@ -53,6 +63,14 @@ fun RegistrationScreen(
 fun RegistrationScreenContent(
     paddingValues: PaddingValues,
     onRegisterClick: (RegisterPayload) -> Unit,
+    firstNameError: Int? = null,
+    lastNameError: Int? = null,
+    emailError: Int? = null,
+    passwordError: Int? = null,
+    onFirstNameChanged: () -> Unit = {},
+    onLastNameChanged: () -> Unit = {},
+    onEmailChanged: () -> Unit = {},
+    onPasswordChanged: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -73,45 +91,55 @@ fun RegistrationScreenContent(
             onValueChange = { title = it }
         )
 
-        Spacer(
-            Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(20.dp))
 
         TextField(
             value = firstName,
-            onValueChange = { firstName = it }
+            onValueChange = {
+                firstName = it
+                onFirstNameChanged()
+            },
+            isError = firstNameError != null,
+            supportingText = firstNameError?.let { { Text(stringResource(it)) } }
         )
 
-        Spacer(
-            Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(20.dp))
 
         TextField(
             value = lastName,
-            onValueChange = { lastName = it }
+            onValueChange = {
+                lastName = it
+                onLastNameChanged()
+            },
+            isError = lastNameError != null,
+            supportingText = lastNameError?.let { { Text(stringResource(it)) } }
         )
 
-        Spacer(
-            Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(20.dp))
 
         TextField(
             value = emailAddress,
-            onValueChange = { emailAddress = it }
+            onValueChange = {
+                emailAddress = it
+                onEmailChanged()
+            },
+            isError = emailError != null,
+            supportingText = emailError?.let { { Text(stringResource(it)) } }
         )
 
-        Spacer(
-            Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(20.dp))
 
         TextField(
             value = password,
-            onValueChange = { password = it }
+            onValueChange = {
+                password = it
+                onPasswordChanged()
+            },
+            isError = passwordError != null,
+            supportingText = passwordError?.let { { Text(stringResource(it)) } }
         )
 
-        Spacer(
-            Modifier.height(20.dp)
-        )
+        Spacer(Modifier.height(20.dp))
 
         Button({
             onRegisterClick.invoke(
