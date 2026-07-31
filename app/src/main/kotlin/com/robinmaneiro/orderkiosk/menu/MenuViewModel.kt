@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.ImmutableList
@@ -30,6 +31,7 @@ import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
 import com.robinmaneiro.orderkiosk.usecase.StartAgainUseCase
+import com.robinmaneiro.orderkiosk.util.ErrorMapper
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 @Suppress("LongParameterList")
@@ -83,7 +85,7 @@ class MenuViewModel(
                 val defaultCategoryId = menuCategories.run {
                     find { it.isDefault } ?: firstOrNull()
                 }?.id ?: run {
-                    handleError()
+                    handleError(null)
                     return
                 }
 
@@ -93,8 +95,8 @@ class MenuViewModel(
 
                 loadProducts(defaultCategoryId, menuCategories)
             }
-            .onFailure {
-                handleError()
+            .onFailure { throwable ->
+                handleError(throwable)
                 return
             }
     }
@@ -118,10 +120,10 @@ class MenuViewModel(
             }
     }
 
-    private fun handleError() = _uiState.update {
+    private fun handleError(throwable: Throwable?) = _uiState.update {
         it.copy(
             isLoading = false,
-            hasError = true
+            errorMessage = ErrorMapper.getErrorMessage(throwable)
         )
     }
 
@@ -138,8 +140,8 @@ class MenuViewModel(
 
                     _actions.trySend(Actions.ResetLazyGridState)
                 }
-                .onFailure {
-                    handleError()
+                .onFailure { throwable ->
+                    handleError(throwable)
                 }
         }
     }
@@ -150,8 +152,8 @@ class MenuViewModel(
                 .onSuccess { expandedItemInfo ->
                     _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
                 }
-                .onFailure {
-                    handleError()
+                .onFailure { throwable ->
+                    handleError(throwable)
                 }
         }
     }
@@ -213,7 +215,7 @@ class MenuViewModel(
         val menuProducts: ImmutableList<MenuProduct> = persistentListOf(),
         val bagResponse: BagResponse? = null,
         val diningOption: DiningOption = DiningOption.TAKE_AWAY,
-        val hasError: Boolean = false,
+        @StringRes val errorMessage: Int? = null,
         val isLoggedIn: Boolean = false
     )
 }

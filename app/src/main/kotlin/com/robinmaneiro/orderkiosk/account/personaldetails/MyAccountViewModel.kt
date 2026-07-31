@@ -1,5 +1,6 @@
 package com.robinmaneiro.orderkiosk.account.personaldetails
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +11,7 @@ import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateDateOfBirthUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateEmailAddressUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdatePhoneNumberUseCase
+import com.robinmaneiro.orderkiosk.util.ErrorMapper
 
 class MyAccountViewModel(
     private val accountDetailsUseCase: AccountDetailsUseCase,
@@ -35,14 +37,14 @@ class MyAccountViewModel(
                         )
                     }
                 }
-                .onFailure {
-                    handleError()
+                .onFailure { throwable ->
+                    handleError(throwable)
                 }
         }
     }
 
-    private fun handleError() {
-        _uiState.update { it.copy(hasError = true, isLoading = false) }
+    private fun handleError(throwable: Throwable) {
+        _uiState.update { it.copy(errorMessage = ErrorMapper.getErrorMessage(throwable), isLoading = false) }
     }
 
     data class UiState(
@@ -51,6 +53,6 @@ class MyAccountViewModel(
         val phoneNumber: String = "",
         val dateOfBirth: String = "",
         val isLoading: Boolean = false,
-        val hasError: Boolean = true
+        @StringRes val errorMessage: Int? = null
     )
 }

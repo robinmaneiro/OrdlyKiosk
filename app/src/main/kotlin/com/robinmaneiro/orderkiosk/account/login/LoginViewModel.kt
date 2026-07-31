@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
 import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.util.ErrorMapper
 import com.robinmaneiro.orderkiosk.util.InputValidator
 
 class LoginViewModel(
@@ -38,11 +39,11 @@ class LoginViewModel(
                 .onSuccess {
                     _actions.trySend(Actions.NavigateBack)
                 }
-                .onFailure {
+                .onFailure { throwable ->
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            hasError = true // TODO: action is better?
+                            errorMessage = ErrorMapper.getErrorMessage(throwable)
                         )
                     }
                 }
@@ -58,7 +59,7 @@ class LoginViewModel(
 
     data class UiState(
         val isLoading: Boolean = false,
-        val hasError: Boolean = false,
+        @StringRes val errorMessage: Int? = null,
         @StringRes val emailError: Int? = null,
         @StringRes val passwordError: Int? = null
     )

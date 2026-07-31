@@ -15,6 +15,7 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.ui.res.stringResource
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 
@@ -41,6 +42,10 @@ fun MyAccountScreen(
             uiState.dateOfBirth,
             uiState.phoneNumber
         )
+
+        uiState.errorMessage?.let { bodyRes ->
+            ErrorDialog(bodyRes = bodyRes) { mainUiEvent.invoke(NavigationEvent.NavigateUp) }
+        }
     }
 }
 

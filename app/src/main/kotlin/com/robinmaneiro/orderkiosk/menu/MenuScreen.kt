@@ -94,8 +94,8 @@ fun MenuScreen(
         }
     }
 
-    if (uiState.hasError) {
-        ErrorDialog { navigationEvent.invoke(NavigationEvent.NavigateUp) }
+    uiState.errorMessage?.let { bodyRes ->
+        ErrorDialog(bodyRes = bodyRes) { navigationEvent.invoke(NavigationEvent.NavigateUp) }
         return
     }
 

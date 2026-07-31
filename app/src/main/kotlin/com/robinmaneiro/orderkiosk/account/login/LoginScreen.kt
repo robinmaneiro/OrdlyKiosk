@@ -81,9 +81,8 @@ fun AccountScreen(
             goToResetPassword = { mainUiEvent.invoke(NavigationEvent.NavigateToDestination(Screens.ResetPasswordScreen.route)) }
         )
 
-        if (uiState.hasError) {
-            ErrorDialog { mainUiEvent.invoke(NavigationEvent.NavigateUp) }
-            return@Scaffold
+        uiState.errorMessage?.let { bodyRes ->
+            ErrorDialog(bodyRes = bodyRes) { mainUiEvent.invoke(NavigationEvent.NavigateUp) }
         }
     }
 }

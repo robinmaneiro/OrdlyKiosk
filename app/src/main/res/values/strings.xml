@@ -77,6 +77,11 @@
     <string name="error_email_invalid">Please enter a valid email address</string>
     <string name="error_password_too_short">Password must be at least 8 characters</string>
 
+    <!-- Contextual API Error Messages -->
+    <string name="error_network">No internet connection. Please check your network and try again.</string>
+    <string name="error_unauthorized">Your session has expired. Please log in again.</string>
+    <string name="error_server">The server encountered an error. Please try again later.</string>
+
     <!-- Order Summary Screen -->
     <string name="order_summary_thank_you">Thank you for your payment</string>
     <string name="order_summary_order_number">Your Order Number is :</string>
