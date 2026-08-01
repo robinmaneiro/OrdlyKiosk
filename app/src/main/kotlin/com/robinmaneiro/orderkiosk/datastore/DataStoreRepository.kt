@@ -7,9 +7,15 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
@@ -42,6 +48,8 @@ private val guestWishlistId = stringPreferencesKey("guest_wishlist_id")
 //endregion
 
 interface DataStoreRepository {
+    val currentToken: StateFlow<String>
+
     suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String)
     suspend fun removeAuthTokenPair()
     suspend fun getAuthAccessToken(): String
@@ -70,6 +78,16 @@ class DataStoreRepositoryImpl(
     context: Context
 ) : DataStoreRepository {
     private val dataStore = context.dataStore
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    override val currentToken: StateFlow<String> = dataStore.data
+        .map { prefs ->
+            val authToken = prefs[authAccessTokenKey]?.let { EncryptionUtil.decrypt(it) }.orEmpty()
+            val guestToken = prefs[guestAccessTokenKey]?.let { EncryptionUtil.decrypt(it) }.orEmpty()
+            authToken.ifEmpty { guestToken }
+        }
+        .stateIn(scope, SharingStarted.Eagerly, initialValue = "")
+
     private suspend fun getDataStore() = dataStore.data.firstOrNull()
 
     override suspend fun getAuthAccessToken(): String {

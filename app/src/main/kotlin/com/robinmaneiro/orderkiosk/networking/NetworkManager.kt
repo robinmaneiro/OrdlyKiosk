@@ -23,7 +23,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
-import kotlinx.coroutines.runBlocking
 import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
 import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
@@ -61,12 +60,7 @@ object NetworkManager {
 
             defaultRequest {
                 contentType(ContentType.Application.Json)
-
-                val token = runBlocking {
-                    dataStore.getAuthAccessToken().ifEmpty { dataStore.getGuestAccessToken() } // User is not considered logged-in until the 'users/me' call is done, check token instead.
-                }
-
-                header("Authorization", "Bearer $token")
+                header("Authorization", "Bearer ${dataStore.currentToken.value}")
             }
         }
     }
