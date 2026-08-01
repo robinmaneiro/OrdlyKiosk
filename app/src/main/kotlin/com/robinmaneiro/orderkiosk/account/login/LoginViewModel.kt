@@ -25,7 +25,7 @@ class LoginViewModel(
     val actions = _actions.receiveAsFlow()
 
     fun loginUser(payload: LoginPayload) {
-        val emailError = InputValidator.validateEmail(payload.username)
+        val emailError = InputValidator.validateEmail(payload.email)
         val passwordError = InputValidator.validatePassword(payload.password)
 
         if (emailError != null || passwordError != null) {
