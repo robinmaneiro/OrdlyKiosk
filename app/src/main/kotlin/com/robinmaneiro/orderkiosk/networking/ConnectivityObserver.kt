@@ -11,9 +11,15 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 class ConnectivityObserver(context: Context) {
-    private val connectivityManager = context.getSystemService<ConnectivityManager>()!!
+    private val connectivityManager = context.getSystemService<ConnectivityManager>()
 
     fun observe(): Flow<Status> = callbackFlow {
+        if (connectivityManager == null) {
+            trySend(Status.Lost)
+            awaitClose()
+            return@callbackFlow
+        }
+
         val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 // Network is connected, but we wait for validation
