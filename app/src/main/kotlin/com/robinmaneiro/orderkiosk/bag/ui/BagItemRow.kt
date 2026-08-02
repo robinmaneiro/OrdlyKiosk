@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,7 +29,6 @@ import com.robinmaneiro.orderkiosk.bag.model.ItemPrice
 import com.robinmaneiro.orderkiosk.bag.model.PriceData
 import com.robinmaneiro.orderkiosk.bag.model.Tax
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 
 @Composable
@@ -68,7 +66,6 @@ fun BagItemRow(
             ) {
                 Text(
                     text = bagItem.title,
-                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.height(4.dp))
@@ -100,7 +97,7 @@ fun BagItemRow(
                     if (bagItem.quantity == 1) R.drawable.icn_bin else R.drawable.icn_filled_circle_minus
                 ),
                 contentDescription = stringResource(R.string.cd_delete),
-                tint = Aquamarine40,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .size(48.dp)
                     .noRippleClickable {
@@ -118,7 +115,7 @@ fun BagItemRow(
             Icon(
                 painter = painterResource(R.drawable.icn_filled_circle_plus),
                 contentDescription = stringResource(R.string.cd_delete),
-                tint = Aquamarine40,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .size(48.dp)
                     .noRippleClickable {
