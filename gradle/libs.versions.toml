@@ -57,6 +57,10 @@ coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-http", 
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 #endregion
 
+#region Fonts
+ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+#endregion
+
 #region Detekt
 detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-rules-compose" }
 detekt-rules-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }

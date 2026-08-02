@@ -13,9 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -46,8 +44,6 @@ import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 
 @Composable
@@ -168,7 +164,7 @@ fun ColumnScope.ItemsSection(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     thickness = 1.dp,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.outlineVariant
                 )
             }
         }
@@ -235,11 +231,7 @@ fun BottomSection(
         ) {
             Button(
                 modifier = Modifier.size(150.dp, 50.dp),
-                colors = buttonColors(
-                    containerColor = Aquamarine40,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(5.dp),
+                shape = MaterialTheme.shapes.medium,
                 onClick = { navigationEvent.invoke(NavigationEvent.NavigateToDestination(Screens.CheckoutScreen.route)) }
             ) {
                 Text(
@@ -255,7 +247,7 @@ fun BottomSection(
             ) {
                 Text(
                     text = stringResource(R.string.btn_cancel_order),
-                    color = SandyBrown40,
+                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.titleMedium
                 )
             }

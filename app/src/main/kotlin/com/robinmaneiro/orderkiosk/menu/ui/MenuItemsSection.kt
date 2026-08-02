@@ -20,9 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -79,11 +78,9 @@ private fun ProductCard(
             .clickable {
                 onProductClick.invoke(productId)
             },
-        border = BorderStroke(1.dp, Color.DarkGray),
-        colors = CardDefaults.cardColors().copy(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(4.dp)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = MaterialTheme.shapes.large
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
@@ -99,21 +96,23 @@ private fun ProductCard(
 
             Text(
                 text = productTitle,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleSmall,
                 minLines = 2,
                 maxLines = 2
             )
 
             Text(
                 text = productDescription,
-                fontWeight = FontWeight.Thin,
-                color = Color.DarkGray,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 minLines = 2,
                 maxLines = 2
             )
 
             Text(
-                text = productPrice
+                text = productPrice,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
