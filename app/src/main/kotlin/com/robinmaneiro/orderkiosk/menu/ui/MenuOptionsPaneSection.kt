@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,8 +31,6 @@ import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.CustomDialog
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 @Composable
 fun MenuOptionsPane(
@@ -58,8 +55,8 @@ fun MenuOptionsPane(
                     top = 100.dp,
                     bottom = 40.dp
                 )
-                .border(1.dp, Color.DarkGray)
-                .background(Color.White)
+                .border(1.dp, MaterialTheme.colorScheme.outline)
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(vertical = 16.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -139,8 +136,8 @@ fun OptionsPaneItem(
     Column(
         modifier = modifier
             .size(width = 80.dp, height = 110.dp)
-            .border(1.dp, Color.DarkGray, RoundedCornerShape(4.dp))
-            .background(Iceberg.copy(alpha = 0.2f))
+            .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.small)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .clickable(onClick = onClick)
             .padding(vertical = 4.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -150,7 +147,7 @@ fun OptionsPaneItem(
             Icon(
                 painter = painterResource(icnRes),
                 contentDescription = stringResource(R.string.cd_bag_icon),
-                tint = Aquamarine40,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(50.dp)
             )
         }

@@ -15,8 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
-
 @Suppress("ModifierComposed") // TODO: Refactor to Modifier.Node when time permits.
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     clickable(
@@ -33,11 +31,13 @@ fun Modifier.boxShadow() = shadow(
     spotColor = Color(0x80000000)
 ).background(Color.White, shape = RoundedCornerShape(6.dp))
 
+private val FadeColor = Color(0xFFF7F5F0) // WarmCream — matches app background
+
 fun Modifier.fadingEdge(
     brush: Brush = Brush.verticalGradient(
         0f to Color.Transparent,
-        0.05f to Iceberg,
-        0.95f to Iceberg,
+        0.05f to FadeColor,
+        0.95f to FadeColor,
         1.0f to Color.Transparent,
     )
 ) = graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
