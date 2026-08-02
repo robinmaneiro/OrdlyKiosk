@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.welcome
 
 import android.content.Context
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -45,9 +45,6 @@ import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.DarkGrey
-import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 import com.robinmaneiro.orderkiosk.util.extensions.showToast
 import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
@@ -104,7 +101,7 @@ fun WelcomeScreenContent(
     Box(
         modifier
             .fillMaxSize()
-            .background(color = Iceberg.copy(alpha = 0.5F))
+            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -114,21 +111,30 @@ fun WelcomeScreenContent(
         ) {
             Text(
                 text = stringResource(R.string.welcome_dining_question),
-                fontSize = 64.sp,
-                color = DarkGrey,
-                textAlign = TextAlign.Center,
-                lineHeight = 90.sp
+                style = MaterialTheme.typography.displaySmall.copy(
+                    textAlign = TextAlign.Center,
+                    lineHeight = 56.sp
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
-            Spacer(Modifier.height(height = 32.dp))
+            Spacer(Modifier.height(height = 44.dp))
 
             Row {
-                DeliveryTypeCard(text = DiningOption.EAT_IN.uiText, onClick = onEatInClick)
-                Spacer(Modifier.width(40.dp))
-                DeliveryTypeCard(text = DiningOption.TAKE_AWAY.uiText, onClick = onTakeAwayClick)
+                DeliveryTypeCard(
+                    text = DiningOption.EAT_IN.uiText,
+                    diningOption = DiningOption.EAT_IN,
+                    onClick = onEatInClick
+                )
+                Spacer(Modifier.width(36.dp))
+                DeliveryTypeCard(
+                    text = DiningOption.TAKE_AWAY.uiText,
+                    diningOption = DiningOption.TAKE_AWAY,
+                    onClick = onTakeAwayClick
+                )
             }
 
-            Spacer(Modifier.height(height = 32.dp))
+            Spacer(Modifier.height(height = 44.dp))
 
             LanguageSection(
                 languageOptions = languageOptions,
@@ -148,7 +154,7 @@ fun LanguageSection(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(24.dp)
+        horizontalArrangement = Arrangement.spacedBy(28.dp)
     ) {
         languageOptions.forEach { option ->
             LanguageCard(option, onOptionClick)
@@ -159,17 +165,29 @@ fun LanguageSection(
 @Composable
 fun DeliveryTypeCard(
     text: String,
+    diningOption: DiningOption,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val containerColor = when (diningOption) {
+        DiningOption.EAT_IN -> MaterialTheme.colorScheme.secondaryContainer
+        DiningOption.TAKE_AWAY -> MaterialTheme.colorScheme.primaryContainer
+    }
+    val borderColor = when (diningOption) {
+        DiningOption.EAT_IN -> MaterialTheme.colorScheme.secondary
+        DiningOption.TAKE_AWAY -> MaterialTheme.colorScheme.primary
+    }
+    val textColor = when (diningOption) {
+        DiningOption.EAT_IN -> MaterialTheme.colorScheme.onSecondaryContainer
+        DiningOption.TAKE_AWAY -> MaterialTheme.colorScheme.onPrimaryContainer
+    }
+
     Card(
         modifier = modifier
-            .size(width = 360.dp, height = 300.dp)
+            .size(width = 320.dp, height = 260.dp)
             .noRippleClickable(onClick = onClick),
-        colors = CardDefaults.cardColors(
-            containerColor = Aquamarine40.copy(alpha = 0.8F),
-            contentColor = Color.White
-        )
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        border = BorderStroke(2.dp, borderColor.copy(alpha = 0.35f))
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -177,7 +195,8 @@ fun DeliveryTypeCard(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.labelLarge.copy(fontSize = 48.sp)
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 26.sp),
+                color = textColor
             )
         }
     }
@@ -193,11 +212,13 @@ fun LegalSection(
     ) {
         Text(
             text = stringResource(R.string.terms_of_service),
-            style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
             text = stringResource(R.string.nutritional_values_allergens),
-            style = MaterialTheme.typography.bodyLarge.copy(color = Color.DarkGray)
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -208,12 +229,15 @@ fun LanguageCard(
     onLanguageClick: (languageCode: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val borderWidth = if (languageOption.isSelected) 3.dp else 1.dp
+    val borderColor = if (languageOption.isSelected) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.outline
+    }
+
     Column(
         modifier = modifier
-            .run {
-                if (!languageOption.isSelected) return@run this
-                border(1.dp, Color.DarkGray)
-            }
             .noRippleClickable { onLanguageClick.invoke(languageOption.languageAlpha2Code) }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -224,14 +248,16 @@ fun LanguageCard(
                 .data(languageOption.countryFlag)
                 .build(),
             modifier = Modifier
-                .size(70.dp)
-                .clip(CircleShape),
+                .size(64.dp)
+                .clip(CircleShape)
+                .border(borderWidth, borderColor, CircleShape),
             contentDescription = null
         )
         Spacer(Modifier.height(8.dp))
         Text(
             languageOption.languageLabel,
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -240,30 +266,10 @@ fun LanguageCard(
 @Composable
 private fun WelcomeScreenPreview() {
     val languageOptions = listOf(
-        LanguageData(
-            R.drawable.flag_gb,
-            languageAlpha2Code = "en",
-            "English",
-            true
-        ),
-        LanguageData(
-            R.drawable.flag_es,
-            "es",
-            "Spanish",
-            false
-        ),
-        LanguageData(
-            R.drawable.flag_de,
-            "de",
-            "German",
-            false
-        ),
-        LanguageData(
-            R.drawable.flag_fr,
-            "fr",
-            "French",
-            false
-        )
+        LanguageData(R.drawable.flag_gb, languageAlpha2Code = "en", "English", true),
+        LanguageData(R.drawable.flag_es, "es", "Spanish", false),
+        LanguageData(R.drawable.flag_de, "de", "German", false),
+        LanguageData(R.drawable.flag_fr, "fr", "French", false)
     )
     WelcomeScreenContent(languageOptions.toImmutableList(), onLanguageClick = {}, onEatInClick = {}, onTakeAwayClick = {})
 }
