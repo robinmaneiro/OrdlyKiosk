@@ -19,18 +19,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import kotlinx.collections.immutable.ImmutableList
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 
 @Composable
@@ -77,12 +74,10 @@ fun MenuCard(
             .clickable { onCategoryClick.invoke(category.id) },
         border = BorderStroke(
             if (category.isDefault) 2.dp else 1.dp,
-            if (category.isDefault) Aquamarine40 else Color.DarkGray
+            if (category.isDefault) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
         ),
-        colors = CardDefaults.cardColors().copy(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(4.dp)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = MaterialTheme.shapes.medium
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -99,8 +94,7 @@ fun MenuCard(
 
             Text(
                 text = category.categoryName,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleSmall
             )
         }
     }

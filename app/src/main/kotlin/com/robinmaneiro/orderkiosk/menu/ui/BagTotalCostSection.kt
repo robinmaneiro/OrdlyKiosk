@@ -1,7 +1,6 @@
 package com.robinmaneiro.orderkiosk.menu.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,17 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.SandyBrown40
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 
 @Composable
@@ -41,44 +35,40 @@ fun BagTotalCostSection(
         modifier
             .widthIn(min = 200.dp)
             .shadow(
-                elevation = 5.dp,
-                ambientColor = Aquamarine40,
-                spotColor = Aquamarine40,
-                shape = RoundedCornerShape(percent = 50)
+                elevation = 16.dp,
+                ambientColor = MaterialTheme.colorScheme.primary,
+                spotColor = MaterialTheme.colorScheme.primary,
+                shape = CircleShape
             )
-            .background(White, shape = RoundedCornerShape(percent = 50))
-            .border(2.dp, Aquamarine40, shape = RoundedCornerShape(percent = 50))
+            .background(MaterialTheme.colorScheme.primary, shape = CircleShape)
             .noRippleClickable(onClick)
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 26.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Text(
                 text = formattedTotalCost,
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 40.sp)
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimary
             )
-            Box(
-                modifier = Modifier
-                    .padding(10.dp)
-            ) {
+            Box {
                 Icon(
                     painter = painterResource(R.drawable.icn_meal_bag),
                     contentDescription = stringResource(R.string.cd_bag_icon),
-                    tint = Aquamarine40,
-                    modifier = Modifier.size(60.dp)
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(32.dp)
                 )
                 Text(
-                    itemCount.toString(),
-                    color = White,
+                    text = itemCount.toString(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .padding(end = 5.dp)
-                        .size(22.dp)
-                        .background(color = SandyBrown40, shape = CircleShape)
+                        .size(18.dp)
+                        .background(MaterialTheme.colorScheme.onPrimary, shape = CircleShape)
                         .align(Alignment.TopEnd)
                 )
             }
@@ -89,5 +79,5 @@ fun BagTotalCostSection(
 @Preview
 @Composable
 private fun BottomSectionPreview() {
-    BagTotalCostSection("42.95", 6, {})
+    BagTotalCostSection("£42.95", 6, {})
 }

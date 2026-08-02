@@ -33,7 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,8 +66,6 @@ import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.RotatingArrow
 import com.robinmaneiro.orderkiosk.ui.SlideFromBottom
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
-import com.robinmaneiro.orderkiosk.ui.theme.Aquamarine40
-import com.robinmaneiro.orderkiosk.ui.theme.Iceberg
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 
@@ -170,7 +168,7 @@ private fun FixedContent(
     Row(
         modifier = modifier
             .fillMaxSize()
-            .background(Iceberg.copy(alpha = 0.2f))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 20.dp, vertical = 4.dp)
     ) {
         MenuCategorySection(
@@ -298,9 +296,10 @@ private fun RoundedSquareNavigateArrow(
     Icon(
         imageVector = imageVector,
         contentDescription = null,
+        tint = MaterialTheme.colorScheme.primary,
         modifier = modifier
             .size(60.dp)
-            .border(2.dp, Aquamarine40, RoundedCornerShape(4.dp))
+            .border(2.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small)
             .clickable(onClick = onClick)
             .padding(5.dp)
     )
