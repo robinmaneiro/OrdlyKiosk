@@ -78,6 +78,10 @@ dependencies {
     implementation(libs.koin.compose)
     //endregion
 
+    //region Fonts
+    implementation(libs.ui.text.google.fonts)
+    //endregion
+
     //region Networking
     implementation(libs.ktor.core)
     implementation(libs.ktor.cio)

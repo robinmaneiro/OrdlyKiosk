@@ -2,23 +2,22 @@ package com.robinmaneiro.orderkiosk.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(color = 0xFFD0BCFF)
-val PurpleGrey80 = Color(color = 0xFFCCC2DC)
-val Pink80 = Color(color = 0xFFEFB8C8)
+// Brand — warm amber (oklch 0.60 0.17 35)
+val BrandAmber = Color(0xFFD15030)
+val BrandAmberDark = Color(0xFF3D0B00)
+val BrandAmberContainer = Color(0xFFFFDAD3)
+val OnBrandAmberContainer = Color(0xFF3D0B00)
 
-val Purple40 = Color(color = 0xFF6650a4)
-val PurpleGrey40 = Color(color = 0xFF625b71)
-val Pink40 = Color(color = 0xFF7D5260)
+// Promo — teal green (oklch 0.58 0.14 150)
+val PromoTeal = Color(0xFF2A9049)
+val PromoTealDark = Color(0xFF002111)
+val PromoTealContainer = Color(0xFFB3F0CB)
+val OnPromoTealContainer = Color(0xFF002111)
 
-//region Custom
-val Aquamarine40 = Color(color = 0xFF00CCA3)
-val SandyBrown40 = Color(color = 0xFFBF600D)
-val PestoGreen40 = Color(color = 0xFF468D3F)
-
-// Background
-val Aquamarine80Alpha50 = Color(color = 0x3F99FFEB) // TODO: Remove if not used
-val LightGreyBackground = Color(color = 0x1FD6D6D6)
-
-val Iceberg = Color(color = 0xFFCCEDF0)
-val DarkGrey = Color(color = 0xFF444444)
-//endregion
+// Neutral warm
+val WarmNearBlack = Color(0xFF302C27)      // oklch 0.22 0.015 60 — headings, body text
+val WarmMuted = Color(0xFF7B7368)          // oklch 0.55 0.02 60  — secondary text
+val WarmCream = Color(0xFFF7F5F0)          // oklch 0.97 0.008 75 — screen background
+val WarmSurface = Color(0xFFFFFFFF)        // card backgrounds
+val WarmSurfaceVariant = Color(0xFFEDE9E2) // oklch 0.93 0.012 70 — secondary surfaces
+val WarmBorder = Color(0xFFE5E1DA)         // oklch 0.90 0.01 70  — dividers, borders
