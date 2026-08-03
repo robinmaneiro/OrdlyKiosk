@@ -26,6 +26,7 @@
     <!-- Bag Screen -->
     <string name="bag_item_count">%1$d Items</string>
     <string name="bag_total">Total</string>
+    <string name="bag_chip_total">Total:</string>
     <string name="btn_order_now">Order Now</string>
     <string name="btn_cancel_order">Cancel Order</string>
     <string name="dialog_remove_item_title">Are you sure?</string>
