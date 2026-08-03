@@ -50,7 +50,7 @@ datastore = { group = "androidx.datastore", name = "datastore-preferences-androi
 #region Compose
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil-compose" }
-coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-http", version.ref = "coil-compose" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil-compose" }
 #endregion
 
 #region Dependency Injection
