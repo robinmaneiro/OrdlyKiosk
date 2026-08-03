@@ -56,6 +56,7 @@ fun MenuItemsSection(
                 productPrice = it.formattedPrice,
                 productId = it.productId,
                 productDescription = it.description,
+                imageUrl = it.imageUrl,
                 onProductClick = onProductClick
             )
         }
@@ -70,6 +71,7 @@ private fun ProductCard(
     productDescription: String,
     onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier,
+    imageUrl: String? = null,
     promotionMessage: String? = null
 ) {
     Card(
@@ -89,7 +91,7 @@ private fun ProductCard(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.item_test_big_mac)
+                    .data(imageUrl ?: R.drawable.item_test_big_mac)
                     .build(),
                 contentDescription = null
             )

@@ -86,7 +86,7 @@ fun MenuCard(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.item_test_big_mac)
+                    .data(category.imageUrl ?: R.drawable.item_test_big_mac)
                     .build(),
                 contentDescription = null,
                 modifier = Modifier.size(80.dp)
