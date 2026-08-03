@@ -53,7 +53,7 @@ fun BagItemRow(
             AsyncImage(
                 modifier = Modifier.height(80.dp),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.item_test_big_mac)
+                    .data(bagItem.imageUrl ?: R.drawable.item_test_big_mac)
                     .build(),
                 contentDescription = null
             )

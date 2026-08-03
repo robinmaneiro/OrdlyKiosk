@@ -22,6 +22,7 @@ data class BagItem(
     @JsonProperty("title") val title: String,
     @JsonProperty("description") val description: String,
     @JsonProperty("price") private val _itemPrice: ItemPrice,
+    @JsonProperty("imageUrl") val imageUrl: String? = null,
 ) {
     val price = _itemPrice.total.withTax
     val formattedPrice = _itemPrice.total.formattedWithTax
