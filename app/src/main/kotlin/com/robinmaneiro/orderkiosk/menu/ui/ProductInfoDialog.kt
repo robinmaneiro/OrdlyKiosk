@@ -26,13 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.MenuViewModel
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
@@ -69,11 +68,12 @@ fun ProductOverlay(
             ) {
                 Column {
                     AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(product.imageUrl ?: R.drawable.item_test_big_mac)
-                            .build(),
+                        model = product.imageUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
+                        placeholder = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                        error = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                        fallback = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(280.dp)

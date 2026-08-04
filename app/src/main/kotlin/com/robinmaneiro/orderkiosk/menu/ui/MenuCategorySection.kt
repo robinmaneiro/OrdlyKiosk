@@ -21,14 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
 import kotlinx.collections.immutable.ImmutableList
-import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 
@@ -87,11 +85,12 @@ fun MenuCard(
             modifier = Modifier.padding(2.dp)
         ) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(category.imageUrl ?: R.drawable.item_test_big_mac)
-                    .build(),
+                model = category.imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
+                placeholder = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                error = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                fallback = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
                 modifier = Modifier
                     .size(80.dp)
                     .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
