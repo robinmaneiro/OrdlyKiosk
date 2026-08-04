@@ -25,6 +25,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -67,11 +69,15 @@ fun ProductOverlay(
             ) {
                 Column {
                     AsyncImage(
-                        modifier = Modifier.size(400.dp, 400.dp),
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(product.imageUrl ?: R.drawable.item_test_big_mac)
                             .build(),
-                        contentDescription = null
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(280.dp)
+                            .clip(MaterialTheme.shapes.large)
                     )
 
                     Text(text = product.title, style = MaterialTheme.typography.titleLarge)
@@ -119,7 +125,7 @@ private fun SectionButtons(
         }
         Spacer(modifier = Modifier.width(8.dp))
         Button(
-            modifier = Modifier.size(150.dp, 50.dp),
+            modifier = Modifier.height(50.dp),
             colors = buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
