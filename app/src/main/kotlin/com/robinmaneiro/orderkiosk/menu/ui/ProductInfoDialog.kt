@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.Card
@@ -25,6 +24,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -77,7 +77,7 @@ fun ProductOverlay(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(280.dp)
-                            .clip(MaterialTheme.shapes.large)
+                            .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                     )
 
                     Text(text = product.title, style = MaterialTheme.typography.titleLarge)

@@ -94,7 +94,7 @@ private fun ProductCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp)
-                .clip(MaterialTheme.shapes.large)
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
         )
 
         Column(
