@@ -109,7 +109,7 @@ class MenuViewModel(
                 _uiState.update {
                     it.copy(
                         menuCategories = menuCategories.toImmutableList(),
-                        menuProducts = (menuItemsResponse.items + menuItemsResponse.items + menuItemsResponse.items).toImmutableList(), // TODO: Undo 'tripled' data
+                        menuProducts = menuItemsResponse.items.toImmutableList(),
                         diningOption = diningOption,
                         isLoading = false
                     )
@@ -134,7 +134,7 @@ class MenuViewModel(
                     _uiState.update {
                         it.copy(
                             menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) }.toImmutableList(),
-                            menuProducts = (updatedItemsResponse.items + updatedItemsResponse.items + updatedItemsResponse.items).toImmutableList() // TODO: Remove triple items
+                            menuProducts = updatedItemsResponse.items.toImmutableList()
                         )
                     }
 
