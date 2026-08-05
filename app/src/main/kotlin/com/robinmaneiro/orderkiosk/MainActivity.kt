@@ -6,8 +6,11 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -42,10 +45,12 @@ class MainActivity : ComponentActivity() {
                         title = { Text(stringResource(R.string.no_connection_title)) },
                         text = { Text(stringResource(R.string.no_connection_body)) },
                         confirmButton = {
-                            Button(onClick = {
-                                startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-                            }) {
-                                Text(stringResource(R.string.btn_open_network_settings))
+                            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                Button(onClick = {
+                                    startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                                }) {
+                                    Text(stringResource(R.string.btn_open_network_settings))
+                                }
                             }
                         }
                     )
