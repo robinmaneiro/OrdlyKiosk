@@ -79,7 +79,7 @@ fun MenuOptionsPane(
                 {
                     shouldShowStartAgainDialog = true
                 },
-                null
+                R.drawable.icn_restart
             )
 
             OptionsPaneItem(
@@ -87,7 +87,7 @@ fun MenuOptionsPane(
                 {
                     shouldShowDiningOptionDialog = true
                 },
-                null
+                R.drawable.icn_dining
             )
         }
     }
