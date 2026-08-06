@@ -87,7 +87,7 @@ fun MenuOptionsPane(
                 {
                     shouldShowDiningOptionDialog = true
                 },
-                R.drawable.icn_dining
+                if (diningOption == DiningOption.EAT_IN) R.drawable.icn_dining else R.drawable.icn_meal_bag
             )
         }
     }
