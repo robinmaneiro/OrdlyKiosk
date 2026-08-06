@@ -1,6 +1,7 @@
 package com.robinmaneiro.orderkiosk
 
 import android.app.Application
+import com.robinmaneiro.orderkiosk.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
@@ -20,9 +21,9 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        if (BuildConfig.DEBUG) { TODO: Uncomment when adding build types to gradle
-        Timber.plant(Timber.DebugTree())
-//        }
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         startKoin {
             androidContext(this@MainApplication)
             modules(

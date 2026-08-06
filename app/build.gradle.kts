@@ -24,10 +24,22 @@ android {
         debug {
             buildConfigField("String", "SERVER_BASE_URL", "\"http://192.168.1.162:8080\"")
         }
+        create("debugQA") {
+            initWith(getByName("debug"))
+            buildConfigField("String", "SERVER_BASE_URL", "\"https://qa.api.yourapp.com\"")
+        }
+        create("qa") {
+            initWith(getByName("release"))
+            isDebuggable = true
+            isMinifyEnabled = false
+            buildConfigField("String", "SERVER_BASE_URL", "\"https://qa.api.yourapp.com\"")
+            // signingConfig = signingConfigs.getByName("qa") // TODO: Add when signing config is available
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "SERVER_BASE_URL", "\"https://api.yourapp.com\"")
+            // signingConfig = signingConfigs.getByName("release") // TODO: Add when signing config is available
         }
     }
     compileOptions {
