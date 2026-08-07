@@ -37,6 +37,9 @@
 
     <!-- Checkout -->
     <string name="btn_pay_now">Pay Now</string>
+    <string name="checkout_your_order">Your Order</string>
+    <string name="checkout_order_total">Order Total</string>
+    <string name="checkout_present_payment">Please present your card or tap for contactless payment</string>
 
     <!-- Menu Options Pane -->
     <string name="menu_open">Open</string>
