@@ -91,4 +91,9 @@
     <string name="order_summary_order_number">Your Order Number is :</string>
     <string name="order_summary_get_progress">Get Progress of your order</string>
     <string name="order_summary_roulette">Spin the roulette for a chance to get a free meal!</string>
+
+    <!-- Roulette Dialog -->
+    <string name="roulette_spin_win">Spin &amp; Win!</string>
+    <string name="roulette_tap_to_spin">Tap the wheel to spin</string>
+    <string name="roulette_good_luck">Good luck!</string>
 </resources>
