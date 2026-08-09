@@ -5,6 +5,9 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
+import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
+import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -23,22 +26,20 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.jackson.jackson
-import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
-import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 
-object NetworkManager {
-    // TODO: Remove 'lateinit' variables
-    lateinit var httpClient: HttpClient
-    lateinit var refreshTokenUseCase: RefreshTokenUseCase
-    lateinit var refreshGuestSessionUseCase: RefreshGuestSessionUseCase
-    lateinit var dataStore: DataStoreRepository
+class NetworkManager(
+    context: Context,
+    @PublishedApi internal val dataStore: DataStoreRepository,
+    refreshTokenUseCaseLazy: Lazy<RefreshTokenUseCase>,
+    refreshGuestSessionUseCaseLazy: Lazy<RefreshGuestSessionUseCase>
+) {
+    @PublishedApi internal val refreshTokenUseCase: RefreshTokenUseCase by refreshTokenUseCaseLazy
 
-    fun initialize(context: Context, dataStore: DataStoreRepository, refreshTokenUseCase: RefreshTokenUseCase, refreshGuestSessionUseCase: RefreshGuestSessionUseCase) {
-        this.refreshGuestSessionUseCase = refreshGuestSessionUseCase
-        this.refreshTokenUseCase = refreshTokenUseCase
-        this.dataStore = dataStore
+    @PublishedApi internal val refreshGuestSessionUseCase: RefreshGuestSessionUseCase by refreshGuestSessionUseCaseLazy
 
+    @PublishedApi internal val httpClient: HttpClient
+
+    init {
         val okhttpEngine = OkHttp.create {
             val chuckerInterceptor = ChuckerInterceptor.Builder(context)
                 .collector(ChuckerCollector(context))

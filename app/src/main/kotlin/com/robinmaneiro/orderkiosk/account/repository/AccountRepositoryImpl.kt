@@ -4,20 +4,20 @@ import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsRe
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
 import com.robinmaneiro.orderkiosk.util.SERVER_BASE_URL
 
-class AccountRepositoryImpl : AccountRepository {
+class AccountRepositoryImpl(private val networkManager: NetworkManager) : AccountRepository {
     override suspend fun getAccountDetails(): Result<AccountDetailsResponse> {
-        return NetworkManager.getRequest("$SERVER_BASE_URL/api/v1/users/me")
+        return networkManager.getRequest("$SERVER_BASE_URL/api/v1/users/me")
     }
 
     override suspend fun updatePhoneNumber(payload: String): Result<AccountDetailsResponse> {
-        return NetworkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/phone", stringBody = payload)
+        return networkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/phone", stringBody = payload)
     }
 
     override suspend fun updateDateOfBirth(payload: String): Result<AccountDetailsResponse> {
-        return NetworkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/dateOfBirth", stringBody = payload)
+        return networkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/dateOfBirth", stringBody = payload)
     }
 
     override suspend fun updateEmailAddress(payload: String): Result<AccountDetailsResponse> {
-        return NetworkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/email", stringBody = payload)
+        return networkManager.patchRequest("$SERVER_BASE_URL/api/v1/guests/me/email", stringBody = payload)
     }
 }
