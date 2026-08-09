@@ -1,12 +1,5 @@
 package com.robinmaneiro.orderkiosk.auth.usecase
 
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
 import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
@@ -15,6 +8,13 @@ import com.robinmaneiro.orderkiosk.fake.FakeAuthRepository
 import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
 import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
 import com.robinmaneiro.orderkiosk.fake.TestData
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
 import java.io.IOException
 
 class LoginUserUseCaseTest {

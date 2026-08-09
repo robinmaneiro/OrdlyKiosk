@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:RegistrationViewModel.kt$RegistrationViewModel$firstNameError != null || lastNameError != null || emailError != null || passwordError != null</ID>
+    <ID>ForbiddenComment:BagViewModel.kt$BagViewModel$// TODO: Handle error</ID>
+    <ID>ForbiddenComment:ComposeExt.kt$// TODO: Refactor to Modifier.Node when time permits.</ID>
+    <ID>ForbiddenComment:CouponsViewModel.kt$CouponsViewModel$// TODO: Prepare placeholder for the calls - if empty will have a lottie animation</ID>
+    <ID>ForbiddenComment:DataStoreRepository.kt$DataStoreRepositoryImpl$// TODO: This will in the future include a more complex object</ID>
+    <ID>ForbiddenComment:MainActivity.kt$MainActivity$// TODO: Style dialog and secure option - e.g. Code or NFC tag?.</ID>
+    <ID>ForbiddenComment:MenuViewModel.kt$MenuViewModel$// TODO: Add some logic here so that if adding the same product calls update instead.</ID>
+    <ID>ForbiddenComment:OrderSummaryScreen.kt$// TODO: Follow a pattern where the first pair of digits is the station number, the second pair sequential order assignation.</ID>
+    <ID>ForbiddenComment:OrderSummaryScreen.kt$// TODO: Move me to new screens - to add some sharing in socials if win</ID>
+    <ID>ForbiddenComment:OrderSummaryScreen.kt$// products = products TODO: Remove?</ID>
+    <ID>ForbiddenComment:ResetPasswordViewModel.kt$ResetPasswordViewModel$// TODO: Declare methods</ID>
+    <ID>ForbiddenComment:RotatingArrow.kt$// TODO: Replace icon with excessive padding</ID>
+    <ID>ForbiddenComment:WelcomeViewModel.kt$WelcomeViewModel$// TODO: Change this to retrieve all languages and set selected the default one.</ID>
+    <ID>ForbiddenComment:WelcomeViewModel.kt$WelcomeViewModel$// TODO: Probably can change a variable in the datastore and listen to a flow that will try to retrieve an updated json for this</ID>
+    <ID>LongMethod:BagItemRow.kt$@Composable fun BagItemRow( bagItem: BagItem, onPlusClick: () -&gt; Unit, onMinusClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:BagScreen.kt$@Composable fun BagScreen( navigationEvent: (NavigationEvent) -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:CheckoutScreen.kt$@Composable private fun CheckoutContent( padding: PaddingValues, bagResponse: BagResponse?, onPayNow: () -&gt; Unit )</ID>
+    <ID>LongMethod:LoginScreen.kt$@Composable fun LoginScreenContent( paddingValues: PaddingValues, loginUser: (String, String) -&gt; Unit, goToRegistration: () -&gt; Unit, goToResetPassword: () -&gt; Unit, emailError: Int? = null, passwordError: Int? = null, onEmailChanged: () -&gt; Unit = {}, onPasswordChanged: () -&gt; Unit = {}, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:MenuOptionsPaneSection.kt$@Composable fun MenuOptionsPane( mainUiEvent: (NavigationEvent) -&gt; Unit, diningOption: DiningOption, visible: Boolean, onUiEvent: (MenuViewModel.UiEvent) -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:OrderSummaryScreen.kt$@Composable private fun RouletteSpinDialog(onDismiss: () -&gt; Unit)</ID>
+    <ID>LongMethod:RegistrationScreen.kt$@Composable fun RegistrationScreenContent( paddingValues: PaddingValues, onRegisterClick: (RegisterPayload) -&gt; Unit, firstNameError: Int? = null, lastNameError: Int? = null, emailError: Int? = null, passwordError: Int? = null, onFirstNameChanged: () -&gt; Unit = {}, onLastNameChanged: () -&gt; Unit = {}, onEmailChanged: () -&gt; Unit = {}, onPasswordChanged: () -&gt; Unit = {}, modifier: Modifier = Modifier )</ID>
+    <ID>LongParameterList:MenuScreen.kt$( menuCategories: ImmutableList&lt;MenuCategory&gt;, menuProducts: ImmutableList&lt;MenuProduct&gt;, diningOption: DiningOption, bagResponse: BagResponse?, lazyGridState: LazyGridState, mainUiEvent: (NavigationEvent) -&gt; Unit, onUiEvent: (MenuViewModel.UiEvent) -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>MagicNumber:BagScreen.kt$.18F</ID>
+    <ID>MagicNumber:BagTotalCostSection.kt$6</ID>
+    <ID>MagicNumber:BaseViewModel.kt$BaseViewModel$5000</ID>
+    <ID>MagicNumber:CheckoutScreen.kt$0.4f</ID>
+    <ID>MagicNumber:CheckoutScreen.kt$0.6f</ID>
+    <ID>MagicNumber:Color.kt$0xFF002111</ID>
+    <ID>MagicNumber:Color.kt$0xFF2A9049</ID>
+    <ID>MagicNumber:Color.kt$0xFF302C27</ID>
+    <ID>MagicNumber:Color.kt$0xFF3D0B00</ID>
+    <ID>MagicNumber:Color.kt$0xFF7B7368</ID>
+    <ID>MagicNumber:Color.kt$0xFFB3F0CB</ID>
+    <ID>MagicNumber:Color.kt$0xFFD15030</ID>
+    <ID>MagicNumber:Color.kt$0xFFE5E1DA</ID>
+    <ID>MagicNumber:Color.kt$0xFFEDE9E2</ID>
+    <ID>MagicNumber:Color.kt$0xFFF7F5F0</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFDAD3</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFFFFF</ID>
+    <ID>MagicNumber:ComposeExt.kt$0.05f</ID>
+    <ID>MagicNumber:ComposeExt.kt$0.95f</ID>
+    <ID>MagicNumber:ComposeExt.kt$0x80000000</ID>
+    <ID>MagicNumber:ComposeExt.kt$0xFFF7F5F0</ID>
+    <ID>MagicNumber:MainScreen.kt$700</ID>
+    <ID>MagicNumber:OffersScreen.kt$0x26000000</ID>
+    <ID>MagicNumber:OffersScreen.kt$0xBF000000</ID>
+    <ID>MagicNumber:OffersViewModel.kt$OffersViewModel$2000L</ID>
+    <ID>MagicNumber:OrderSummaryScreen.kt$0.05f</ID>
+    <ID>MagicNumber:OrderSummaryScreen.kt$0.1f</ID>
+    <ID>MagicNumber:OrderSummaryScreen.kt$0.7f</ID>
+    <ID>MagicNumber:QRCodeDisplay.kt$512</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFF00838F</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFF1E88E5</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFF43A047</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFF6A1B9A</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFFE53935</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFFE91E63</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFFFDD835</ID>
+    <ID>MagicNumber:RouletteWheel.kt$0xFFFF6F00</ID>
+    <ID>MagicNumber:RouletteWheel.kt$180.0</ID>
+    <ID>MagicNumber:RouletteWheel.kt$360f</ID>
+    <ID>MagicNumber:RouletteWheel.kt$90.0</ID>
+    <ID>SwallowedException:QRCodeDisplay.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:QRCodeDisplay.kt$e: Exception</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$clazz: Class&lt;T&gt;</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$default: Float</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$default: Int</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$default: Long</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$default: String</ID>
+    <ID>UnusedParameter:LiveContent.kt$LiveContent$key: String</ID>
+    <ID>UnusedParameter:MenuItemsSection.kt$promotionMessage: String? = null</ID>
+    <ID>UnusedParameter:OrderSummaryScreen.kt$modifier: Modifier = Modifier</ID>
+    <ID>UnusedParameter:OrderSummaryScreen.kt$products: ImmutableList&lt;BagItem&gt;</ID>
+    <ID>UnusedParameter:PromotionCategory.kt$onCategoryClick: (String) -&gt; Unit</ID>
+    <ID>UnusedPrivateMember:OrderSummaryScreen.kt$@Composable private fun SectionItems( modifier: Modifier = Modifier, products: ImmutableList&lt;BagItem&gt; )</ID>
+    <ID>UnusedPrivateProperty:DataStoreRepository.kt$private val phoneAlpha2CountryCode = stringPreferencesKey("phone_alpha_2_country_code")</ID>
+    <ID>UnusedPrivateProperty:DataStoreRepository.kt$private val phoneDialingCode = stringPreferencesKey("phone_dialing_code")</ID>
+    <ID>UnusedPrivateProperty:MyAccountViewModel.kt$MyAccountViewModel$private val updateDateOfBirthUseCase: UpdateDateOfBirthUseCase</ID>
+    <ID>UnusedPrivateProperty:MyAccountViewModel.kt$MyAccountViewModel$private val updateEmailAddressUseCase: UpdateEmailAddressUseCase</ID>
+    <ID>UnusedPrivateProperty:MyAccountViewModel.kt$MyAccountViewModel$private val updatePhoneNumberUseCase: UpdatePhoneNumberUseCase</ID>
+    <ID>UnusedPrivateProperty:OrderHistoryScreen.kt$val orderHistoryViewModel = koinViewModel&lt;OrderHistoryViewModel&gt;()</ID>
+    <ID>UnusedPrivateProperty:WelcomeScreen.kt$val activity = LocalActivity.current</ID>
+    <ID>UnusedPrivateProperty:WelcomeScreen.kt$var showErrorDialog by remember { mutableStateOf(true) }</ID>
+  </CurrentIssues>
+</SmellBaseline>

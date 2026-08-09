@@ -1,6 +1,14 @@
 package com.robinmaneiro.orderkiosk.bag
 
 import app.cash.turbine.test
+import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
+import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
+import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
+import com.robinmaneiro.orderkiosk.fake.TestData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -12,14 +20,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import com.robinmaneiro.orderkiosk.bag.usecase.BagSelectorUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.RemoveAllBagItemsUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.RemoveFromBagUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.UpdateBagItemUseCase
-import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
-import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
-import com.robinmaneiro.orderkiosk.fake.TestData
 import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)

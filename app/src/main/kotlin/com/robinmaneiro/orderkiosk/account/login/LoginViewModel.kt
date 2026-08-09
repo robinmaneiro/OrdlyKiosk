@@ -3,6 +3,10 @@ package com.robinmaneiro.orderkiosk.account.login
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
+import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.util.ErrorMapper
+import com.robinmaneiro.orderkiosk.util.InputValidator
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,10 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
-import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
-import com.robinmaneiro.orderkiosk.util.ErrorMapper
-import com.robinmaneiro.orderkiosk.util.InputValidator
 
 class LoginViewModel(
     private val loginUserUseCase: LoginUserUseCase

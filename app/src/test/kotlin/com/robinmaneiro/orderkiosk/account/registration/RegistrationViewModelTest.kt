@@ -1,5 +1,9 @@
 package com.robinmaneiro.orderkiosk.account.registration
 
+import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
+import com.robinmaneiro.orderkiosk.fake.FakeAuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -11,10 +15,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
-import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
-import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
-import com.robinmaneiro.orderkiosk.fake.FakeAuthRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RegistrationViewModelTest {

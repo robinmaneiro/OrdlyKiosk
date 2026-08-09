@@ -1,5 +1,15 @@
 package com.robinmaneiro.orderkiosk.account.login
 
+import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
+import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
+import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
+import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
+import com.robinmaneiro.orderkiosk.fake.FakeAccountRepository
+import com.robinmaneiro.orderkiosk.fake.FakeAuthRepository
+import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
+import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -11,16 +21,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
-import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
-import com.robinmaneiro.orderkiosk.account.login.model.LoginPayload
-import com.robinmaneiro.orderkiosk.auth.usecase.LoginUserUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
-import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
-import com.robinmaneiro.orderkiosk.fake.FakeAccountRepository
-import com.robinmaneiro.orderkiosk.fake.FakeAuthRepository
-import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
-import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {

@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OffersScreen(

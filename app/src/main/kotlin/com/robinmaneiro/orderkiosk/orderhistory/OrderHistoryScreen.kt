@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderHistoryScreen(

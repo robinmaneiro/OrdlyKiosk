@@ -29,12 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
-import androidx.compose.ui.res.stringResource
-import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
@@ -45,6 +43,8 @@ import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
+import kotlinx.collections.immutable.ImmutableList
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BagScreen(

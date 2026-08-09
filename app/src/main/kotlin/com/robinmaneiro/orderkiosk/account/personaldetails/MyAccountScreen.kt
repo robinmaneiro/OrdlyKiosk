@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.compose.koinViewModel
-import androidx.compose.ui.res.stringResource
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MyAccountScreen(

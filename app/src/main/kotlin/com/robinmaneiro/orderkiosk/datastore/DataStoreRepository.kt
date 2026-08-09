@@ -7,6 +7,10 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
+import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
+import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
+import com.robinmaneiro.orderkiosk.util.extensions.orFalse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,10 +20,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
-import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
-import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
-import com.robinmaneiro.orderkiosk.util.extensions.orFalse
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 

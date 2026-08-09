@@ -1,10 +1,10 @@
 package com.robinmaneiro.orderkiosk.util
 
 import androidx.annotation.StringRes
+import com.robinmaneiro.orderkiosk.R
 import io.ktor.client.plugins.ResponseException
 import io.ktor.http.HttpStatusCode
 import java.io.IOException
-import com.robinmaneiro.orderkiosk.R
 
 object ErrorMapper {
 

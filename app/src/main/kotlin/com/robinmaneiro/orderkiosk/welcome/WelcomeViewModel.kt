@@ -1,13 +1,13 @@
 package com.robinmaneiro.orderkiosk.welcome
 
 import androidx.lifecycle.ViewModel
+import com.robinmaneiro.orderkiosk.R
+import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
-import com.robinmaneiro.orderkiosk.R
-import com.robinmaneiro.orderkiosk.welcome.model.LanguageData
 import kotlin.collections.listOf
 
 class WelcomeViewModel : ViewModel() {

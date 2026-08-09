@@ -1,10 +1,10 @@
 package com.robinmaneiro.orderkiosk.bag.usecase
 
+import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import com.robinmaneiro.orderkiosk.fake.FakeDataStoreRepository
 
 class BagSelectorUseCaseTest {
 

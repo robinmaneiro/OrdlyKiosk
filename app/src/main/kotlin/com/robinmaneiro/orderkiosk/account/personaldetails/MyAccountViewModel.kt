@@ -3,15 +3,15 @@ package com.robinmaneiro.orderkiosk.account.personaldetails
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import com.robinmaneiro.orderkiosk.account.accountdetails.AccountDetailsUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateDateOfBirthUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdateEmailAddressUseCase
 import com.robinmaneiro.orderkiosk.account.personaldetails.usecase.UpdatePhoneNumberUseCase
 import com.robinmaneiro.orderkiosk.util.ErrorMapper
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class MyAccountViewModel(
     private val accountDetailsUseCase: AccountDetailsUseCase,

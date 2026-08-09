@@ -1,11 +1,11 @@
 package com.robinmaneiro.orderkiosk.fake
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
 import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class FakeDataStoreRepository : DataStoreRepository {
     private val _currentToken = MutableStateFlow("")

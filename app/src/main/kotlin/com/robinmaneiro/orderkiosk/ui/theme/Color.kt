@@ -15,9 +15,9 @@ val PromoTealContainer = Color(0xFFB3F0CB)
 val OnPromoTealContainer = Color(0xFF002111)
 
 // Neutral warm
-val WarmNearBlack = Color(0xFF302C27)      // oklch 0.22 0.015 60 — headings, body text
-val WarmMuted = Color(0xFF7B7368)          // oklch 0.55 0.02 60  — secondary text
-val WarmCream = Color(0xFFF7F5F0)          // oklch 0.97 0.008 75 — screen background
-val WarmSurface = Color(0xFFFFFFFF)        // card backgrounds
+val WarmNearBlack = Color(0xFF302C27) // oklch 0.22 0.015 60 — headings, body text
+val WarmMuted = Color(0xFF7B7368) // oklch 0.55 0.02 60  — secondary text
+val WarmCream = Color(0xFFF7F5F0) // oklch 0.97 0.008 75 — screen background
+val WarmSurface = Color(0xFFFFFFFF) // card backgrounds
 val WarmSurfaceVariant = Color(0xFFEDE9E2) // oklch 0.93 0.012 70 — secondary surfaces
-val WarmBorder = Color(0xFFE5E1DA)         // oklch 0.90 0.01 70  — dividers, borders
+val WarmBorder = Color(0xFFE5E1DA) // oklch 0.90 0.01 70  — dividers, borders

@@ -1,7 +1,7 @@
 package com.robinmaneiro.orderkiosk.bag.repository
 
-import kotlinx.coroutines.flow.StateFlow
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
+import kotlinx.coroutines.flow.StateFlow
 
 interface BagRepository {
     val bag: StateFlow<BagResponse?>

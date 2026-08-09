@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.fake
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class FakeBagRepository : BagRepository {
     private val _bag = MutableStateFlow<BagResponse?>(null)

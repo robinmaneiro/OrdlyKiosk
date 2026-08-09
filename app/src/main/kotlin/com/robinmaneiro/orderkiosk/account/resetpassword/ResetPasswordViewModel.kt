@@ -1,9 +1,9 @@
 package com.robinmaneiro.orderkiosk.account.resetpassword
 
 import androidx.lifecycle.ViewModel
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
 
 class ResetPasswordViewModel(
     val registerAccountUseCase: RegisterAccountUseCase

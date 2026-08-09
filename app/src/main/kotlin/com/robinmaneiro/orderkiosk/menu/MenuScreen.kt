@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -18,11 +17,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,19 +32,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.robinmaneiro.orderkiosk.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 import com.robinmaneiro.orderkiosk.NavigationEvent
+import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.bag.model.BagResponse
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
@@ -53,19 +46,22 @@ import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
 import com.robinmaneiro.orderkiosk.menu.model.MenuItemExpanded
 import com.robinmaneiro.orderkiosk.menu.model.MenuProduct
 import com.robinmaneiro.orderkiosk.menu.ui.BagTotalCostSection
-import com.robinmaneiro.orderkiosk.menu.ui.MenuCard
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuOptionsPane
 import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
-import com.robinmaneiro.orderkiosk.menu.ui.PromoCategoryCard
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
 import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.RotatingArrow
 import com.robinmaneiro.orderkiosk.ui.SlideFromBottom
 import com.robinmaneiro.orderkiosk.ui.SlideFromSide
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 private const val SCROLL_PIXELS_NUMBER = 300F
 

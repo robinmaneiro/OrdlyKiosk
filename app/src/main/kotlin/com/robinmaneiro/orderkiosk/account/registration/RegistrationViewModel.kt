@@ -3,13 +3,13 @@ package com.robinmaneiro.orderkiosk.account.registration
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
+import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
+import com.robinmaneiro.orderkiosk.util.InputValidator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.robinmaneiro.orderkiosk.account.registration.model.RegisterPayload
-import com.robinmaneiro.orderkiosk.account.registration.usecase.RegisterAccountUseCase
-import com.robinmaneiro.orderkiosk.util.InputValidator
 
 class RegistrationViewModel(
     val registerAccountUseCase: RegisterAccountUseCase

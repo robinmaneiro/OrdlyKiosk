@@ -40,10 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.bag.model.BagItem
@@ -51,6 +47,10 @@ import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.QRCodeDisplay
 import com.robinmaneiro.orderkiosk.ui.RouletteWheel
 import com.robinmaneiro.orderkiosk.ui.SimpleTopBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun OrderSummaryScreen(
@@ -118,7 +118,6 @@ private fun SectionOrderDetails(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
             text = stringResource(R.string.order_summary_thank_you),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 48.sp)

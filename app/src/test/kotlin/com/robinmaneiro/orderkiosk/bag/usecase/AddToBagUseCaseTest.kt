@@ -1,13 +1,13 @@
 package com.robinmaneiro.orderkiosk.bag.usecase
 
+import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
+import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
+import com.robinmaneiro.orderkiosk.fake.TestData
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import com.robinmaneiro.orderkiosk.bag.model.AddToBagPayload
-import com.robinmaneiro.orderkiosk.fake.FakeBagRepository
-import com.robinmaneiro.orderkiosk.fake.TestData
 import java.io.IOException
 
 class AddToBagUseCaseTest {
