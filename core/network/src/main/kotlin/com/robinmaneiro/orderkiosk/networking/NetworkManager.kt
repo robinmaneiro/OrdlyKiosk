@@ -5,9 +5,6 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.robinmaneiro.orderkiosk.auth.guestsession.usecase.RefreshGuestSessionUseCase
-import com.robinmaneiro.orderkiosk.auth.usecase.RefreshTokenUseCase
-import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -29,14 +26,9 @@ import io.ktor.serialization.jackson.jackson
 
 class NetworkManager(
     context: Context,
-    @PublishedApi internal val dataStore: DataStoreRepository,
-    refreshTokenUseCaseLazy: Lazy<RefreshTokenUseCase>,
-    refreshGuestSessionUseCaseLazy: Lazy<RefreshGuestSessionUseCase>
+    @PublishedApi internal val tokenProvider: TokenProvider,
+    @PublishedApi internal val tokenRefresher: TokenRefresher
 ) {
-    @PublishedApi internal val refreshTokenUseCase: RefreshTokenUseCase by refreshTokenUseCaseLazy
-
-    @PublishedApi internal val refreshGuestSessionUseCase: RefreshGuestSessionUseCase by refreshGuestSessionUseCaseLazy
-
     @PublishedApi internal val httpClient: HttpClient
 
     init {
@@ -61,7 +53,7 @@ class NetworkManager(
 
             defaultRequest {
                 contentType(ContentType.Application.Json)
-                header("Authorization", "Bearer ${dataStore.currentToken.value}")
+                header("Authorization", "Bearer ${tokenProvider.currentToken.value}")
             }
         }
     }
@@ -77,10 +69,10 @@ class NetworkManager(
             }
         }.recover { exception ->
             if (exception is ResponseException && exception.response.status.value == HttpStatusCode.Unauthorized.value) {
-                if (dataStore.isUserLoggedIn()) {
-                    refreshTokenUseCase.invoke()
+                if (tokenProvider.isUserLoggedIn()) {
+                    tokenRefresher.refreshAuthToken()
                 } else {
-                    refreshGuestSessionUseCase.invoke()
+                    tokenRefresher.refreshGuestSession()
                 }
 
                 return runCatching { request().body() } // Repeat the request that originally returned a 401.

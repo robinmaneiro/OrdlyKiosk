@@ -38,8 +38,12 @@ import com.robinmaneiro.orderkiosk.menu.repository.MenuRepositoryImpl
 import com.robinmaneiro.orderkiosk.menu.usecase.GetMenuCategoriesUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductExtendedInfoUseCase
 import com.robinmaneiro.orderkiosk.menu.usecase.GetProductsByCategoryUseCase
+import com.robinmaneiro.orderkiosk.networking.AppTokenRefresher
 import com.robinmaneiro.orderkiosk.networking.ConnectivityObserver
+import com.robinmaneiro.orderkiosk.networking.DataStoreTokenProvider
 import com.robinmaneiro.orderkiosk.networking.NetworkManager
+import com.robinmaneiro.orderkiosk.networking.TokenProvider
+import com.robinmaneiro.orderkiosk.networking.TokenRefresher
 import com.robinmaneiro.orderkiosk.offers.OffersViewModel
 import com.robinmaneiro.orderkiosk.orderhistory.OrderHistoryViewModel
 import com.robinmaneiro.orderkiosk.ordersummary.OrderSummaryViewModel
@@ -95,7 +99,9 @@ val useCaseModules = module {
 
 val repositoryModules = module {
     single { ConnectivityObserver(androidContext()) }
-    single { NetworkManager(androidContext(), get(), lazy { get() }, lazy { get() }) }
+    single<TokenProvider> { DataStoreTokenProvider(get()) }
+    single<TokenRefresher> { AppTokenRefresher(lazy { get() }, lazy { get() }) }
+    single { NetworkManager(androidContext(), get(), get()) }
     single<AuthRepository> { AuthRepositoryImpl(get()) }
     single<AccountRepository> { AccountRepositoryImpl(get()) }
     single<DataStoreRepository> { DataStoreRepositoryImpl(get()) }

@@ -98,11 +98,7 @@ dependencies {
     //endregion
 
     //region Networking
-    implementation(libs.ktor.core)
-    implementation(libs.ktor.cio)
-    implementation(libs.ktor.contentNegotiation)
-    implementation(libs.ktor.serialization.jackson)
-    implementation(libs.ktor.okhttp)
+    implementation(project(":core:network"))
     //endregion
 
     //region Crypto
@@ -110,8 +106,6 @@ dependencies {
     //endregion
 
     //region Debug
-    debugImplementation(libs.chucker.debug)
-    releaseImplementation(libs.chucker.release)
     implementation(libs.timber)
     //endregion
 
