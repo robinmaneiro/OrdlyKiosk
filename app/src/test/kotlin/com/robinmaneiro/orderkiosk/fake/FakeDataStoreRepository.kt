@@ -1,8 +1,8 @@
 package com.robinmaneiro.orderkiosk.fake
 
-import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
-import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
+import com.robinmaneiro.orderkiosk.datastore.AccountDetails
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
+import com.robinmaneiro.orderkiosk.datastore.GuestSessionDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +22,7 @@ class FakeDataStoreRepository : DataStoreRepository {
     private var guestBagId = "guest-bag-id"
     private var guestWishlistId = "guest-wishlist-id"
 
-    var savedAccountDetails: AccountDetailsResponse? = null
+    var savedAccountDetails: AccountDetails? = null
         private set
 
     override suspend fun saveAuthTokenPair(accessToken: String, refreshToken: String) {
@@ -41,7 +41,7 @@ class FakeDataStoreRepository : DataStoreRepository {
 
     override suspend fun getAuthRefreshToken(): String = authRefreshToken
 
-    override suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse) {
+    override suspend fun saveAccountDetails(accountDetails: AccountDetails) {
         savedAccountDetails = accountDetails
         userLoggedIn = true
         _loggedInStatus.value = true
@@ -61,7 +61,7 @@ class FakeDataStoreRepository : DataStoreRepository {
 
     override suspend fun getGuestRefreshToken(): String = guestRefreshToken
 
-    override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse) {
+    override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetails) {
         guestBagId = guestDetails.guestBagId
         guestWishlistId = guestDetails.guestWishlistId
     }

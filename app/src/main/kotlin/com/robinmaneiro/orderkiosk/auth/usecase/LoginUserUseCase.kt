@@ -7,6 +7,7 @@ import com.robinmaneiro.orderkiosk.auth.repository.AuthRepository
 import com.robinmaneiro.orderkiosk.bag.repository.BagRepository
 import com.robinmaneiro.orderkiosk.bag.usecase.GetBagUseCase
 import com.robinmaneiro.orderkiosk.bag.usecase.MergeBagsUseCase
+import com.robinmaneiro.orderkiosk.datastore.AccountDetails
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
 import com.robinmaneiro.orderkiosk.util.Mapper
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
@@ -30,7 +31,18 @@ class LoginUserUseCase(
                 )
                 accountDetailsUseCase.invoke()
                     .onSuccess { accountDetailsResponse ->
-                        dataStore.saveAccountDetails(accountDetailsResponse)
+                        dataStore.saveAccountDetails(
+                            AccountDetails(
+                                userId = accountDetailsResponse.userId,
+                                firstName = accountDetailsResponse.firstName,
+                                lastName = accountDetailsResponse.lastName,
+                                emailAddress = accountDetailsResponse.emailAddress,
+                                dateOfBirth = accountDetailsResponse.dateOfBirth,
+                                phoneNumber = accountDetailsResponse.phoneNumber,
+                                bagId = accountDetailsResponse.bagId,
+                                wishlistId = accountDetailsResponse.wishlistId
+                            )
+                        )
 
                         if (bagRepository.bag.value?.items.orEmpty().isNotEmpty()) { // There's Guest bag items to be merged to the Logged-in bag
                             mergeBagsUseCase.invoke(dataStore.getGuestBagId(), dataStore.getAuthBagId())

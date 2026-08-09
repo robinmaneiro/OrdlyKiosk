@@ -2,6 +2,7 @@ package com.robinmaneiro.orderkiosk.auth.guestsession.usecase
 
 import com.robinmaneiro.orderkiosk.auth.repository.AuthRepository
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepository
+import com.robinmaneiro.orderkiosk.datastore.GuestSessionDetails
 import com.robinmaneiro.orderkiosk.util.extensions.errorLog
 
 class CreateGuestSessionUseCase(
@@ -18,7 +19,12 @@ class CreateGuestSessionUseCase(
                 )
                 guestSessionDetailsUseCase.invoke()
                     .onSuccess { guestSessionDetails ->
-                        dataStore.saveGuestSessionDetails(guestSessionDetails)
+                        dataStore.saveGuestSessionDetails(
+                            GuestSessionDetails(
+                                guestBagId = guestSessionDetails.guestBagId,
+                                guestWishlistId = guestSessionDetails.guestWishlistId
+                            )
+                        )
                     }
                     .onFailure { exception ->
                         errorLog(exception) { "There has been an issue when attempting to retrieve guest session data" }

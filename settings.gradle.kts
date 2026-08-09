@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Order Kiosk"
 include(":app")
 include(":core:network")
+include(":core:datastore")

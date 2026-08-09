@@ -77,7 +77,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //region AndroidX/KotlinX
-    implementation(libs.datastore)
     implementation(libs.immutable.collections)
     //endregion
 
@@ -97,12 +96,9 @@ dependencies {
     implementation(libs.ui.text.google.fonts)
     //endregion
 
-    //region Networking
+    //region Core modules
     implementation(project(":core:network"))
-    //endregion
-
-    //region Crypto
-    implementation(libs.tink)
+    implementation(project(":core:datastore"))
     //endregion
 
     //region Debug

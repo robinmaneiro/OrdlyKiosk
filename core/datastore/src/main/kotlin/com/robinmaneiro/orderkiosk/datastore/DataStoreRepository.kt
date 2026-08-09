@@ -7,10 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.robinmaneiro.orderkiosk.account.accountdetails.model.AccountDetailsResponse
-import com.robinmaneiro.orderkiosk.auth.guestsession.model.GuestSessionDetailsResponse
 import com.robinmaneiro.orderkiosk.datastore.DataStoreRepositoryImpl.Companion.PREFERENCES_NAME
-import com.robinmaneiro.orderkiosk.util.extensions.orFalse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -54,12 +51,12 @@ interface DataStoreRepository {
     suspend fun removeAuthTokenPair()
     suspend fun getAuthAccessToken(): String
     suspend fun getAuthRefreshToken(): String
-    suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse)
+    suspend fun saveAccountDetails(accountDetails: AccountDetails)
 
     suspend fun saveGuestSessionPair(accessToken: String, refreshToken: String)
     suspend fun getGuestAccessToken(): String
     suspend fun getGuestRefreshToken(): String
-    suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse)
+    suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetails)
 
     suspend fun isUserLoggedIn(): Boolean
     fun loggedInStatus(): Flow<Boolean>
@@ -135,12 +132,12 @@ class DataStoreRepositoryImpl(
         return EncryptionUtil.decrypt(encryptedRefreshToken)
     }
 
-    override suspend fun saveAccountDetails(accountDetails: AccountDetailsResponse) {
+    override suspend fun saveAccountDetails(accountDetails: AccountDetails) {
         dataStore.edit { preferences ->
             preferences[userId] = accountDetails.userId
             preferences[firstName] = accountDetails.firstName
             preferences[lastName] = accountDetails.lastName
-            preferences[phoneNumber] = accountDetails.phoneNumber // TODO: This will in the future include a more complex object
+            preferences[phoneNumber] = accountDetails.phoneNumber
             preferences[emailAddress] = accountDetails.emailAddress
             preferences[dateOfBirth] = accountDetails.dateOfBirth.orEmpty()
             preferences[authBagId] = accountDetails.bagId
@@ -151,14 +148,14 @@ class DataStoreRepositoryImpl(
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
-        return getDataStore()?.get(isUserLoggedIn).orFalse()
+        return getDataStore()?.get(isUserLoggedIn) ?: false
     }
 
     override fun loggedInStatus(): Flow<Boolean> {
-        return dataStore.data.map { it[isUserLoggedIn].orFalse() }
+        return dataStore.data.map { it[isUserLoggedIn] ?: false }
     }
 
-    override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetailsResponse) {
+    override suspend fun saveGuestSessionDetails(guestDetails: GuestSessionDetails) {
         dataStore.edit { preferences ->
             preferences[guestBagId] = guestDetails.guestBagId
             preferences[guestWishlistId] = guestDetails.guestWishlistId
