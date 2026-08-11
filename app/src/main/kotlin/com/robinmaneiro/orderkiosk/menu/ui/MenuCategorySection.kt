@@ -82,7 +82,7 @@ fun MenuCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.padding(2.dp)
+            modifier = Modifier
         ) {
             AsyncImage(
                 model = category.imageUrl,
