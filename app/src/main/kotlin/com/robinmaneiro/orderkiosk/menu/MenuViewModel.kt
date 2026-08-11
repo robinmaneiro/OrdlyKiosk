@@ -75,7 +75,7 @@ class MenuViewModel(
             UiEvent.StartAgain -> startAgain()
             is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
             is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
-            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId)
+            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId, uiEvent.quantity)
         }
     }
 
@@ -158,11 +158,11 @@ class MenuViewModel(
         }
     }
 
-    private fun addToBasket(productId: String) {
+    private fun addToBasket(productId: String, quantity: Int) {
         viewModelScope.launch {
             val addToBagPayload = AddToBagPayload(
                 productId,
-                1
+                quantity
             )
 
             // TODO: Add some logic here so that if adding the same product calls update instead.
@@ -198,7 +198,7 @@ class MenuViewModel(
     sealed interface UiEvent {
         data object ToggleDiningOption : UiEvent
         data object StartAgain : UiEvent
-        data class AddToBasket(val productId: String) : UiEvent
+        data class AddToBasket(val productId: String, val quantity: Int) : UiEvent
         data class OnProductClick(val productId: String) : UiEvent
         data class OnCategoryClick(val categoryId: String) : UiEvent
     }

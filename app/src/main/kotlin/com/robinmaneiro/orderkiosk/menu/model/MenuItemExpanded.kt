@@ -12,4 +12,5 @@ data class MenuItemExpanded(
 ) {
     val price = _priceData.withTax
     val formattedPrice = _priceData.formattedWithTax
+    val currencyCode = _priceData.currencyCode
 }

@@ -50,6 +50,13 @@
 
     <!-- Product Info Dialog -->
     <string name="btn_add_to_basket">Add to basket</string>
+    <string name="product_add_to_basket_with_price">Add to basket - %1$s</string>
+    <string name="product_nutritional_info">Nutritional Information</string>
+    <string name="product_allergens">Allergen Information</string>
+    <string name="product_nutritional_placeholder">Nutritional information is not yet available for this product.</string>
+    <string name="product_allergens_placeholder">Allergen information is not yet available for this product.</string>
+    <string name="cd_increase_quantity">Increase quantity</string>
+    <string name="cd_decrease_quantity">Decrease quantity</string>
 
     <!-- Promotions -->
     <string name="promotions_label">Promotions</string>
