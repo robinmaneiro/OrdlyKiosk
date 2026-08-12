@@ -49,10 +49,10 @@ import com.robinmaneiro.orderkiosk.menu.ui.BagTotalCostSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuCategorySection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuItemsSection
 import com.robinmaneiro.orderkiosk.menu.ui.MenuOptionsPane
+import com.robinmaneiro.orderkiosk.menu.ui.MenuSkeletonLoading
 import com.robinmaneiro.orderkiosk.menu.ui.OptionsPaneItem
 import com.robinmaneiro.orderkiosk.menu.ui.ProductOverlay
 import com.robinmaneiro.orderkiosk.ui.ErrorDialog
-import com.robinmaneiro.orderkiosk.ui.KiLoadingSpinner
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.ui.RotatingArrow
 import com.robinmaneiro.orderkiosk.ui.SlideFromBottom
@@ -93,6 +93,11 @@ fun MenuScreen(
         return
     }
 
+    if (uiState.isLoading) {
+        MenuSkeletonLoading(modifier = modifier)
+        return
+    }
+
     val bagResponse = uiState.bagResponse ?: return
 
     MenuScreenContent(
@@ -115,10 +120,6 @@ fun MenuScreen(
                 shownProduct = null
             }
         )
-    }
-
-    if (uiState.isLoading) {
-        KiLoadingSpinner()
     }
 }
 
