@@ -21,6 +21,8 @@ import com.robinmaneiro.orderkiosk.ui.shimmerEffect
 private const val SKELETON_CATEGORY_COUNT = 5
 private const val SKELETON_PRODUCT_COLUMNS = 4
 private const val SKELETON_PRODUCT_ROWS = 2
+private const val SKELETON_TITLE_WIDTH_FRACTION = 0.8f
+private const val SKELETON_DESCRIPTION_WIDTH_FRACTION = 0.6f
 
 @Composable
 fun MenuSkeletonLoading(
@@ -114,7 +116,7 @@ private fun SkeletonProductCard(
         // Title placeholder
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.8f)
+                .fillMaxWidth(SKELETON_TITLE_WIDTH_FRACTION)
                 .height(16.dp)
                 .clip(MaterialTheme.shapes.extraSmall)
                 .shimmerEffect()
@@ -125,7 +127,7 @@ private fun SkeletonProductCard(
         // Description placeholder
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.6f)
+                .fillMaxWidth(SKELETON_DESCRIPTION_WIDTH_FRACTION)
                 .height(12.dp)
                 .clip(MaterialTheme.shapes.extraSmall)
                 .shimmerEffect()

@@ -142,49 +142,12 @@ private fun ProductDetailsPane(
             }
         }
 
-        Column(
+        ProductInfoContent(
+            product = product,
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = product.title,
-                style = MaterialTheme.typography.headlineMedium
-            )
-
-            Spacer(Modifier.height(8.dp))
-
-            Text(
-                text = product.formattedPrice,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            Text(
-                text = product.description,
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-            Spacer(Modifier.height(20.dp))
-
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-            Spacer(Modifier.height(16.dp))
-
-            InfoSection(
-                title = stringResource(R.string.product_nutritional_info),
-                body = stringResource(R.string.product_nutritional_placeholder)
-            )
-
-            Spacer(Modifier.height(16.dp))
-
-            InfoSection(
-                title = stringResource(R.string.product_allergens),
-                body = stringResource(R.string.product_allergens_placeholder)
-            )
-        }
+        )
 
         Spacer(Modifier.height(16.dp))
 
@@ -200,6 +163,52 @@ private fun ProductDetailsPane(
             formattedTotal = calculateFormattedTotal(product, quantity),
             onClick = onAddToBasket,
             modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun ProductInfoContent(
+    product: MenuItemExpanded,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = product.title,
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        Text(
+            text = product.formattedPrice,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        Text(
+            text = product.description,
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+        Spacer(Modifier.height(16.dp))
+
+        InfoSection(
+            title = stringResource(R.string.product_nutritional_info),
+            body = stringResource(R.string.product_nutritional_placeholder)
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        InfoSection(
+            title = stringResource(R.string.product_allergens),
+            body = stringResource(R.string.product_allergens_placeholder)
         )
     }
 }
@@ -238,8 +247,11 @@ private fun QuantitySelector(
         Icon(
             painter = painterResource(R.drawable.icn_filled_circle_minus),
             contentDescription = stringResource(R.string.cd_decrease_quantity),
-            tint = if (quantity > 1) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.outlineVariant,
+            tint = if (quantity > 1) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.outlineVariant
+            },
             modifier = Modifier
                 .size(48.dp)
                 .noRippleClickable {
