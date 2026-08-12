@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Order Kiosk</string>
+    <string name="app_name">Ordly Kiosk</string>
+    <string name="brand_name">Longhorn Burgers</string>
+    <string name="cd_app_logo">Ordly Kiosk logo</string>
 
     <!-- Screen Titles -->
     <string name="screen_title_account">Account</string>

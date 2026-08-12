@@ -41,6 +41,7 @@ import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
 import com.robinmaneiro.orderkiosk.menu.model.DiningOption
+import com.robinmaneiro.orderkiosk.ui.OrdlyBranding
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import com.robinmaneiro.orderkiosk.util.extensions.noRippleClickable
 import com.robinmaneiro.orderkiosk.util.extensions.showToast
@@ -105,6 +106,14 @@ fun WelcomeScreenContent(
             .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
+        OrdlyBranding(
+            logoSize = 38.dp,
+            appNameColor = MaterialTheme.colorScheme.onBackground,
+            brandNameColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.align(Alignment.TopStart)
+                .padding(start = 24.dp, top = 12.dp)
+        )
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

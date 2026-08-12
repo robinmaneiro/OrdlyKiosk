@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.robinmaneiro.orderkiosk.menu.model.MenuCategory
+import com.robinmaneiro.orderkiosk.ui.OrdlyBranding
 import com.robinmaneiro.orderkiosk.util.extensions.fadingEdge
 import kotlinx.collections.immutable.ImmutableList
 
@@ -39,6 +40,13 @@ fun MenuCategorySection(
     Column(
         modifier = modifier.padding(top = 16.dp)
     ) {
+        OrdlyBranding(
+            logoSize = 30.dp,
+            appNameColor = MaterialTheme.colorScheme.onBackground,
+            brandNameColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
+        )
+
         PromoCategoryCard({})
 
         Spacer(Modifier.height(10.dp))

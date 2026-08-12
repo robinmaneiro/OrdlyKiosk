@@ -29,6 +29,7 @@ import coil3.request.ImageRequest
 import com.robinmaneiro.orderkiosk.NavigationEvent
 import com.robinmaneiro.orderkiosk.R
 import com.robinmaneiro.orderkiosk.Screens
+import com.robinmaneiro.orderkiosk.ui.OrdlyBranding
 import com.robinmaneiro.orderkiosk.ui.PreviewPixelTablet
 import org.koin.androidx.compose.koinViewModel
 
@@ -87,24 +88,46 @@ private fun OffersContent(
                 )
         )
 
-        // Pulsing pill CTA
-        Box(
+        // Branding top-left
+        OrdlyBranding(
+            logoSize = 60.dp,
+            appNameColor = Color.White,
+            brandNameColor = Color.White.copy(alpha = 0.62f),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 56.dp, top = 40.dp)
+        )
+
+        PulsingCtaButton(
+            text = clickHereText,
+            pulse = pulse,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 64.dp)
-                .graphicsLayer { scaleX = pulse; scaleY = pulse }
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = CircleShape
-                )
-                .padding(horizontal = 48.dp, vertical = 20.dp)
-        ) {
-            Text(
-                text = clickHereText,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+@Composable
+private fun PulsingCtaButton(
+    text: String,
+    pulse: Float,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .graphicsLayer { scaleX = pulse; scaleY = pulse }
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = CircleShape
             )
-        }
+            .padding(horizontal = 48.dp, vertical = 20.dp)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
 
