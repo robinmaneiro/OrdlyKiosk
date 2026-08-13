@@ -1,0 +1,221 @@
+package com.robinmaneiro.ordly.kiosk.menu
+
+import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.robinmaneiro.ordly.kiosk.bag.model.AddToBagPayload
+import com.robinmaneiro.ordly.kiosk.bag.model.BagResponse
+import com.robinmaneiro.ordly.kiosk.bag.repository.BagRepository
+import com.robinmaneiro.ordly.kiosk.bag.usecase.AddToBagUseCase
+import com.robinmaneiro.ordly.kiosk.bag.usecase.BagSelectorUseCase
+import com.robinmaneiro.ordly.kiosk.bag.usecase.GetBagUseCase
+import com.robinmaneiro.ordly.kiosk.datastore.DataStoreRepository
+import com.robinmaneiro.ordly.kiosk.menu.model.DiningOption
+import com.robinmaneiro.ordly.kiosk.menu.model.MenuCategories
+import com.robinmaneiro.ordly.kiosk.menu.model.MenuCategory
+import com.robinmaneiro.ordly.kiosk.menu.model.MenuItemExpanded
+import com.robinmaneiro.ordly.kiosk.menu.model.MenuProduct
+import com.robinmaneiro.ordly.kiosk.menu.usecase.GetMenuCategoriesUseCase
+import com.robinmaneiro.ordly.kiosk.menu.usecase.GetProductExtendedInfoUseCase
+import com.robinmaneiro.ordly.kiosk.menu.usecase.GetProductsByCategoryUseCase
+import com.robinmaneiro.ordly.kiosk.usecase.StartAgainUseCase
+import com.robinmaneiro.ordly.kiosk.util.ErrorMapper
+import com.robinmaneiro.ordly.kiosk.util.extensions.errorLog
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+@Suppress("LongParameterList")
+class MenuViewModel(
+    dataStore: DataStoreRepository,
+    bagRepository: BagRepository,
+    private val getMenuCategoriesUseCase: GetMenuCategoriesUseCase,
+    private val getMenuItemsByCategoryUserCase: GetProductsByCategoryUseCase,
+    private val getProductExtendedInfoUseCase: GetProductExtendedInfoUseCase,
+    private val bagSelectorUseCase: BagSelectorUseCase,
+    private val addToBagUseCase: AddToBagUseCase,
+    private val getBagUseCase: GetBagUseCase,
+    private val startAgainUseCase: StartAgainUseCase,
+    private val diningOptionString: String
+) : ViewModel() {
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState = combine(_uiState, bagRepository.bag, dataStore.loggedInStatus()) { state, bag, isLoggedIn ->
+        state.copy(
+            bagResponse = bag,
+            isLoggedIn = isLoggedIn
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = UiState()
+    )
+
+    private val _actions = Channel<Actions>(Channel.BUFFERED)
+    val actions = _actions.receiveAsFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update { it.copy(isLoading = true) }
+            loadCategories()
+        }
+    }
+
+    fun onHandleEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            UiEvent.ToggleDiningOption -> toggleDiningOption()
+            UiEvent.StartAgain -> startAgain()
+            is UiEvent.OnCategoryClick -> updateItemsOnCategorySelected(uiEvent.categoryId)
+            is UiEvent.OnProductClick -> onProductClick(uiEvent.productId)
+            is UiEvent.AddToBasket -> addToBasket(uiEvent.productId, uiEvent.quantity)
+        }
+    }
+
+    private suspend fun loadCategories() {
+        getMenuCategoriesUseCase()
+            .onSuccess { menuCategories ->
+                val defaultCategoryId = menuCategories.run {
+                    find { it.isDefault } ?: firstOrNull()
+                }?.id ?: run {
+                    handleError(null)
+                    return
+                }
+
+                getBagUseCase.invoke(
+                    bagId = bagSelectorUseCase.invoke()
+                )
+
+                loadProducts(defaultCategoryId, menuCategories)
+            }
+            .onFailure { throwable ->
+                handleError(throwable)
+                return
+            }
+    }
+
+    private suspend fun loadProducts(defaultCategoryId: String, menuCategories: MenuCategories) {
+        getMenuItemsByCategoryUserCase(defaultCategoryId)
+            .onSuccess { menuItemsResponse ->
+                val diningOption = runCatching { DiningOption.valueOf(diningOptionString) }.getOrElse { uiState.value.diningOption }
+
+                _uiState.update {
+                    it.copy(
+                        menuCategories = menuCategories.toImmutableList(),
+                        menuProducts = menuItemsResponse.items.toImmutableList(),
+                        diningOption = diningOption,
+                        isLoading = false
+                    )
+                }
+            }
+            .onFailure {
+                _uiState.update { it.copy(isLoading = false) }
+            }
+    }
+
+    private fun handleError(throwable: Throwable?) = _uiState.update {
+        it.copy(
+            isLoading = false,
+            errorMessage = ErrorMapper.getErrorMessage(throwable)
+        )
+    }
+
+    private fun updateItemsOnCategorySelected(categoryId: String) {
+        viewModelScope.launch {
+            getMenuItemsByCategoryUserCase(categoryId)
+                .onSuccess { updatedItemsResponse ->
+                    _uiState.update {
+                        it.copy(
+                            menuCategories = it.menuCategories.map { category -> category.copy(isDefault = category.id == categoryId) }.toImmutableList(),
+                            menuProducts = updatedItemsResponse.items.toImmutableList()
+                        )
+                    }
+
+                    _actions.trySend(Actions.ResetLazyGridState)
+                }
+                .onFailure { throwable ->
+                    handleError(throwable)
+                }
+        }
+    }
+
+    private fun onProductClick(productId: String) {
+        viewModelScope.launch {
+            getProductExtendedInfoUseCase(productId)
+                .onSuccess { expandedItemInfo ->
+                    _actions.trySend(Actions.OpenProductInfo(expandedItemInfo))
+                }
+                .onFailure { throwable ->
+                    handleError(throwable)
+                }
+        }
+    }
+
+    private fun addToBasket(productId: String, quantity: Int) {
+        viewModelScope.launch {
+            val addToBagPayload = AddToBagPayload(
+                productId,
+                quantity
+            )
+
+            // TODO: Add some logic here so that if adding the same product calls update instead.
+            addToBagUseCase.invoke(
+                bagId = bagSelectorUseCase.invoke(),
+                addToBagPayload = addToBagPayload
+            ).onFailure { exception ->
+                errorLog(exception) { "There was an issue adding product to the bag" }
+            }
+        }
+    }
+
+    private fun toggleDiningOption() {
+        val updatedDiningOption = when (uiState.value.diningOption) {
+            DiningOption.TAKE_AWAY -> DiningOption.EAT_IN
+            DiningOption.EAT_IN -> DiningOption.TAKE_AWAY
+        }
+
+        _uiState.update {
+            it.copy(
+                diningOption = updatedDiningOption
+            )
+        }
+    }
+
+    private fun startAgain() {
+        viewModelScope.launch {
+            startAgainUseCase.invoke()
+            _actions.trySend(Actions.NavigateBackToStart)
+        }
+    }
+
+    sealed interface UiEvent {
+        data object ToggleDiningOption : UiEvent
+        data object StartAgain : UiEvent
+        data class AddToBasket(val productId: String, val quantity: Int) : UiEvent
+        data class OnProductClick(val productId: String) : UiEvent
+        data class OnCategoryClick(val categoryId: String) : UiEvent
+    }
+
+    sealed interface Actions {
+        data class OpenProductInfo(val product: MenuItemExpanded) : Actions
+        data object ResetLazyGridState : Actions
+        data object NavigateBackToStart : Actions
+    }
+
+    data class UiState(
+        val isLoading: Boolean = false,
+        val menuCategories: ImmutableList<MenuCategory> = persistentListOf(),
+        val menuProducts: ImmutableList<MenuProduct> = persistentListOf(),
+        val bagResponse: BagResponse? = null,
+        val diningOption: DiningOption = DiningOption.TAKE_AWAY,
+        @StringRes val errorMessage: Int? = null,
+        val isLoggedIn: Boolean = false
+    )
+}

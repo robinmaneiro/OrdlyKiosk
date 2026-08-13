@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.robinmaneiro.orderkiosk.core.datastore"
+    namespace = "com.robinmaneiro.ordly.kiosk.core.datastore"
     compileSdk = 36
 
     defaultConfig {

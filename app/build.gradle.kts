@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.robinmaneiro.orderkiosk"
+    namespace = "com.robinmaneiro.ordly.kiosk"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.robinmaneiro.orderkiosk"
+        applicationId = "com.robinmaneiro.ordly.kiosk"
         minSdk = 25
         targetSdk = 36
         versionCode = 1
